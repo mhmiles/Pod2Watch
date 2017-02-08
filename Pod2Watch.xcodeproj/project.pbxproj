@@ -1,0 +1,580 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		02C1DCE31E4B9281000C760D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DCE21E4B9281000C760D /* AppDelegate.swift */; };
+		02C1DCE51E4B9281000C760D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DCE41E4B9281000C760D /* ViewController.swift */; };
+		02C1DCE81E4B9281000C760D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DCE61E4B9281000C760D /* Main.storyboard */; };
+		02C1DCEA1E4B9281000C760D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DCE91E4B9281000C760D /* Assets.xcassets */; };
+		02C1DCED1E4B9281000C760D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DCEB1E4B9281000C760D /* LaunchScreen.storyboard */; };
+		02C1DCF21E4B9281000C760D /* Pod2Watch WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 02C1DCF11E4B9281000C760D /* Pod2Watch WatchKit App.app */; };
+		02C1DCF81E4B9281000C760D /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DCF61E4B9281000C760D /* Interface.storyboard */; };
+		02C1DCFA1E4B9281000C760D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DCF91E4B9281000C760D /* Assets.xcassets */; };
+		02C1DD011E4B9281000C760D /* Pod2Watch WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 02C1DD001E4B9281000C760D /* Pod2Watch WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		02C1DD061E4B9281000C760D /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DD051E4B9281000C760D /* InterfaceController.swift */; };
+		02C1DD081E4B9281000C760D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DD071E4B9281000C760D /* ExtensionDelegate.swift */; };
+		02C1DD0A1E4B9281000C760D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DD091E4B9281000C760D /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		02C1DCF31E4B9281000C760D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02C1DCD71E4B9281000C760D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 02C1DCF01E4B9281000C760D;
+			remoteInfo = "Pod2Watch WatchKit App";
+		};
+		02C1DD021E4B9281000C760D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02C1DCD71E4B9281000C760D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 02C1DCFF1E4B9281000C760D;
+			remoteInfo = "Pod2Watch WatchKit Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		02C1DD111E4B9281000C760D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				02C1DD011E4B9281000C760D /* Pod2Watch WatchKit Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02C1DD151E4B9281000C760D /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				02C1DCF21E4B9281000C760D /* Pod2Watch WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		02C1DCDF1E4B9281000C760D /* Pod2Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pod2Watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		02C1DCE21E4B9281000C760D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		02C1DCE41E4B9281000C760D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		02C1DCE71E4B9281000C760D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		02C1DCE91E4B9281000C760D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		02C1DCEC1E4B9281000C760D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		02C1DCEE1E4B9281000C760D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02C1DCF11E4B9281000C760D /* Pod2Watch WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pod2Watch WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		02C1DCF71E4B9281000C760D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		02C1DCF91E4B9281000C760D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		02C1DCFB1E4B9281000C760D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02C1DD001E4B9281000C760D /* Pod2Watch WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Pod2Watch WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		02C1DD051E4B9281000C760D /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		02C1DD071E4B9281000C760D /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		02C1DD091E4B9281000C760D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		02C1DD0B1E4B9281000C760D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		02C1DCDC1E4B9281000C760D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02C1DCFD1E4B9281000C760D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		02C1DCD61E4B9281000C760D = {
+			isa = PBXGroup;
+			children = (
+				02C1DCE11E4B9281000C760D /* Pod2Watch */,
+				02C1DCF51E4B9281000C760D /* Pod2Watch WatchKit App */,
+				02C1DD041E4B9281000C760D /* Pod2Watch WatchKit Extension */,
+				02C1DCE01E4B9281000C760D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		02C1DCE01E4B9281000C760D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02C1DCDF1E4B9281000C760D /* Pod2Watch.app */,
+				02C1DCF11E4B9281000C760D /* Pod2Watch WatchKit App.app */,
+				02C1DD001E4B9281000C760D /* Pod2Watch WatchKit Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		02C1DCE11E4B9281000C760D /* Pod2Watch */ = {
+			isa = PBXGroup;
+			children = (
+				02C1DCE21E4B9281000C760D /* AppDelegate.swift */,
+				02C1DCE41E4B9281000C760D /* ViewController.swift */,
+				02C1DCE61E4B9281000C760D /* Main.storyboard */,
+				02C1DCE91E4B9281000C760D /* Assets.xcassets */,
+				02C1DCEB1E4B9281000C760D /* LaunchScreen.storyboard */,
+				02C1DCEE1E4B9281000C760D /* Info.plist */,
+			);
+			path = Pod2Watch;
+			sourceTree = "<group>";
+		};
+		02C1DCF51E4B9281000C760D /* Pod2Watch WatchKit App */ = {
+			isa = PBXGroup;
+			children = (
+				02C1DCF61E4B9281000C760D /* Interface.storyboard */,
+				02C1DCF91E4B9281000C760D /* Assets.xcassets */,
+				02C1DCFB1E4B9281000C760D /* Info.plist */,
+			);
+			path = "Pod2Watch WatchKit App";
+			sourceTree = "<group>";
+		};
+		02C1DD041E4B9281000C760D /* Pod2Watch WatchKit Extension */ = {
+			isa = PBXGroup;
+			children = (
+				02C1DD051E4B9281000C760D /* InterfaceController.swift */,
+				02C1DD071E4B9281000C760D /* ExtensionDelegate.swift */,
+				02C1DD091E4B9281000C760D /* Assets.xcassets */,
+				02C1DD0B1E4B9281000C760D /* Info.plist */,
+			);
+			path = "Pod2Watch WatchKit Extension";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		02C1DCDE1E4B9281000C760D /* Pod2Watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02C1DD161E4B9281000C760D /* Build configuration list for PBXNativeTarget "Pod2Watch" */;
+			buildPhases = (
+				02C1DCDB1E4B9281000C760D /* Sources */,
+				02C1DCDC1E4B9281000C760D /* Frameworks */,
+				02C1DCDD1E4B9281000C760D /* Resources */,
+				02C1DD151E4B9281000C760D /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				02C1DCF41E4B9281000C760D /* PBXTargetDependency */,
+			);
+			name = Pod2Watch;
+			productName = Pod2Watch;
+			productReference = 02C1DCDF1E4B9281000C760D /* Pod2Watch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		02C1DCF01E4B9281000C760D /* Pod2Watch WatchKit App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02C1DD121E4B9281000C760D /* Build configuration list for PBXNativeTarget "Pod2Watch WatchKit App" */;
+			buildPhases = (
+				02C1DCEF1E4B9281000C760D /* Resources */,
+				02C1DD111E4B9281000C760D /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				02C1DD031E4B9281000C760D /* PBXTargetDependency */,
+			);
+			name = "Pod2Watch WatchKit App";
+			productName = "Pod2Watch WatchKit App";
+			productReference = 02C1DCF11E4B9281000C760D /* Pod2Watch WatchKit App.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		02C1DCFF1E4B9281000C760D /* Pod2Watch WatchKit Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 02C1DD0E1E4B9281000C760D /* Build configuration list for PBXNativeTarget "Pod2Watch WatchKit Extension" */;
+			buildPhases = (
+				02C1DCFC1E4B9281000C760D /* Sources */,
+				02C1DCFD1E4B9281000C760D /* Frameworks */,
+				02C1DCFE1E4B9281000C760D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pod2Watch WatchKit Extension";
+			productName = "Pod2Watch WatchKit Extension";
+			productReference = 02C1DD001E4B9281000C760D /* Pod2Watch WatchKit Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		02C1DCD71E4B9281000C760D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Miles Hollingsworth";
+				TargetAttributes = {
+					02C1DCDE1E4B9281000C760D = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 7XLNECBC46;
+						ProvisioningStyle = Automatic;
+					};
+					02C1DCF01E4B9281000C760D = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 7XLNECBC46;
+						ProvisioningStyle = Automatic;
+					};
+					02C1DCFF1E4B9281000C760D = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 7XLNECBC46;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 02C1DCDA1E4B9281000C760D /* Build configuration list for PBXProject "Pod2Watch" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 02C1DCD61E4B9281000C760D;
+			productRefGroup = 02C1DCE01E4B9281000C760D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				02C1DCDE1E4B9281000C760D /* Pod2Watch */,
+				02C1DCF01E4B9281000C760D /* Pod2Watch WatchKit App */,
+				02C1DCFF1E4B9281000C760D /* Pod2Watch WatchKit Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		02C1DCDD1E4B9281000C760D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02C1DCED1E4B9281000C760D /* LaunchScreen.storyboard in Resources */,
+				02C1DCEA1E4B9281000C760D /* Assets.xcassets in Resources */,
+				02C1DCE81E4B9281000C760D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02C1DCEF1E4B9281000C760D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02C1DCFA1E4B9281000C760D /* Assets.xcassets in Resources */,
+				02C1DCF81E4B9281000C760D /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02C1DCFE1E4B9281000C760D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02C1DD0A1E4B9281000C760D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		02C1DCDB1E4B9281000C760D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02C1DCE51E4B9281000C760D /* ViewController.swift in Sources */,
+				02C1DCE31E4B9281000C760D /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		02C1DCFC1E4B9281000C760D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				02C1DD081E4B9281000C760D /* ExtensionDelegate.swift in Sources */,
+				02C1DD061E4B9281000C760D /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		02C1DCF41E4B9281000C760D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 02C1DCF01E4B9281000C760D /* Pod2Watch WatchKit App */;
+			targetProxy = 02C1DCF31E4B9281000C760D /* PBXContainerItemProxy */;
+		};
+		02C1DD031E4B9281000C760D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 02C1DCFF1E4B9281000C760D /* Pod2Watch WatchKit Extension */;
+			targetProxy = 02C1DD021E4B9281000C760D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		02C1DCE61E4B9281000C760D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02C1DCE71E4B9281000C760D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		02C1DCEB1E4B9281000C760D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02C1DCEC1E4B9281000C760D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		02C1DCF61E4B9281000C760D /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				02C1DCF71E4B9281000C760D /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		02C1DD0C1E4B9281000C760D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		02C1DD0D1E4B9281000C760D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		02C1DD0F1E4B9281000C760D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				DEVELOPMENT_TEAM = 7XLNECBC46;
+				INFOPLIST_FILE = "Pod2Watch WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+			};
+			name = Debug;
+		};
+		02C1DD101E4B9281000C760D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				DEVELOPMENT_TEAM = 7XLNECBC46;
+				INFOPLIST_FILE = "Pod2Watch WatchKit Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+			};
+			name = Release;
+		};
+		02C1DD131E4B9281000C760D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7XLNECBC46;
+				IBSC_MODULE = Pod2Watch_WatchKit_Extension;
+				INFOPLIST_FILE = "Pod2Watch WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+			};
+			name = Debug;
+		};
+		02C1DD141E4B9281000C760D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7XLNECBC46;
+				IBSC_MODULE = Pod2Watch_WatchKit_Extension;
+				INFOPLIST_FILE = "Pod2Watch WatchKit App/Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.1;
+			};
+			name = Release;
+		};
+		02C1DD171E4B9281000C760D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7XLNECBC46;
+				INFOPLIST_FILE = Pod2Watch/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		02C1DD181E4B9281000C760D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7XLNECBC46;
+				INFOPLIST_FILE = Pod2Watch/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		02C1DCDA1E4B9281000C760D /* Build configuration list for PBXProject "Pod2Watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02C1DD0C1E4B9281000C760D /* Debug */,
+				02C1DD0D1E4B9281000C760D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		02C1DD0E1E4B9281000C760D /* Build configuration list for PBXNativeTarget "Pod2Watch WatchKit Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02C1DD0F1E4B9281000C760D /* Debug */,
+				02C1DD101E4B9281000C760D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		02C1DD121E4B9281000C760D /* Build configuration list for PBXNativeTarget "Pod2Watch WatchKit App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02C1DD131E4B9281000C760D /* Debug */,
+				02C1DD141E4B9281000C760D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		02C1DD161E4B9281000C760D /* Build configuration list for PBXNativeTarget "Pod2Watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				02C1DD171E4B9281000C760D /* Debug */,
+				02C1DD181E4B9281000C760D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 02C1DCD71E4B9281000C760D /* Project object */;
+}
