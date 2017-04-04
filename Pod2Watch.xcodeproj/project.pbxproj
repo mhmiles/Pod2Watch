@@ -7,11 +7,52 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020932901E93326200948002 /* PodcastEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0209328E1E93321700948002 /* PodcastEpisode.swift */; };
+		020E296C1E920258008013C0 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E296B1E920258008013C0 /* MessageType.swift */; };
+		020E296D1E9202EA008013C0 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E296B1E920258008013C0 /* MessageType.swift */; };
+		020E296E1E920E2A008013C0 /* Pod2WatchOnWatch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 021C82671E88545700E2265E /* Pod2WatchOnWatch.xcdatamodeld */; };
+		020E29721E920E7A008013C0 /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E29711E920E7A008013C0 /* PersistentContainer.swift */; };
+		020E29731E920E91008013C0 /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DD201E4B94C7000C760D /* PersistentContainer.swift */; };
+		020E29751E9216CC008013C0 /* EpisodeDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E29741E9216CC008013C0 /* EpisodeDetailsController.swift */; };
+		0212D6861E52DF7C002DD840 /* IGListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0212D6851E52DF7C002DD840 /* IGListKit.framework */; };
+		021B615B1E4FCBA2007CD7A2 /* MyWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021B615A1E4FCBA2007CD7A2 /* MyWatchViewController.swift */; };
+		021B615D1E4FCF1F007CD7A2 /* MyWatchEpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021B615C1E4FCF1F007CD7A2 /* MyWatchEpisodeCell.swift */; };
+		021C826B1E88A2F400E2265E /* String+withoutThe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021C826A1E88A2F400E2265E /* String+withoutThe.swift */; };
+		021C826D1E88B60600E2265E /* InMemoryContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021C826C1E88B60600E2265E /* InMemoryContainer.swift */; };
+		021C82701E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 021C826E1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld */; };
+		0220132F1E9304720092DB73 /* NoAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0220132E1E9304720092DB73 /* NoAccessView.xib */; };
+		022013311E9305FD0092DB73 /* RequestAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 022013301E9305FD0092DB73 /* RequestAccessView.xib */; };
+		02298D0C1E930717001BE8D5 /* OpenPodcastsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02298D0B1E930717001BE8D5 /* OpenPodcastsView.xib */; };
+		022CA0311E4FB73D00B49A66 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02310CDE1E4BA76000D427EE /* Alamofire.framework */; };
+		022CA0331E4FBF4500B49A66 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 022CA0321E4FBF4500B49A66 /* AlamofireImage.framework */; };
+		022CA0351E4FC48600B49A66 /* BorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022CA0341E4FC48600B49A66 /* BorderButton.swift */; };
+		02310CDA1E4B9BC000D427EE /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 02310CD91E4B9BC000D427EE /* Cartfile */; };
+		02508F801E858886000AAA43 /* LibraryPodcastEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02508F7F1E858886000AAA43 /* LibraryPodcastEpisode.swift */; };
+		02508F831E85D6C3000AAA43 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02508F811E85D6C3000AAA43 /* ReactiveSwift.framework */; };
+		02508F841E85D6C3000AAA43 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02508F821E85D6C3000AAA43 /* Result.framework */; };
+		025EB9711E871AC800B41025 /* racAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025EB9701E871AC800B41025 /* racAdditions.framework */; };
+		025EB9731E87258700B41025 /* MPMediaItemCollection+IGListDiffable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025EB9721E87258700B41025 /* MPMediaItemCollection+IGListDiffable.swift */; };
+		025EB9751E8739E000B41025 /* PodcastEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025EB9741E8739E000B41025 /* PodcastEpisode.swift */; };
+		0272D2D01E78ED0C00205049 /* RecentPodcastsHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0272D2CF1E78ED0C00205049 /* RecentPodcastsHeaderView.xib */; };
+		0272D2D21E78ED4400205049 /* RecentPodcastsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0272D2D11E78ED4400205049 /* RecentPodcastsHeaderView.swift */; };
+		027E7F7D1E5F7DF4005876C9 /* RecentPodcastsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E7F7C1E5F7DF4005876C9 /* RecentPodcastsViewController.swift */; };
+		02847FBD1E54DE6400A1DC86 /* EpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02847FBC1E54DE6400A1DC86 /* EpisodeCell.swift */; };
+		02847FBF1E54E05700A1DC86 /* RecentEpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02847FBE1E54E05700A1DC86 /* RecentEpisodeCell.swift */; };
+		02847FC11E54FA9600A1DC86 /* EmptyPodcastsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02847FC01E54FA9600A1DC86 /* EmptyPodcastsView.xib */; };
+		02907C0A1E64F61D0044140D /* SyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02907C091E64F61C0044140D /* SyncButton.swift */; };
+		029D954F1E8A2783000D87C8 /* BorderImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029D954E1E8A2783000D87C8 /* BorderImageView.swift */; };
+		02B22D2F1E8DE9E000A12113 /* PodcastTransferManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B22D2E1E8DE9E000A12113 /* PodcastTransferManager.swift */; };
+		02B22D311E8DEBEC00A12113 /* NSURLTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B22D301E8DEBEC00A12113 /* NSURLTransformer.swift */; };
+		02B2DA8C1E53C42A00E54A15 /* PodcastSectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2DA8B1E53C42A00E54A15 /* PodcastSectionController.swift */; };
+		02BB4D171E4E4F8300F08B7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02BB4D161E4E4F8300F08B7F /* LaunchScreen.storyboard */; };
+		02BB4D1B1E4E5DE800F08B7F /* MyPodcastsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB4D1A1E4E5DE800F08B7F /* MyPodcastsViewController.swift */; };
+		02BB4D1D1E4E65A600F08B7F /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB4D1C1E4E65A600F08B7F /* PodcastCell.swift */; };
+		02BB4D1F1E4E674300F08B7F /* MyPodcastsEpisodesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB4D1E1E4E674300F08B7F /* MyPodcastsEpisodesViewController.swift */; };
+		02BB4D211E4E693200F08B7F /* MyPodcastsEpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB4D201E4E693200F08B7F /* MyPodcastsEpisodeCell.swift */; };
+		02BB4D291E4E914600F08B7F /* PodcastsTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB4D281E4E914600F08B7F /* PodcastsTableRowController.swift */; };
 		02C1DCE31E4B9281000C760D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DCE21E4B9281000C760D /* AppDelegate.swift */; };
-		02C1DCE51E4B9281000C760D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DCE41E4B9281000C760D /* ViewController.swift */; };
-		02C1DCE81E4B9281000C760D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DCE61E4B9281000C760D /* Main.storyboard */; };
 		02C1DCEA1E4B9281000C760D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DCE91E4B9281000C760D /* Assets.xcassets */; };
-		02C1DCED1E4B9281000C760D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DCEB1E4B9281000C760D /* LaunchScreen.storyboard */; };
+		02C1DCED1E4B9281000C760D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DCEB1E4B9281000C760D /* Main.storyboard */; };
 		02C1DCF21E4B9281000C760D /* Pod2Watch WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 02C1DCF11E4B9281000C760D /* Pod2Watch WatchKit App.app */; };
 		02C1DCF81E4B9281000C760D /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DCF61E4B9281000C760D /* Interface.storyboard */; };
 		02C1DCFA1E4B9281000C760D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DCF91E4B9281000C760D /* Assets.xcassets */; };
@@ -19,6 +60,7 @@
 		02C1DD061E4B9281000C760D /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DD051E4B9281000C760D /* InterfaceController.swift */; };
 		02C1DD081E4B9281000C760D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DD071E4B9281000C760D /* ExtensionDelegate.swift */; };
 		02C1DD0A1E4B9281000C760D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DD091E4B9281000C760D /* Assets.xcassets */; };
+		02C1DD1D1E4B929D000C760D /* Pod2Watch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DD1B1E4B929D000C760D /* Pod2Watch.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,15 +103,66 @@
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		02C1DD351E4B9577000C760D /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0209328E1E93321700948002 /* PodcastEpisode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastEpisode.swift; sourceTree = "<group>"; };
+		020E296B1E920258008013C0 /* MessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
+		020E29711E920E7A008013C0 /* PersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentContainer.swift; path = "Pod2Watch WatchKit Extension/PersistentContainer.swift"; sourceTree = SOURCE_ROOT; };
+		020E29741E9216CC008013C0 /* EpisodeDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeDetailsController.swift; sourceTree = "<group>"; };
+		0212D6851E52DF7C002DD840 /* IGListKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IGListKit.framework; path = Carthage/Build/iOS/IGListKit.framework; sourceTree = "<group>"; };
+		021B615A1E4FCBA2007CD7A2 /* MyWatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyWatchViewController.swift; sourceTree = "<group>"; };
+		021B615C1E4FCF1F007CD7A2 /* MyWatchEpisodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyWatchEpisodeCell.swift; sourceTree = "<group>"; };
+		021C82681E88545700E2265E /* Pod2WatchOnWatch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pod2WatchOnWatch.xcdatamodel; sourceTree = "<group>"; };
+		021C826A1E88A2F400E2265E /* String+withoutThe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+withoutThe.swift"; sourceTree = "<group>"; };
+		021C826C1E88B60600E2265E /* InMemoryContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InMemoryContainer.swift; path = ../InMemoryContainer.swift; sourceTree = "<group>"; };
+		021C826F1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pod2WatchPersistent.xcdatamodel; sourceTree = "<group>"; };
+		0220132E1E9304720092DB73 /* NoAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoAccessView.xib; sourceTree = "<group>"; };
+		022013301E9305FD0092DB73 /* RequestAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequestAccessView.xib; sourceTree = "<group>"; };
+		02298D0B1E930717001BE8D5 /* OpenPodcastsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenPodcastsView.xib; sourceTree = "<group>"; };
+		022CA0321E4FBF4500B49A66 /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
+		022CA0341E4FC48600B49A66 /* BorderButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderButton.swift; sourceTree = "<group>"; };
+		02310CD91E4B9BC000D427EE /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		02310CDE1E4BA76000D427EE /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		02508F7F1E858886000AAA43 /* LibraryPodcastEpisode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryPodcastEpisode.swift; sourceTree = "<group>"; };
+		02508F811E85D6C3000AAA43 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
+		02508F821E85D6C3000AAA43 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		025EB9701E871AC800B41025 /* racAdditions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = racAdditions.framework; path = Carthage/Build/iOS/racAdditions.framework; sourceTree = "<group>"; };
+		025EB9721E87258700B41025 /* MPMediaItemCollection+IGListDiffable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MPMediaItemCollection+IGListDiffable.swift"; sourceTree = "<group>"; };
+		025EB9741E8739E000B41025 /* PodcastEpisode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastEpisode.swift; sourceTree = "<group>"; };
+		0272D2CF1E78ED0C00205049 /* RecentPodcastsHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecentPodcastsHeaderView.xib; sourceTree = "<group>"; };
+		0272D2D11E78ED4400205049 /* RecentPodcastsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentPodcastsHeaderView.swift; sourceTree = "<group>"; };
+		027E7F7C1E5F7DF4005876C9 /* RecentPodcastsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentPodcastsViewController.swift; sourceTree = "<group>"; };
+		02847FBC1E54DE6400A1DC86 /* EpisodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeCell.swift; sourceTree = "<group>"; };
+		02847FBE1E54E05700A1DC86 /* RecentEpisodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentEpisodeCell.swift; sourceTree = "<group>"; };
+		02847FC01E54FA9600A1DC86 /* EmptyPodcastsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyPodcastsView.xib; sourceTree = "<group>"; };
+		02875AE21E4C46550025C586 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		02875AE61E4C52BE0025C586 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		02907C091E64F61C0044140D /* SyncButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncButton.swift; sourceTree = "<group>"; };
+		029D954E1E8A2783000D87C8 /* BorderImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderImageView.swift; sourceTree = "<group>"; };
+		02B22D2E1E8DE9E000A12113 /* PodcastTransferManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastTransferManager.swift; sourceTree = "<group>"; };
+		02B22D301E8DEBEC00A12113 /* NSURLTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLTransformer.swift; sourceTree = "<group>"; };
+		02B2DA8B1E53C42A00E54A15 /* PodcastSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastSectionController.swift; sourceTree = "<group>"; };
+		02BB4D161E4E4F8300F08B7F /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ../LaunchScreen.storyboard; sourceTree = "<group>"; };
+		02BB4D1A1E4E5DE800F08B7F /* MyPodcastsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPodcastsViewController.swift; sourceTree = "<group>"; };
+		02BB4D1C1E4E65A600F08B7F /* PodcastCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
+		02BB4D1E1E4E674300F08B7F /* MyPodcastsEpisodesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPodcastsEpisodesViewController.swift; sourceTree = "<group>"; };
+		02BB4D201E4E693200F08B7F /* MyPodcastsEpisodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPodcastsEpisodeCell.swift; sourceTree = "<group>"; };
+		02BB4D281E4E914600F08B7F /* PodcastsTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastsTableRowController.swift; sourceTree = "<group>"; };
 		02C1DCDF1E4B9281000C760D /* Pod2Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pod2Watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02C1DCE21E4B9281000C760D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		02C1DCE41E4B9281000C760D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		02C1DCE71E4B9281000C760D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		02C1DCE91E4B9281000C760D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		02C1DCEC1E4B9281000C760D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		02C1DCEC1E4B9281000C760D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		02C1DCEE1E4B9281000C760D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		02C1DCF11E4B9281000C760D /* Pod2Watch WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pod2Watch WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02C1DCF71E4B9281000C760D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
@@ -80,6 +173,11 @@
 		02C1DD071E4B9281000C760D /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		02C1DD091E4B9281000C760D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		02C1DD0B1E4B9281000C760D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02C1DD1C1E4B929D000C760D /* Pod2Watch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pod2Watch.xcdatamodel; sourceTree = "<group>"; };
+		02C1DD1E1E4B94AC000C760D /* Pod2Watch WatchKit Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Pod2Watch WatchKit Extension.entitlements"; sourceTree = "<group>"; };
+		02C1DD1F1E4B94B3000C760D /* Pod2Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pod2Watch.entitlements; sourceTree = "<group>"; };
+		02C1DD201E4B94C7000C760D /* PersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentContainer.swift; path = ../PersistentContainer.swift; sourceTree = "<group>"; };
+		02C61FBD1E4D27310022FBB1 /* Pod2Watch WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Pod2Watch WatchKit App.entitlements"; path = "Pod2Watch WatchKit App/Pod2Watch WatchKit App.entitlements"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +185,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				025EB9711E871AC800B41025 /* racAdditions.framework in Frameworks */,
+				02508F831E85D6C3000AAA43 /* ReactiveSwift.framework in Frameworks */,
+				02508F841E85D6C3000AAA43 /* Result.framework in Frameworks */,
+				022CA0331E4FBF4500B49A66 /* AlamofireImage.framework in Frameworks */,
+				022CA0311E4FB73D00B49A66 /* Alamofire.framework in Frameworks */,
+				0212D6861E52DF7C002DD840 /* IGListKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,13 +204,130 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		020E296F1E920E3F008013C0 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				021C82671E88545700E2265E /* Pod2WatchOnWatch.xcdatamodeld */,
+				020E29711E920E7A008013C0 /* PersistentContainer.swift */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		02310CDD1E4BA75F00D427EE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				025EB9701E871AC800B41025 /* racAdditions.framework */,
+				02508F811E85D6C3000AAA43 /* ReactiveSwift.framework */,
+				02508F821E85D6C3000AAA43 /* Result.framework */,
+				022CA0321E4FBF4500B49A66 /* AlamofireImage.framework */,
+				02875AE61E4C52BE0025C586 /* MobileCoreServices.framework */,
+				02875AE21E4C46550025C586 /* MediaPlayer.framework */,
+				02310CDE1E4BA76000D427EE /* Alamofire.framework */,
+				0212D6851E52DF7C002DD840 /* IGListKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		02508F7E1E858859000AAA43 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				02508F7F1E858886000AAA43 /* LibraryPodcastEpisode.swift */,
+				025EB9741E8739E000B41025 /* PodcastEpisode.swift */,
+				02B22D2E1E8DE9E000A12113 /* PodcastTransferManager.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		025E6E8A1E92CBCE00AB2D98 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				02C1DD051E4B9281000C760D /* InterfaceController.swift */,
+				02BB4D281E4E914600F08B7F /* PodcastsTableRowController.swift */,
+				020E29741E9216CC008013C0 /* EpisodeDetailsController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		025E6E8B1E92CBD300AB2D98 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				0209328E1E93321700948002 /* PodcastEpisode.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		0268B56A1E56532E001E3F74 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				025EB9721E87258700B41025 /* MPMediaItemCollection+IGListDiffable.swift */,
+				021C826A1E88A2F400E2265E /* String+withoutThe.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		029D95501E8A32F9000D87C8 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				02C1DD1B1E4B929D000C760D /* Pod2Watch.xcdatamodeld */,
+				021C826E1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld */,
+				02C1DD201E4B94C7000C760D /* PersistentContainer.swift */,
+				021C826C1E88B60600E2265E /* InMemoryContainer.swift */,
+				02B22D301E8DEBEC00A12113 /* NSURLTransformer.swift */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		02B2DA8A1E53C25700E54A15 /* Section Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				02B2DA8B1E53C42A00E54A15 /* PodcastSectionController.swift */,
+			);
+			name = "Section Controllers";
+			sourceTree = "<group>";
+		};
+		02BB4D221E4E6A0E00F08B7F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				02BB4D1A1E4E5DE800F08B7F /* MyPodcastsViewController.swift */,
+				02BB4D1E1E4E674300F08B7F /* MyPodcastsEpisodesViewController.swift */,
+				027E7F7C1E5F7DF4005876C9 /* RecentPodcastsViewController.swift */,
+				021B615A1E4FCBA2007CD7A2 /* MyWatchViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		02BB4D231E4E6A1300F08B7F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				02BB4D1C1E4E65A600F08B7F /* PodcastCell.swift */,
+				02847FC01E54FA9600A1DC86 /* EmptyPodcastsView.xib */,
+				02847FBC1E54DE6400A1DC86 /* EpisodeCell.swift */,
+				02847FBE1E54E05700A1DC86 /* RecentEpisodeCell.swift */,
+				022CA0341E4FC48600B49A66 /* BorderButton.swift */,
+				02907C091E64F61C0044140D /* SyncButton.swift */,
+				02BB4D201E4E693200F08B7F /* MyPodcastsEpisodeCell.swift */,
+				021B615C1E4FCF1F007CD7A2 /* MyWatchEpisodeCell.swift */,
+				0272D2D11E78ED4400205049 /* RecentPodcastsHeaderView.swift */,
+				0272D2CF1E78ED0C00205049 /* RecentPodcastsHeaderView.xib */,
+				029D954E1E8A2783000D87C8 /* BorderImageView.swift */,
+				0220132E1E9304720092DB73 /* NoAccessView.xib */,
+				02298D0B1E930717001BE8D5 /* OpenPodcastsView.xib */,
+				022013301E9305FD0092DB73 /* RequestAccessView.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		02C1DCD61E4B9281000C760D = {
 			isa = PBXGroup;
 			children = (
+				02C61FBD1E4D27310022FBB1 /* Pod2Watch WatchKit App.entitlements */,
+				02310CD91E4B9BC000D427EE /* Cartfile */,
+				02C1DD191E4B928B000C760D /* Shared */,
 				02C1DCE11E4B9281000C760D /* Pod2Watch */,
-				02C1DCF51E4B9281000C760D /* Pod2Watch WatchKit App */,
-				02C1DD041E4B9281000C760D /* Pod2Watch WatchKit Extension */,
+				02C1DCF51E4B9281000C760D /* WatchKit App */,
+				02C1DD041E4B9281000C760D /* WatchKit Extension */,
 				02C1DCE01E4B9281000C760D /* Products */,
+				02310CDD1E4BA75F00D427EE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,34 +345,53 @@
 			isa = PBXGroup;
 			children = (
 				02C1DCE21E4B9281000C760D /* AppDelegate.swift */,
-				02C1DCE41E4B9281000C760D /* ViewController.swift */,
-				02C1DCE61E4B9281000C760D /* Main.storyboard */,
-				02C1DCE91E4B9281000C760D /* Assets.xcassets */,
-				02C1DCEB1E4B9281000C760D /* LaunchScreen.storyboard */,
 				02C1DCEE1E4B9281000C760D /* Info.plist */,
+				029D95501E8A32F9000D87C8 /* CoreData */,
+				02508F7E1E858859000AAA43 /* Models */,
+				0268B56A1E56532E001E3F74 /* Extensions */,
+				02B2DA8A1E53C25700E54A15 /* Section Controllers */,
+				02BB4D231E4E6A1300F08B7F /* Views */,
+				02BB4D221E4E6A0E00F08B7F /* Controllers */,
+				02C1DCEB1E4B9281000C760D /* Main.storyboard */,
+				02BB4D161E4E4F8300F08B7F /* LaunchScreen.storyboard */,
+				02C1DCE91E4B9281000C760D /* Assets.xcassets */,
+				02C1DD1F1E4B94B3000C760D /* Pod2Watch.entitlements */,
 			);
 			path = Pod2Watch;
 			sourceTree = "<group>";
 		};
-		02C1DCF51E4B9281000C760D /* Pod2Watch WatchKit App */ = {
+		02C1DCF51E4B9281000C760D /* WatchKit App */ = {
 			isa = PBXGroup;
 			children = (
 				02C1DCF61E4B9281000C760D /* Interface.storyboard */,
 				02C1DCF91E4B9281000C760D /* Assets.xcassets */,
 				02C1DCFB1E4B9281000C760D /* Info.plist */,
 			);
+			name = "WatchKit App";
 			path = "Pod2Watch WatchKit App";
 			sourceTree = "<group>";
 		};
-		02C1DD041E4B9281000C760D /* Pod2Watch WatchKit Extension */ = {
+		02C1DD041E4B9281000C760D /* WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
-				02C1DD051E4B9281000C760D /* InterfaceController.swift */,
 				02C1DD071E4B9281000C760D /* ExtensionDelegate.swift */,
+				025E6E8B1E92CBD300AB2D98 /* Models */,
+				020E296F1E920E3F008013C0 /* CoreData */,
+				02C1DD1E1E4B94AC000C760D /* Pod2Watch WatchKit Extension.entitlements */,
+				025E6E8A1E92CBCE00AB2D98 /* Controllers */,
 				02C1DD091E4B9281000C760D /* Assets.xcassets */,
 				02C1DD0B1E4B9281000C760D /* Info.plist */,
 			);
+			name = "WatchKit Extension";
 			path = "Pod2Watch WatchKit Extension";
+			sourceTree = "<group>";
+		};
+		02C1DD191E4B928B000C760D /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				020E296B1E920258008013C0 /* MessageType.swift */,
+			);
+			name = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,6 +405,8 @@
 				02C1DCDC1E4B9281000C760D /* Frameworks */,
 				02C1DCDD1E4B9281000C760D /* Resources */,
 				02C1DD151E4B9281000C760D /* Embed Watch Content */,
+				02C1DD351E4B9577000C760D /* Embed App Extensions */,
+				02310CE51E4BA78500D427EE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -224,16 +466,37 @@
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 7XLNECBC46;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					02C1DCF01E4B9281000C760D = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 7XLNECBC46;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.BackgroundModes.watchos.app = {
+								enabled = 1;
+							};
+						};
 					};
 					02C1DCFF1E4B9281000C760D = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 7XLNECBC46;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.BackgroundModes.watchos.extension = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -262,9 +525,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02C1DCED1E4B9281000C760D /* LaunchScreen.storyboard in Resources */,
+				02C1DCED1E4B9281000C760D /* Main.storyboard in Resources */,
 				02C1DCEA1E4B9281000C760D /* Assets.xcassets in Resources */,
-				02C1DCE81E4B9281000C760D /* Main.storyboard in Resources */,
+				02847FC11E54FA9600A1DC86 /* EmptyPodcastsView.xib in Resources */,
+				0220132F1E9304720092DB73 /* NoAccessView.xib in Resources */,
+				02298D0C1E930717001BE8D5 /* OpenPodcastsView.xib in Resources */,
+				022013311E9305FD0092DB73 /* RequestAccessView.xib in Resources */,
+				02310CDA1E4B9BC000D427EE /* Cartfile in Resources */,
+				02BB4D171E4E4F8300F08B7F /* LaunchScreen.storyboard in Resources */,
+				0272D2D01E78ED0C00205049 /* RecentPodcastsHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,13 +556,59 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		02310CE51E4BA78500D427EE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/AlamofireImage.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/IGListKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/racAdditions.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		02C1DCDB1E4B9281000C760D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02C1DCE51E4B9281000C760D /* ViewController.swift in Sources */,
+				02B2DA8C1E53C42A00E54A15 /* PodcastSectionController.swift in Sources */,
+				027E7F7D1E5F7DF4005876C9 /* RecentPodcastsViewController.swift in Sources */,
+				02BB4D1F1E4E674300F08B7F /* MyPodcastsEpisodesViewController.swift in Sources */,
+				02907C0A1E64F61D0044140D /* SyncButton.swift in Sources */,
+				021C826B1E88A2F400E2265E /* String+withoutThe.swift in Sources */,
+				021B615B1E4FCBA2007CD7A2 /* MyWatchViewController.swift in Sources */,
+				020E29731E920E91008013C0 /* PersistentContainer.swift in Sources */,
+				020E296C1E920258008013C0 /* MessageType.swift in Sources */,
+				021B615D1E4FCF1F007CD7A2 /* MyWatchEpisodeCell.swift in Sources */,
+				02C1DD1D1E4B929D000C760D /* Pod2Watch.xcdatamodeld in Sources */,
 				02C1DCE31E4B9281000C760D /* AppDelegate.swift in Sources */,
+				02BB4D1D1E4E65A600F08B7F /* PodcastCell.swift in Sources */,
+				025EB9751E8739E000B41025 /* PodcastEpisode.swift in Sources */,
+				029D954F1E8A2783000D87C8 /* BorderImageView.swift in Sources */,
+				02B22D2F1E8DE9E000A12113 /* PodcastTransferManager.swift in Sources */,
+				021C826D1E88B60600E2265E /* InMemoryContainer.swift in Sources */,
+				02BB4D211E4E693200F08B7F /* MyPodcastsEpisodeCell.swift in Sources */,
+				0272D2D21E78ED4400205049 /* RecentPodcastsHeaderView.swift in Sources */,
+				02BB4D1B1E4E5DE800F08B7F /* MyPodcastsViewController.swift in Sources */,
+				02B22D311E8DEBEC00A12113 /* NSURLTransformer.swift in Sources */,
+				021C82701E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld in Sources */,
+				022CA0351E4FC48600B49A66 /* BorderButton.swift in Sources */,
+				02508F801E858886000AAA43 /* LibraryPodcastEpisode.swift in Sources */,
+				02847FBF1E54E05700A1DC86 /* RecentEpisodeCell.swift in Sources */,
+				02847FBD1E54DE6400A1DC86 /* EpisodeCell.swift in Sources */,
+				025EB9731E87258700B41025 /* MPMediaItemCollection+IGListDiffable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,7 +617,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				02C1DD081E4B9281000C760D /* ExtensionDelegate.swift in Sources */,
+				02BB4D291E4E914600F08B7F /* PodcastsTableRowController.swift in Sources */,
 				02C1DD061E4B9281000C760D /* InterfaceController.swift in Sources */,
+				020E29751E9216CC008013C0 /* EpisodeDetailsController.swift in Sources */,
+				020E29721E920E7A008013C0 /* PersistentContainer.swift in Sources */,
+				020E296E1E920E2A008013C0 /* Pod2WatchOnWatch.xcdatamodeld in Sources */,
+				020932901E93326200948002 /* PodcastEpisode.swift in Sources */,
+				020E296D1E9202EA008013C0 /* MessageType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,20 +643,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		02C1DCE61E4B9281000C760D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				02C1DCE71E4B9281000C760D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		02C1DCEB1E4B9281000C760D /* LaunchScreen.storyboard */ = {
+		02C1DCEB1E4B9281000C760D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				02C1DCEC1E4B9281000C760D /* Base */,
 			);
-			name = LaunchScreen.storyboard;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		02C1DCF61E4B9281000C760D /* Interface.storyboard */ = {
@@ -446,10 +759,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "Pod2Watch WatchKit Extension/Pod2Watch WatchKit Extension.entitlements";
 				DEVELOPMENT_TEAM = 7XLNECBC46;
 				INFOPLIST_FILE = "Pod2Watch WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollingsware.Pod2Watch.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -463,10 +777,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "Pod2Watch WatchKit Extension/Pod2Watch WatchKit Extension.entitlements";
 				DEVELOPMENT_TEAM = 7XLNECBC46;
 				INFOPLIST_FILE = "Pod2Watch WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch.watchkitapp.watchkitextension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollingsware.Pod2Watch.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -480,11 +795,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = WatchIcon;
+				CODE_SIGN_ENTITLEMENTS = "Pod2Watch WatchKit App/Pod2Watch WatchKit App.entitlements";
 				DEVELOPMENT_TEAM = 7XLNECBC46;
 				IBSC_MODULE = Pod2Watch_WatchKit_Extension;
 				INFOPLIST_FILE = "Pod2Watch WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollingsware.Pod2Watch.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -498,11 +814,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = WatchIcon;
+				CODE_SIGN_ENTITLEMENTS = "Pod2Watch WatchKit App/Pod2Watch WatchKit App.entitlements";
 				DEVELOPMENT_TEAM = 7XLNECBC46;
 				IBSC_MODULE = Pod2Watch_WatchKit_Extension;
 				INFOPLIST_FILE = "Pod2Watch WatchKit App/Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch.watchkitapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollingsware.Pod2Watch.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -515,26 +832,42 @@
 		02C1DD171E4B9281000C760D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Pod2Watch/Pod2Watch.entitlements;
 				DEVELOPMENT_TEAM = 7XLNECBC46;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Pod2Watch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollingsware.Pod2Watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		02C1DD181E4B9281000C760D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Pod2Watch/Pod2Watch.entitlements;
 				DEVELOPMENT_TEAM = 7XLNECBC46;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = Pod2Watch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hollylabs.Pod2Watch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hollingsware.Pod2Watch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -557,6 +890,7 @@
 				02C1DD101E4B9281000C760D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		02C1DD121E4B9281000C760D /* Build configuration list for PBXNativeTarget "Pod2Watch WatchKit App" */ = {
 			isa = XCConfigurationList;
@@ -565,6 +899,7 @@
 				02C1DD141E4B9281000C760D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		02C1DD161E4B9281000C760D /* Build configuration list for PBXNativeTarget "Pod2Watch" */ = {
 			isa = XCConfigurationList;
@@ -573,8 +908,43 @@
 				02C1DD181E4B9281000C760D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		021C82671E88545700E2265E /* Pod2WatchOnWatch.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				021C82681E88545700E2265E /* Pod2WatchOnWatch.xcdatamodel */,
+			);
+			currentVersion = 021C82681E88545700E2265E /* Pod2WatchOnWatch.xcdatamodel */;
+			name = Pod2WatchOnWatch.xcdatamodeld;
+			path = ../Pod2WatchOnWatch.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		021C826E1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				021C826F1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodel */,
+			);
+			currentVersion = 021C826F1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodel */;
+			path = Pod2WatchPersistent.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		02C1DD1B1E4B929D000C760D /* Pod2Watch.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				02C1DD1C1E4B929D000C760D /* Pod2Watch.xcdatamodel */,
+			);
+			currentVersion = 02C1DD1C1E4B929D000C760D /* Pod2Watch.xcdatamodel */;
+			path = Pod2Watch.xcdatamodeld;
+			sourceTree = SOURCE_ROOT;
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 02C1DCD71E4B9281000C760D /* Project object */;
 }

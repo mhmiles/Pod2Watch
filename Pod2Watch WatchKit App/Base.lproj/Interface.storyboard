@@ -1,15 +1,112 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="11055"/>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="12029"/>
     </dependencies>
     <scenes>
-        <!--Interface Controller-->
+        <!--Pod2Watch-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModuleProvider="target"/>
+                <controller title="Pod2Watch" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Pod2Watch_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <table alignment="left" id="NDu-g2-b5M">
+                            <items>
+                                <tableRow identifier="Podcast" id="b3S-EZ-8YY" customClass="PodcastsTableRowController" customModule="Pod2Watch_WatchKit_Extension">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="tz6-0k-y54">
+                                        <items>
+                                            <label alignment="left" id="K6i-HN-wTE">
+                                                <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
+                                            </label>
+                                            <label alignment="left" id="M5h-O9-lwA">
+                                                <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                            </label>
+                                            <group width="1" height="3" alignment="left" verticalAlignment="bottom" radius="1.5" id="8FB-Bx-Rik">
+                                                <items>
+                                                    <group width="1" height="1" alignment="left" verticalAlignment="bottom" id="xUd-5M-MpC">
+                                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </group>
+                                                </items>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </group>
+                                        </items>
+                                        <edgeInsets key="margins" left="5" right="5" top="0.0" bottom="5"/>
+                                    </group>
+                                    <connections>
+                                        <outlet property="epiosodeTitleLabel" destination="M5h-O9-lwA" id="Dsj-r5-rvh"/>
+                                        <outlet property="podcastTitleLabel" destination="K6i-HN-wTE" id="DAR-yn-y5I"/>
+                                        <outlet property="progressBar" destination="xUd-5M-MpC" id="0Pd-EG-C1i"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="podcastsTable" destination="NDu-g2-b5M" id="KAk-Jm-C4R"/>
+                    </connections>
+                </controller>
             </objects>
+        </scene>
+        <!--Details-->
+        <scene sceneID="RM7-aX-fab">
+            <objects>
+                <controller identifier="Details" title="Details" id="8on-nl-ngG" customClass="EpisodeDetailsController" customModule="Pod2Watch_WatchKit_Extension">
+                    <items>
+                        <group width="1" alignment="left" layout="vertical" id="cWZ-F6-KLG">
+                            <items>
+                                <label alignment="left" id="z1g-Fr-PDC"/>
+                                <label alignment="left" numberOfLines="2" id="BfV-kQ-bvG">
+                                    <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                </label>
+                            </items>
+                        </group>
+                        <button width="1" alignment="right" verticalAlignment="bottom" title="Play" id="Iht-lr-rrq">
+                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="handlePlay" destination="8on-nl-ngG" id="gQ5-rQ-XGn"/>
+                            </connections>
+                        </button>
+                        <group width="1" alignment="left" verticalAlignment="center" layout="vertical" id="Aa9-4Z-MZG">
+                            <items>
+                                <label alignment="left" text="Start at:" id="uAw-zn-msG">
+                                    <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                </label>
+                                <group width="1" height="40" alignment="left" verticalAlignment="bottom" id="qCv-H2-5gM">
+                                    <items>
+                                        <picker width="0.29999999999999999" height="1" alignment="left" verticalAlignment="bottom" focusStyle="sequence" id="PU3-6e-9wu">
+                                            <connections>
+                                                <action selector="handleHoursSelection:" destination="8on-nl-ngG" id="qQL-nM-fnW"/>
+                                            </connections>
+                                        </picker>
+                                        <picker width="0.29999999999999999" height="1" alignment="center" focusStyle="sequence" id="FpN-mB-auH">
+                                            <connections>
+                                                <action selector="handleMinutesSelection:" destination="8on-nl-ngG" id="ENQ-0t-Aah"/>
+                                            </connections>
+                                        </picker>
+                                        <picker width="0.29999999999999999" height="1" alignment="right" focusStyle="sequence" id="hdO-IL-Yck">
+                                            <connections>
+                                                <action selector="handleSecondsSelection:" destination="8on-nl-ngG" id="thD-Uu-Gbp"/>
+                                            </connections>
+                                        </picker>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
+                    </items>
+                    <connections>
+                        <outlet property="episodeTitleLabel" destination="BfV-kQ-bvG" id="Ytl-m6-awJ"/>
+                        <outlet property="hourPicker" destination="PU3-6e-9wu" id="DPw-Ob-cIz"/>
+                        <outlet property="minutePicker" destination="FpN-mB-auH" id="Ap1-LR-pMY"/>
+                        <outlet property="podcastTitleLabel" destination="z1g-Fr-PDC" id="hdW-NR-E82"/>
+                        <outlet property="secondPicker" destination="hdO-IL-Yck" id="B4L-Su-MXq"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="311" y="134"/>
         </scene>
     </scenes>
 </document>

@@ -1,26 +1,417 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TpU-7P-fnh">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--My Podcasts-->
+        <scene sceneID="XfL-uF-zpg">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                <navigationController id="gSG-DD-HUY" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Podcasts" image="Podcasts" id="7jJ-qL-5iG"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S2D-bV-hjW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="eW5-3v-kwb" kind="relationship" relationship="rootViewController" id="L3K-ds-SlP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qkp-yi-Kq4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-207" y="27"/>
+        </scene>
+        <!--Recent Podcasts View Controller-->
+        <scene sceneID="RiV-Ml-Uy6">
+            <objects>
+                <tableViewController storyboardIdentifier="RecentViewController" id="dXi-G8-PGN" customClass="RecentPodcastsViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="ual-MU-5Nh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="RecentEpisodeCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="RecentEpisodeCell" id="5up-F7-Tc6" customClass="RecentEpisodeCell" customModule="Pod2Watch" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5up-F7-Tc6" id="BH5-xt-7Dn">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yJm-Ps-MbM" customClass="BorderImageView" customModule="Pod2Watch" customModuleProvider="target">
+                                            <rect key="frame" x="3" y="3" width="73.5" height="73.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="yJm-Ps-MbM" secondAttribute="height" multiplier="1:1" id="gZk-s5-r0S"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                    <real key="value" value="0.5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tjj-j7-dAY">
+                                            <rect key="frame" x="82.5" y="8" width="44" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSy-2D-0Ol" customClass="SyncButton" customModule="Pod2Watch" customModuleProvider="target">
+                                            <rect key="frame" x="310" y="27" width="57" height="26"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                            <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                                            <state key="normal" title="SYNC"/>
+                                            <connections>
+                                                <action selector="handleSyncPressWithButton:" destination="5up-F7-Tc6" eventType="touchUpInside" id="BAf-Ac-HOg"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEE-2Z-U7q">
+                                            <rect key="frame" x="82.5" y="33" width="37" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Tjj-j7-dAY" firstAttribute="leading" secondItem="yJm-Ps-MbM" secondAttribute="trailing" constant="6" id="3hX-je-oAs"/>
+                                        <constraint firstItem="yJm-Ps-MbM" firstAttribute="top" secondItem="BH5-xt-7Dn" secondAttribute="top" constant="3" id="4T8-Qn-Ygt"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="mSy-2D-0Ol" secondAttribute="trailing" id="64j-21-gDa"/>
+                                        <constraint firstItem="yJm-Ps-MbM" firstAttribute="leading" secondItem="BH5-xt-7Dn" secondAttribute="leading" constant="3" id="8An-IW-DZw"/>
+                                        <constraint firstAttribute="topMargin" secondItem="Tjj-j7-dAY" secondAttribute="top" id="IPg-ao-NXX"/>
+                                        <constraint firstItem="zEE-2Z-U7q" firstAttribute="leading" secondItem="Tjj-j7-dAY" secondAttribute="leading" id="JPR-AP-Crt"/>
+                                        <constraint firstItem="mSy-2D-0Ol" firstAttribute="centerY" secondItem="BH5-xt-7Dn" secondAttribute="centerY" id="PQq-rc-CxI"/>
+                                        <constraint firstAttribute="bottom" secondItem="yJm-Ps-MbM" secondAttribute="bottom" constant="3" id="WeG-tK-Ktq"/>
+                                        <constraint firstItem="zEE-2Z-U7q" firstAttribute="top" secondItem="Tjj-j7-dAY" secondAttribute="bottom" constant="4" id="aff-YU-lWy"/>
+                                        <constraint firstItem="mSy-2D-0Ol" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tjj-j7-dAY" secondAttribute="trailing" constant="10" id="uyu-BO-ZOF"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="artworkView" destination="yJm-Ps-MbM" id="qfA-OJ-kqS"/>
+                                    <outlet property="durationLabel" destination="zEE-2Z-U7q" id="7qM-iW-FsK"/>
+                                    <outlet property="syncButton" destination="mSy-2D-0Ol" id="VjL-qZ-ERz"/>
+                                    <outlet property="titleLabel" destination="Tjj-j7-dAY" id="aJf-C0-IHW"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="dXi-G8-PGN" id="dcN-qL-iTp"/>
+                            <outlet property="delegate" destination="dXi-G8-PGN" id="sv5-So-Gpj"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="bLI-8x-zvq">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="0UQ-Kb-Q9D">
+                            <rect key="frame" x="112.5" y="7" width="150" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Podcasts"/>
+                                <segment title="Recent"/>
+                            </segments>
+                            <connections>
+                                <action selector="handleSegmentPress:" destination="eW5-3v-kwb" eventType="valueChanged" id="bc7-ui-T72"/>
+                                <action selector="handleSegmentPress:" destination="dXi-G8-PGN" eventType="valueChanged" id="slN-Vp-lH5"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="segmentedTitle" destination="0UQ-Kb-Q9D" id="Y77-tf-fry"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fNM-5b-ybX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="478" y="-752"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="WVc-5g-FMt">
+            <objects>
+                <navigationController id="XUk-2x-ety" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1qN-ql-URN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="dXi-G8-PGN" kind="relationship" relationship="rootViewController" id="dOe-ow-OMa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="B4O-XA-eUR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-207" y="-751"/>
+        </scene>
+        <!--Podcasts-->
+        <scene sceneID="vCf-dB-IpJ">
+            <objects>
+                <collectionViewController storyboardIdentifier="PodcastsViewController" id="eW5-3v-kwb" customClass="MyPodcastsViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Nwo-BR-Bji" customClass="IGListCollectionView">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <collectionViewLayout key="collectionViewLayout" id="dfo-sS-cDR" customClass="IGListGridCollectionViewLayout">
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="minimumLineSpacing">
+                                    <real key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="minimumInteritemSpacing">
+                                    <real key="value" value="2"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </collectionViewLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PodcastCell" id="yMj-DU-ikC" customClass="PodcastCell" customModule="Pod2Watch">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GY0-2y-uBL">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        </imageView>
+                                    </subviews>
+                                </view>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="GY0-2y-uBL" secondAttribute="bottom" id="69A-b6-hYD"/>
+                                    <constraint firstItem="GY0-2y-uBL" firstAttribute="top" secondItem="yMj-DU-ikC" secondAttribute="top" id="I9o-5T-UZd"/>
+                                    <constraint firstAttribute="trailing" secondItem="GY0-2y-uBL" secondAttribute="trailing" id="VdO-hZ-dz6"/>
+                                    <constraint firstItem="GY0-2y-uBL" firstAttribute="leading" secondItem="yMj-DU-ikC" secondAttribute="leading" id="oFQ-Dg-Bhg"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="GY0-2y-uBL" id="gW7-fi-h4M"/>
+                                    <segue destination="ave-un-BsK" kind="show" id="NxX-aH-dFC"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                    </collectionView>
+                    <tabBarItem key="tabBarItem" title="My Podcasts" image="Podcasts" id="hPC-PN-JGG"/>
+                    <navigationItem key="navigationItem" title="Podcasts" id="s6G-nv-2Cl">
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="AdD-J1-Yc9">
+                            <rect key="frame" x="112.5" y="7" width="150" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Podcasts"/>
+                                <segment title="Recent"/>
+                            </segments>
+                            <connections>
+                                <action selector="handleSegmentPress:" destination="eW5-3v-kwb" eventType="valueChanged" id="Zps-PS-O6T"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="Nwo-BR-Bji" id="bjs-Wt-DxT"/>
+                        <outlet property="segmentedTitle" destination="AdD-J1-Yc9" id="DH8-5e-W2v"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="091-te-fUT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="479" y="27"/>
+        </scene>
+        <!--Episodes-->
+        <scene sceneID="SR1-R2-0i6">
+            <objects>
+                <tableViewController id="ave-un-BsK" customClass="MyPodcastsEpisodesViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="WJI-Lm-G0Q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="EpisodeCell" id="Gke-mC-Fn4" customClass="MyPodcastsEpisodeCell" customModule="Pod2Watch" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gke-mC-Fn4" id="Obc-di-8TJ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C7m-D8-np8">
+                                            <rect key="frame" x="8" y="8" width="43.5" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bdw-b1-zFX" customClass="SyncButton" customModule="Pod2Watch" customModuleProvider="target">
+                                            <rect key="frame" x="310" y="27" width="57" height="26"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                            <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                                            <state key="normal" title="SYNC"/>
+                                            <connections>
+                                                <action selector="handleSyncPressWithButton:" destination="Gke-mC-Fn4" eventType="touchUpInside" id="2WJ-qA-21h"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4k-Rl-lE2">
+                                            <rect key="frame" x="8" y="33" width="37" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Bdw-b1-zFX" firstAttribute="centerY" secondItem="Obc-di-8TJ" secondAttribute="centerY" id="80L-wl-1Ev"/>
+                                        <constraint firstAttribute="trailing" secondItem="Bdw-b1-zFX" secondAttribute="trailing" constant="8" id="ML9-EY-07f"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="C7m-D8-np8" secondAttribute="leading" id="Rul-5Z-7Wl"/>
+                                        <constraint firstItem="Bdw-b1-zFX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="z4k-Rl-lE2" secondAttribute="trailing" constant="10" id="SyN-by-9vJ"/>
+                                        <constraint firstItem="z4k-Rl-lE2" firstAttribute="top" secondItem="C7m-D8-np8" secondAttribute="bottom" constant="4" id="ahM-IM-xaZ"/>
+                                        <constraint firstAttribute="topMargin" secondItem="C7m-D8-np8" secondAttribute="top" id="dAD-3d-SzL"/>
+                                        <constraint firstItem="Bdw-b1-zFX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="C7m-D8-np8" secondAttribute="trailing" constant="10" id="wyO-JP-mfD"/>
+                                        <constraint firstItem="z4k-Rl-lE2" firstAttribute="leading" secondItem="C7m-D8-np8" secondAttribute="leading" id="yJU-hV-Nit"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="durationLabel" destination="z4k-Rl-lE2" id="gTa-Qb-nVa"/>
+                                    <outlet property="syncButton" destination="Bdw-b1-zFX" id="gkM-h6-q1C"/>
+                                    <outlet property="titleLabel" destination="C7m-D8-np8" id="KSq-m2-VPd"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ave-un-BsK" id="Cfi-ye-vck"/>
+                            <outlet property="delegate" destination="ave-un-BsK" id="nCZ-q6-veB"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Episodes" id="fL9-Pf-XUg"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cJs-zH-x7l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1236" y="27"/>
+        </scene>
+        <!--Podcasts-->
+        <scene sceneID="hPf-Gp-No6">
+            <objects>
+                <tableViewController id="XqH-YI-jw8" customClass="MyWatchViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="xQu-ds-FHa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyWatchCell" id="G6w-Th-Caz" customClass="MyWatchEpisodeCell" customModule="Pod2Watch" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G6w-Th-Caz" id="QQF-zj-LHZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdJ-Nw-CiU">
+                                            <rect key="frame" x="79.5" y="8" width="43.5" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ls9-mF-vNp">
+                                            <rect key="frame" x="79.5" y="33" width="37" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cpw-19-Qf3" customClass="BorderImageView" customModule="Pod2Watch" customModuleProvider="target">
+                                            <rect key="frame" x="3" y="3" width="73.5" height="73.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="Cpw-19-Qf3" secondAttribute="height" multiplier="1:1" id="AJl-6K-XAV"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                    <real key="value" value="0.5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O4L-Ub-zze" customClass="SyncButton" customModule="Pod2Watch" customModuleProvider="target">
+                                            <rect key="frame" x="347" y="27" width="20" height="26"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="13"/>
+                                            <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="O4L-Ub-zze" firstAttribute="centerY" secondItem="QQF-zj-LHZ" secondAttribute="centerY" id="7n2-LT-6ch"/>
+                                        <constraint firstItem="ls9-mF-vNp" firstAttribute="top" secondItem="OdJ-Nw-CiU" secondAttribute="bottom" constant="4" id="EPb-DJ-HOs"/>
+                                        <constraint firstAttribute="bottom" secondItem="Cpw-19-Qf3" secondAttribute="bottom" constant="3" id="Hz4-80-zPj"/>
+                                        <constraint firstItem="OdJ-Nw-CiU" firstAttribute="leading" secondItem="Cpw-19-Qf3" secondAttribute="trailing" constant="3" id="Jia-Wg-9kw"/>
+                                        <constraint firstAttribute="trailing" secondItem="O4L-Ub-zze" secondAttribute="trailing" constant="8" id="KJS-j8-rDY"/>
+                                        <constraint firstItem="Cpw-19-Qf3" firstAttribute="top" secondItem="QQF-zj-LHZ" secondAttribute="top" constant="3" id="SIf-oO-z5t"/>
+                                        <constraint firstItem="Cpw-19-Qf3" firstAttribute="leading" secondItem="QQF-zj-LHZ" secondAttribute="leading" constant="3" id="XK8-pj-CNp"/>
+                                        <constraint firstItem="OdJ-Nw-CiU" firstAttribute="leading" secondItem="ls9-mF-vNp" secondAttribute="leading" id="eqV-lj-vmB"/>
+                                        <constraint firstAttribute="topMargin" secondItem="OdJ-Nw-CiU" secondAttribute="top" id="jvv-Zq-V7s"/>
+                                        <constraint firstItem="O4L-Ub-zze" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="OdJ-Nw-CiU" secondAttribute="trailing" constant="8" id="xOj-II-ixz"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="artworkView" destination="Cpw-19-Qf3" id="mqX-pU-HYV"/>
+                                    <outlet property="durationLabel" destination="ls9-mF-vNp" id="9v9-hf-Csv"/>
+                                    <outlet property="syncButton" destination="O4L-Ub-zze" id="69a-fg-pOR"/>
+                                    <outlet property="titleLabel" destination="OdJ-Nw-CiU" id="dd5-S8-O0w"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="XqH-YI-jw8" id="P5J-kR-yg3"/>
+                            <outlet property="delegate" destination="XqH-YI-jw8" id="F0J-Y4-lLc"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Podcasts" id="tiA-js-c2r">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="2M0-Ln-JE6">
+                            <connections>
+                                <action selector="handleEditPress" destination="XqH-YI-jw8" id="Hr8-lB-2a3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eZd-e9-x5n" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="621.60000000000002" y="780.35982008995506"/>
+        </scene>
+        <!--My Watch-->
+        <scene sceneID="83G-qW-47L">
+            <objects>
+                <navigationController id="RgU-kU-Rva" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Watch" image="Watch" selectedImage="Watch Selected" id="rea-LI-Wo6"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ane-qQ-Z0v">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="XqH-YI-jw8" kind="relationship" relationship="rootViewController" id="CcB-bs-TwR"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gHf-QX-lO0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-223" y="782"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="Dau-el-Vdm">
+            <objects>
+                <tabBarController id="TpU-7P-fnh" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="amd-gb-fGn">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="selectedImageTintColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="gSG-DD-HUY" kind="relationship" relationship="viewControllers" id="dkB-w0-RCY"/>
+                        <segue destination="RgU-kU-Rva" kind="relationship" relationship="viewControllers" id="RFc-jh-phw"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q6Z-da-aa3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="rba-8B-8sx">
+                    <rect key="frame" x="0.0" y="-1" width="150" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <segments>
+                        <segment title="Podcasts"/>
+                        <segment title="Recent"/>
+                    </segments>
+                    <connections>
+                        <action selector="handleSegmentPress:" destination="eW5-3v-kwb" eventType="valueChanged" id="H82-vV-KtJ"/>
+                    </connections>
+                </segmentedControl>
+            </objects>
+            <point key="canvasLocation" x="-956" y="439"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Podcasts" width="25" height="25"/>
+        <image name="Watch" width="25" height="25"/>
+        <image name="Watch Selected" width="25" height="25"/>
+    </resources>
+    <color key="tintColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

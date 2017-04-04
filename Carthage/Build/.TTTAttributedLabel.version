@@ -1,0 +1,13 @@
+{
+  "commitish" : "2.0.0",
+  "iOS" : [
+    {
+      "hash" : "62352b3b9d46314d87433778ca4edd12dddae6234f90eb68491105c26bed96b5",
+      "name" : "TTTAttributedLabel"
+    }
+  ],
+  "xcodeVersion" : "Xcode 8.3\nBuild version 8E162",
+  "watchOS" : [
+
+  ]
+}

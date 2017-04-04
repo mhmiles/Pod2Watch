@@ -1,0 +1,13 @@
+{
+  "commitish" : "7dbc51afc4145021b57f232936764f388117cacd",
+  "iOS" : [
+    {
+      "hash" : "9811d4f85db241d46a527ad7d3eb4e49699f486484ce3f1073696fe04e668a64",
+      "name" : "racAdditions"
+    }
+  ],
+  "xcodeVersion" : "Xcode 8.3\nBuild version 8E162",
+  "watchOS" : [
+
+  ]
+}

@@ -1,0 +1,10 @@
+framework module racAdditions {
+  umbrella header "racAdditions.h"
+
+  export *
+  module * { export * }
+}
+
+module racAdditions.Swift {
+    header "racAdditions-Swift.h"
+}

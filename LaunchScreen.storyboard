@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zn0-cR-RQU">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tab Bar Controller-->
+        <scene sceneID="KvI-iY-aQD">
+            <objects>
+                <tabBarController id="zn0-cR-RQU" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="xlf-B4-iqW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="selectedImageTintColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="31v-MW-gmD" kind="relationship" relationship="viewControllers" id="Qsl-S3-W6u"/>
+                        <segue destination="DVu-Vw-aNJ" kind="relationship" relationship="viewControllers" id="YsO-Uu-9ux"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QjC-ej-Npv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-71" y="161"/>
+        </scene>
+        <!--Podcasts-->
+        <scene sceneID="jvh-cf-CSL">
+            <objects>
+                <viewController id="Z0R-Rg-0n6" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="BsE-1O-t9t"/>
+                        <viewControllerLayoutGuide type="bottom" id="buF-QE-f0a"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RYS-kb-jG9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Podcasts" id="hgc-I5-aVh"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2p3-ow-x7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1583" y="-18"/>
+        </scene>
+        <!--My Podcasts-->
+        <scene sceneID="UDs-9D-q87">
+            <objects>
+                <navigationController id="31v-MW-gmD" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Podcasts" image="Podcasts" id="IrL-lI-n5x"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2Ox-fU-grH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Z0R-Rg-0n6" kind="relationship" relationship="rootViewController" id="9v4-tY-yZ5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XUd-UK-mAT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="758" y="-18"/>
+        </scene>
+        <!--My Watch-->
+        <scene sceneID="CLu-3q-SaR">
+            <objects>
+                <viewController id="DVu-Vw-aNJ" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IFz-P4-lKI"/>
+                        <viewControllerLayoutGuide type="bottom" id="7jj-HM-exU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dBn-cp-ekX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="My Watch" image="Watch" id="LQJ-lg-7AY"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a95-KK-etW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="758" y="645"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Podcasts" width="25" height="25"/>
+        <image name="Watch" width="25" height="25"/>
+    </resources>
+</document>

@@ -1,0 +1,20 @@
+{
+  "commitish" : "271d8653e00c1a1e31ad3c3d48223bfadac7cc8b",
+  "iOS" : [
+    {
+      "hash" : "045ee33676eec04e8287626c7933fe4b0982f47d5f4faa1266c4055a0a2e80c5",
+      "name" : "Result"
+    },
+    {
+      "hash" : "5f15b989a41f88f1d5169ed5e5d32e030eee019cb264f60112c6054e0701a554",
+      "name" : "ReactiveSwift"
+    }
+  ],
+  "xcodeVersion" : "Xcode 8.3\nBuild version 8E162",
+  "watchOS" : [
+    {
+      "hash" : "6ea4f201aab5f950efa7d87bff6c030854ddae1eff4d9f165ef6abfad4fab42e",
+      "name" : "ReactiveSwift"
+    }
+  ]
+}
