@@ -156,7 +156,7 @@ extension PodcastTransferManager: WCSessionDelegate {
         for episode in episodes {
           episode.isTransferred = true
           
-          try! FileManager.default.removeItem(at: episode.fileURL)
+          try? FileManager.default.removeItem(at: episode.fileURL)
         }
         
         PersistentContainer.saveContext()

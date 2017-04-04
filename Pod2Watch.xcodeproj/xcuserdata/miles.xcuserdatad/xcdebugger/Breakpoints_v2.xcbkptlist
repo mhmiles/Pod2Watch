@@ -53,54 +53,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pod2Watch/PodcastTransferManager.swift"
-            timestampString = "512975762.635737"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "session(_:didFinish:error:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pod2Watch.PodcastTransferManager.session (__ObjC.WCSession, didFinish : __ObjC.WCSessionFileTransfer, error : Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
-                  moduleName = "Pod2Watch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/PodcastTransferManager.swift"
-                  timestampString = "512975167.541723"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "153"
-                  endingLineNumber = "153"
-                  offsetFromSymbolStart = "272">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pod2Watch.PodcastTransferManager.session (__ObjC.WCSession, didFinish : __ObjC.WCSessionFileTransfer, error : Swift.Optional&lt;Swift.Error&gt;) -&gt; ()"
-                  moduleName = "Pod2Watch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/PodcastTransferManager.swift"
-                  timestampString = "512975167.543035"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "153"
-                  endingLineNumber = "153"
-                  offsetFromSymbolStart = "292">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Pod2Watch/RecentEpisodeCell.swift"
             timestampString = "512974797.089753"
             startingColumnNumber = "9223372036854775807"

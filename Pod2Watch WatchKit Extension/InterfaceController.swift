@@ -133,7 +133,7 @@ extension InterfaceController: WCSessionDelegate {
     for episode in episodesToDelete {
       if let fileURLString = episode.fileURLString,
         let fileURL = URL(string: fileURLString) {
-        try! FileManager.default.removeItem(at: fileURL)
+        try? FileManager.default.removeItem(at: fileURL)
       } else {
         
       }

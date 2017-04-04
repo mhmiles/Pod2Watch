@@ -231,7 +231,6 @@ class LibraryPodcastEpisode: NSManagedObject {
     
     releaseDate = mediaItem.releaseDate as NSDate?
   }
-
 }
 
 extension LibraryPodcastEpisode: IGListDiffable {
