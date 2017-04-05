@@ -36,6 +36,16 @@ class PodcastTransferManager: NSObject {
     let outputURL = URL(fileURLWithPath: "\(NSTemporaryDirectory())\(podcast.podcastID).mov")
     exporter.outputURL = outputURL
     
+    if let episodeTitle = episode.episodeTitle as NSString? {
+      let metadata = AVMutableMetadataItem()
+      metadata.keySpace = AVMetadataKeySpaceCommon
+      metadata.key = AVMetadataCommonKeyTitle as NSString
+      metadata.value = episodeTitle
+      
+      exporter.metadata = [metadata]
+    }
+
+    
     exporter.exportAsynchronously {
       switch exporter.status {
       case .completed:
