@@ -13,6 +13,7 @@ enum SyncState: Int {
   case noSync = 0
   case preparing
   case pending
+  case syncing
   case synced
 }
 
@@ -31,6 +32,10 @@ class SyncButton: BorderButton {
       case .pending?:
         layer.borderWidth = 0.0
         setTitle("PENDING", for: .normal)
+        
+      case .syncing?:
+        layer.borderWidth = 0.0
+        setTitle("SYNCING", for: .normal)
         
       case .synced?:
         layer.borderWidth = 0.0

@@ -70,7 +70,7 @@
                   moduleName = "Pod2Watch"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/RecentEpisodeCell.swift"
-                  timestampString = "512975167.546278"
+                  timestampString = "513061187.426951"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "22"
@@ -85,7 +85,7 @@
                   moduleName = "Pod2Watch"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/RecentEpisodeCell.swift"
-                  timestampString = "512975167.547768"
+                  timestampString = "513061187.42865"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "22"
@@ -124,38 +124,6 @@
             startingLineNumber = "24"
             endingLineNumber = "24"
             landmarkName = "handleSyncPress(button:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pod2Watch/RecentPodcastsViewController.swift"
-            timestampString = "512975762.635737"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pod2Watch/RecentPodcastsViewController.swift"
-            timestampString = "512975762.635737"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "92"
-            endingLineNumber = "92"
-            landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

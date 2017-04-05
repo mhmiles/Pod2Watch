@@ -86,7 +86,7 @@ class RecentPodcastsViewController: UITableViewController {
       } else if synced.isTransferred {
         cell.syncButton.syncState = .synced
       } else {
-        cell.syncButton.syncState = .pending
+        cell.syncButton.syncState = .syncing
       }
     } else {
       cell.syncButton.syncState = .noSync

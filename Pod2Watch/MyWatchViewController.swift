@@ -67,7 +67,7 @@ class MyWatchViewController: UITableViewController {
     cell.durationLabel.text = podcast.secondaryLabelText
     
     if podcast.isTransferred == false {
-      cell.syncButton.syncState = .pending
+      cell.syncButton.syncState = .syncing
     } else {
       cell.syncButton.syncState = nil
     }
