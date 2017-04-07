@@ -45,7 +45,6 @@ class PodcastTransferManager: NSObject {
       exporter.metadata = [metadata]
     }
 
-    
     exporter.exportAsynchronously {
       switch exporter.status {
       case .completed:
@@ -54,6 +53,11 @@ class PodcastTransferManager: NSObject {
         
       default:
         print("Failed")
+        
+        if FileManager.default.fileExists(atPath: outputURL.absoluteString) {
+          episode.fileURLString = outputURL.absoluteString
+          self.handlePendingTransfers()
+        }
         break
       }
     }
