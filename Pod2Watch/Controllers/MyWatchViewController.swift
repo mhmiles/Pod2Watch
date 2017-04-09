@@ -128,6 +128,10 @@ class MyWatchViewController: UITableViewController {
 }
 
 extension MyWatchViewController: NSFetchedResultsControllerDelegate {
+  func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.beginUpdates()
+  }
+  
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                   didChange anObject: Any,
                   at indexPath: IndexPath?,
@@ -149,5 +153,9 @@ extension MyWatchViewController: NSFetchedResultsControllerDelegate {
     default:
       break
     }
+  }
+  
+  func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.endUpdates()
   }
 }

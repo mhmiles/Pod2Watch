@@ -120,6 +120,10 @@ class RecentPodcastsViewController: UITableViewController {
 }
 
 extension RecentPodcastsViewController: NSFetchedResultsControllerDelegate {
+  func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.beginUpdates()
+  }
+  
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     if controller == syncResultsController,
       let episode = anObject as? PodcastEpisode,
@@ -139,5 +143,9 @@ extension RecentPodcastsViewController: NSFetchedResultsControllerDelegate {
     } else if controller == fetchedResultsController {
       print(anObject)
     }
+  }
+  
+  func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.endUpdates()
   }
 }

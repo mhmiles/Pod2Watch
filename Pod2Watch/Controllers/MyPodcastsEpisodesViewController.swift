@@ -112,6 +112,10 @@ class MyPodcastsEpisodesViewController: UITableViewController {
 }
 
 extension MyPodcastsEpisodesViewController: NSFetchedResultsControllerDelegate {
+  func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.beginUpdates()
+  }
+  
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     if controller == syncResultsController,
       let episode = anObject as? PodcastEpisode,
@@ -131,6 +135,10 @@ extension MyPodcastsEpisodesViewController: NSFetchedResultsControllerDelegate {
     } else if controller == libraryResultsController {
       print(anObject)
     }
+  }
+  
+  func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    tableView.endUpdates()
   }
 }
 
