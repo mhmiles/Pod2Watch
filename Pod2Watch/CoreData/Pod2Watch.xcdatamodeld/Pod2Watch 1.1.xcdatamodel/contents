@@ -12,17 +12,8 @@
         <attribute name="title" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="episodes" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="LibraryEpisode" inverseName="podcast" inverseEntity="LibraryEpisode" syncable="YES"/>
     </entity>
-    <entity name="LibraryPodcastEpisode2" representedClassName=".LibraryPodcastEpisode" syncable="YES" codeGenerationType="class">
-        <attribute name="playbackDuration" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="podcastID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="podcastTitle" attributeType="String" indexed="YES" syncable="YES"/>
-        <attribute name="podcastTitleWithoutThe" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="releaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="syncStatus" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-    </entity>
     <elements>
         <element name="LibraryEpisode" positionX="-27" positionY="117" width="128" height="120"/>
         <element name="LibraryPodcast" positionX="-45" positionY="108" width="128" height="90"/>
-        <element name="LibraryPodcastEpisode2" positionX="-54" positionY="54" width="128" height="135"/>
     </elements>
 </model>

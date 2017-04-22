@@ -36,7 +36,7 @@
                   moduleName = "Pod2Watch"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
-                  timestampString = "514521551.008999"
+                  timestampString = "514523351.615963"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "104"
@@ -51,7 +51,7 @@
                   moduleName = "Pod2Watch"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
-                  timestampString = "514521551.011105"
+                  timestampString = "514523351.618278"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "104"
@@ -66,7 +66,7 @@
                   moduleName = "Pod2Watch"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
-                  timestampString = "514521551.012505"
+                  timestampString = "514523351.619632"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "104"
@@ -81,7 +81,7 @@
                   moduleName = "Pod2Watch"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
-                  timestampString = "514521551.013825"
+                  timestampString = "514523351.621002"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "104"
@@ -89,22 +89,6 @@
                   offsetFromSymbolStart = "136">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pod2Watch/CoreData/PersistentContainer.swift"
-            timestampString = "514521488.884886"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
-            landmarkName = "shared"
-            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
