@@ -47,6 +47,8 @@ public final class PersistentContainer: NSPersistentContainer {
       }
     })
     
+    print(container.managedObjectModel.versionIdentifiers)
+    
     container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
     
     return container

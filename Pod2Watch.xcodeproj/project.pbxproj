@@ -191,6 +191,7 @@
 		02C61FBD1E4D27310022FBB1 /* Pod2Watch WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Pod2Watch WatchKit App.entitlements"; path = "Pod2Watch WatchKit App/Pod2Watch WatchKit App.entitlements"; sourceTree = "<group>"; };
 		02EC2EED1EAAF5D30077DF84 /* Versioned.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Versioned.xcdatamodel; sourceTree = "<group>"; };
 		02EC2EEF1EAAF6360077DF84 /* Pod2Watch 1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pod2Watch 1.1.xcdatamodel"; sourceTree = "<group>"; };
+		02EC2EF01EAAF72F0077DF84 /* Pod2WatchPersistent 1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Pod2WatchPersistent 1.1.xcdatamodel"; sourceTree = "<group>"; };
 		02F1D4481EA97CCA0098A50E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		02F1D44A1EA9A3A10098A50E /* SearchSectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchSectionController.swift; sourceTree = "<group>"; };
 		02F1D44D1EA9B5070098A50E /* LibraryEpisode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryEpisode.swift; sourceTree = "<group>"; };
@@ -971,9 +972,10 @@
 		021C826E1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				02EC2EF01EAAF72F0077DF84 /* Pod2WatchPersistent 1.1.xcdatamodel */,
 				021C826F1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodel */,
 			);
-			currentVersion = 021C826F1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodel */;
+			currentVersion = 02EC2EF01EAAF72F0077DF84 /* Pod2WatchPersistent 1.1.xcdatamodel */;
 			path = Pod2WatchPersistent.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
@@ -984,7 +986,7 @@
 				02EC2EEF1EAAF6360077DF84 /* Pod2Watch 1.1.xcdatamodel */,
 				02C1DD1C1E4B929D000C760D /* Pod2Watch.xcdatamodel */,
 			);
-			currentVersion = 02C1DD1C1E4B929D000C760D /* Pod2Watch.xcdatamodel */;
+			currentVersion = 02EC2EEF1EAAF6360077DF84 /* Pod2Watch 1.1.xcdatamodel */;
 			path = Pod2Watch.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
