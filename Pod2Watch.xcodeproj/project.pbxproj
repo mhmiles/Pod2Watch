@@ -28,7 +28,7 @@
 		022CA0351E4FC48600B49A66 /* BorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022CA0341E4FC48600B49A66 /* BorderButton.swift */; };
 		02310CDA1E4B9BC000D427EE /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 02310CD91E4B9BC000D427EE /* Cartfile */; };
 		024AB56D1EAA7C38002A6B3B /* TransferredPodcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024AB56C1EAA7C38002A6B3B /* TransferredPodcast.swift */; };
-		024AB56F1EAAF256002A6B3B /* Model.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 024AB56E1EAAF256002A6B3B /* Model.xcmappingmodel */; };
+		024AB56F1EAAF256002A6B3B /* 1.1 update.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 024AB56E1EAAF256002A6B3B /* 1.1 update.xcmappingmodel */; };
 		024D9A161EA9D3B100F0485D /* SearchBarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024D9A151EA9D3B100F0485D /* SearchBarCell.swift */; };
 		024D9A181EA9ECE900F0485D /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A171EA9ECE900F0485D /* ReactiveCocoa.framework */; };
 		02508F831E85D6C3000AAA43 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02508F811E85D6C3000AAA43 /* ReactiveSwift.framework */; };
@@ -142,7 +142,7 @@
 		02310CD91E4B9BC000D427EE /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		02310CDE1E4BA76000D427EE /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		024AB56C1EAA7C38002A6B3B /* TransferredPodcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferredPodcast.swift; sourceTree = "<group>"; };
-		024AB56E1EAAF256002A6B3B /* Model.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model.xcmappingmodel; sourceTree = "<group>"; };
+		024AB56E1EAAF256002A6B3B /* 1.1 update.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "1.1 update.xcmappingmodel"; sourceTree = "<group>"; };
 		024D9A151EA9D3B100F0485D /* SearchBarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBarCell.swift; sourceTree = "<group>"; };
 		024D9A171EA9ECE900F0485D /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		02508F7F1E858886000AAA43 /* LibraryPodcastEpisode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryPodcastEpisode.swift; sourceTree = "<group>"; };
@@ -296,7 +296,7 @@
 				02C1DD201E4B94C7000C760D /* PersistentContainer.swift */,
 				02C1DD1B1E4B929D000C760D /* Pod2Watch.xcdatamodeld */,
 				021C826E1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld */,
-				024AB56E1EAAF256002A6B3B /* Model.xcmappingmodel */,
+				024AB56E1EAAF256002A6B3B /* 1.1 update.xcmappingmodel */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -645,7 +645,7 @@
 				02BB4D1B1E4E5DE800F08B7F /* MyPodcastsViewController.swift in Sources */,
 				02B22D311E8DEBEC00A12113 /* NSURLTransformer.swift in Sources */,
 				024D9A161EA9D3B100F0485D /* SearchBarCell.swift in Sources */,
-				024AB56F1EAAF256002A6B3B /* Model.xcmappingmodel in Sources */,
+				024AB56F1EAAF256002A6B3B /* 1.1 update.xcmappingmodel in Sources */,
 				021C82701E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld in Sources */,
 				02F1D4501EA9B5980098A50E /* LibraryPodcast.swift in Sources */,
 				022CA0351E4FC48600B49A66 /* BorderButton.swift in Sources */,
