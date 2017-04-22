@@ -171,6 +171,25 @@ extension InterfaceController: WCSessionDelegate {
     }
   }
   
+  func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+    guard let messageType = message["type"] as? String else {
+      return
+    }
+    
+    switch messageType {
+    case MessageType.sendDeleteAll:
+      let fetchRequest: NSFetchRequest<NSFetchRequestResult> = PodcastEpisode.fetchRequest()
+      let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+      try! PersistentContainer.shared.viewContext.execute(deleteRequest)
+      PersistentContainer.saveContext()
+      
+      replyHandler(["type": MessageType.confirmDeleteAll])
+      
+    default:
+      break
+    }
+  }
+  
   func session(_ session: WCSession, didReceive file: WCSessionFile) {
     let fileManager = FileManager.default
     fileManager.delegate = self

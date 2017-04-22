@@ -16,8 +16,8 @@ class RecentPodcastsViewController: UITableViewController {
   
   @IBOutlet weak var segmentedTitle: UISegmentedControl!
 
-  fileprivate lazy var fetchedResultsController: NSFetchedResultsController<LibraryPodcastEpisode> = {
-    let request: NSFetchRequest<LibraryPodcastEpisode> = LibraryPodcastEpisode.fetchRequest()
+  fileprivate lazy var fetchedResultsController: NSFetchedResultsController<LibraryEpisode> = {
+    let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
     request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
     
     let controller = NSFetchedResultsController(fetchRequest: request,
@@ -31,11 +31,11 @@ class RecentPodcastsViewController: UITableViewController {
     return controller
   }()
   
-  fileprivate lazy var syncResultsController: NSFetchedResultsController<PodcastEpisode> = {
-    let request: NSFetchRequest<PodcastEpisode> = PodcastEpisode.fetchRequest()
+  fileprivate lazy var syncResultsController: NSFetchedResultsController<TransferredEpisode> = {
+    let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
     request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
     
-    let controller = NSFetchedResultsController<PodcastEpisode>(fetchRequest: request,
+    let controller = NSFetchedResultsController<TransferredEpisode>(fetchRequest: request,
                                                                 managedObjectContext: PersistentContainer.shared.viewContext,
                                                                 sectionNameKeyPath: nil,
                                                                 cacheName: nil)
@@ -77,10 +77,10 @@ class RecentPodcastsViewController: UITableViewController {
     
     cell.artworkView.rac_image <~ episode.podcastArtworkProducer
     
-    cell.titleLabel.text = episode.episodeTitle
+    cell.titleLabel.text = episode.title
     cell.durationLabel.text = episode.recentSecondaryLabelText
     
-    if let synced = syncResultsController.fetchedObjects?.first(where: { $0.podcastID == episode.podcastID }) {
+    if let synced = syncResultsController.fetchedObjects?.first(where: { $0.persistentID == episode.persistentID }) {
       if synced.shouldDelete {
         cell.syncButton.syncState = .pending
       } else if synced.isTransferred {
@@ -126,8 +126,8 @@ extension RecentPodcastsViewController: NSFetchedResultsControllerDelegate {
   
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     if controller == syncResultsController,
-      let episode = anObject as? PodcastEpisode,
-      let existing = fetchedResultsController.fetchedObjects?.first(where: { $0.podcastID == episode.podcastID }),
+      let episode = anObject as? TransferredEpisode,
+      let existing = fetchedResultsController.fetchedObjects?.first(where: { $0.persistentID == episode.persistentID }),
       let existingIndexPath = fetchedResultsController.indexPath(forObject: existing) {
       switch type {
       case .insert:

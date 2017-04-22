@@ -1,15 +1,9 @@
 {
+  "xcodeVersion" : "Xcode 8.3.1\nBuild version 8E1000a",
   "commitish" : "3.2.0",
   "iOS" : [
     {
-      "hash" : "1eb5ca2e5d519a886dd85a38a6e1025e4fcb9555d35d821fc29d01bb210d7a7a",
-      "name" : "AlamofireImage"
-    }
-  ],
-  "xcodeVersion" : "Xcode 8.3\nBuild version 8E162",
-  "watchOS" : [
-    {
-      "hash" : "de6a4f70e9ce2538921b9f4b5a6cf87e3d46d57adada0c37edba26f2a53039fe",
+      "hash" : "2c9137cad44525cf121a94824f77d2931b0490e2812c93ec7bc719feda147b10",
       "name" : "AlamofireImage"
     }
   ]

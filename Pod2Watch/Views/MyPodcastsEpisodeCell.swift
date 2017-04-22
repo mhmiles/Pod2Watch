@@ -34,6 +34,7 @@ class MyPodcastsEpisodeCell: UITableViewCell {
   }
   
   override func prepareForReuse() {
+    syncButton.isEnabled = true
     syncHandler = nil
   }
 }

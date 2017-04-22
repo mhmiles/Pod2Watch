@@ -212,7 +212,6 @@ class LibraryPodcastEpisode: NSManagedObject {
   }
   
   convenience init(mediaItem: MPMediaItem, context: NSManagedObjectContext) {
-    let context = context
     let entity = NSEntityDescription.entity(forEntityName: "LibraryPodcastEpisode", in: context)!
     
     self.init(entity: entity, insertInto: context)
@@ -220,7 +219,7 @@ class LibraryPodcastEpisode: NSManagedObject {
     self.mediaItem = mediaItem
     podcastTitle = mediaItem.podcastTitle
     podcastTitleWithoutThe = podcastTitle?.withoutThe
-    podcastID = Int64(bitPattern: mediaItem.podcastPersistentID)
+    podcastID = Int64(bitPattern: mediaItem.persistentID)
     
     if mediaItem.playbackDuration == 0 {
       let asset = AVURLAsset(url: mediaItem.assetURL!)

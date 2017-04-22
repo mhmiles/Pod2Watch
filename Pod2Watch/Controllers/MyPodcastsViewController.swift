@@ -11,48 +11,91 @@ import Alamofire
 import IGListKit
 import CoreData
 import MediaPlayer.MPMediaLibrary
+import ReactiveSwift
 
 private let reuseIdentifier = "MyPodcastsCell"
+private let searchToken = NSString(string: "c6816e681737dea7e15642b7887a64d8fce71aa2")
+private let searchBarBottomOffset = CGPoint(x: 0.0, y: 42.0)
 
 class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
   @IBOutlet weak var collectionView: IGListCollectionView!
   
   lazy var adapter: IGListAdapter = {
-    return IGListAdapter(updater: IGListAdapterUpdater(), viewController: self, workingRangeSize: 0)
+    let adapter = IGListAdapter(updater: IGListAdapterUpdater(), viewController: self, workingRangeSize: 0)
+    adapter.scrollViewDelegate = self
+    
+    return adapter
   }()
-  
-  var podcasts: [LibraryPodcastEpisode]!
   
   var podcastsViewController: MyPodcastsViewController!
   var recentViewController: UITableViewController!
   
   @IBOutlet weak var segmentedTitle: UISegmentedControl!
   
+  fileprivate lazy var libraryResultsController: NSFetchedResultsController<LibraryPodcast> = {
+    let request: NSFetchRequest<LibraryPodcast> = LibraryPodcast.fetchRequest()
+
+    request.sortDescriptors = [NSSortDescriptor(key: "titleWithoutThe", ascending: true)]
+
+    let controller = NSFetchedResultsController<LibraryPodcast>(fetchRequest: request,
+                                                                       managedObjectContext: InMemoryContainer.shared.viewContext,
+                                                                       sectionNameKeyPath: nil,
+                                                                       cacheName: nil)
+    
+    controller.delegate = self
+    try! controller.performFetch()
+    
+    return controller
+  }()
+  
+  fileprivate weak var searchBar: UISearchBar? {
+    didSet {
+      searchBar?.delegate = self
+    }
+  }
+  
+  fileprivate var titleSearchQuery: String? {
+    didSet {
+      if let titleSearchQuery = self.titleSearchQuery, titleSearchQuery.characters.count > 0 {
+        libraryResultsController.fetchRequest.predicate = NSPredicate(format: "title CONTAINS[cd] %@", titleSearchQuery)
+      } else {
+        libraryResultsController.fetchRequest.predicate = nil
+      }
+      
+      try! libraryResultsController.performFetch()
+      adapter.performUpdates(animated: true, completion: nil)
+    }
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     
     segmentedTitle.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 16)],
                                           for: .normal)
     
-    loadPodcasts()
+    collectionView.setContentOffset(searchBarBottomOffset, animated: false)
+//    loadPodcasts()
+//    _ = libraryResultsController
     
     adapter.collectionView = collectionView
     adapter.dataSource = self
   }
   
-  fileprivate func loadPodcasts() {
-    let request: NSFetchRequest<LibraryPodcastEpisode> = LibraryPodcastEpisode.fetchRequest()
-    request.sortDescriptors = [NSSortDescriptor(key: "podcastTitleWithoutThe", ascending: true)]
-    
-    let episodes = try! InMemoryContainer.shared.viewContext.fetch(request)
-    podcasts = episodes.reduce([], { (accum, episode) -> [LibraryPodcastEpisode] in
-      if accum.last?.podcastTitle == episode.podcastTitle {
-        return accum
-      } else {
-        return accum + [episode]
-      }
-    })
-  }
+  
+  
+//  fileprivate func loadPodcasts() {
+//    let request: NSFetchRequest<LibraryPodcastEpisode> = LibraryPodcastEpisode.fetchRequest()
+//    request.sortDescriptors = [NSSortDescriptor(key: "podcastTitleWithoutThe", ascending: true)]
+//    
+//    let episodes = try! InMemoryContainer.shared.viewContext.fetch(request)
+//    podcasts = episodes.reduce([], { (accum, episode) -> [LibraryEpisode] in
+//      if accum.last?.podcastTitle == episode.podcastTitle {
+//        return accum
+//      } else {
+//        return accum + [episode]
+//      }
+//    })
+//  }
   
   @IBAction func handleSegmentPress(_ sender: UISegmentedControl) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -64,9 +107,8 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
   @IBAction func requestLibraryAccess() {
     MPMediaLibrary.requestAuthorization { (status) in
       if status == .authorized {
-        InMemoryContainer.shared.loadPodcastLibrary()
-//        InMemoryContainer.saveContext()
-        self.loadPodcasts()
+        InMemoryContainer.shared.reloadPodcastLibrary()
+//        self.loadPodcasts()
       } else {
       }
       
@@ -93,17 +135,55 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
     
     let podcastsEpisodesController = segue.destination as! MyPodcastsEpisodesViewController
     
-    podcastsEpisodesController.podcastTitle = podcasts[indexPath.section].podcastTitle ?? ""
+    let podcast = libraryResultsController.fetchedObjects?[indexPath.section-1]
+    podcastsEpisodesController.podcast = podcast
   }
   
   //MARK: IGListAdapterDataSource
   
   func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
-    return podcasts ?? []
+    guard let podcasts = libraryResultsController.fetchedObjects,
+      podcasts.count > 0 || titleSearchQuery != nil else {
+      return []
+    }
+    
+    return [searchToken] + podcasts
   }
   
   func listAdapter(_ listAdapter: IGListAdapter, sectionControllerFor object: Any) -> IGListSectionController {
-    return PodcastSectionController()
+    if let string = object as? NSString, string == searchToken {
+      return IGListSingleSectionController(storyboardCellIdentifier: "SearchBar",
+                                           configureBlock: { [unowned self] (item, cell) in
+                                            guard let searchBarCell = cell as? SearchBarCell else {
+                                              return
+                                            }
+                                            
+                                            self.searchBar = searchBarCell.searchBar
+      }, sizeBlock: { (item, context) -> CGSize in
+        guard let context = context else {
+          return CGSize.zero
+        }
+        
+        return CGSize(width: context.containerSize.width, height: 40.0)
+      })
+    }
+    
+    return IGListSingleSectionController(storyboardCellIdentifier: "PodcastCell",
+                                         configureBlock: { (item, cell) in
+                                          guard let podcast = item as? LibraryPodcast,
+                                            let podcastCell = cell as? PodcastCell else {
+                                              return
+                                          }
+                                          
+                                          podcastCell.imageView.rac_image <~ podcast.podcastArtworkProducer
+    }, sizeBlock: { (item, context) -> CGSize in
+      guard let context = context else {
+        return CGSize.zero
+      }
+      
+      let width = context.containerSize.width/2 - 1
+      return CGSize(width: width, height: width)
+    })
   }
   
   func emptyView(for listAdapter: IGListAdapter) -> UIView? {
@@ -124,16 +204,41 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
   }
 }
 
-extension NSString {
-  func trimmingThe() -> String {
-    if lowercased.hasPrefix("the ") {
-      return substring(from: 4).trimmingCharacters(in: CharacterSet.whitespaces)
-    } else {
-      return self as String
+extension MyPodcastsViewController: NSFetchedResultsControllerDelegate {
+  func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    adapter.reloadData()
+  }
+}
+
+extension MyPodcastsViewController: UISearchBarDelegate {
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    titleSearchQuery = searchText
+  }
+}
+
+extension MyPodcastsViewController: UIScrollViewDelegate {
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    searchBar?.resignFirstResponder()
+  }
+  
+  func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    if decelerate == false {
+      handleSearchBarVisiblity()
     }
   }
   
-  @objc func compareWithoutThe(_ string: NSString) -> ComparisonResult {
-    return trimmingThe().compare(string.trimmingThe())
+  func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    handleSearchBarVisiblity()
+  }
+  
+  private func handleSearchBarVisiblity() {
+    let scrollView = collectionView!
+    let offset = scrollView.contentOffset
+    
+    if offset.y < -44 {
+      scrollView.setContentOffset(CGPoint(x: 0, y: -64), animated: true)
+    } else if offset.y < -24 {
+      scrollView.setContentOffset(CGPoint(x: 0, y: -22), animated: true)
+    }
   }
 }

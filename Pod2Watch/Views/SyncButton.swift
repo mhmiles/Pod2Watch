@@ -18,6 +18,16 @@ enum SyncState: Int {
 }
 
 class SyncButton: BorderButton {
+  override var isEnabled: Bool {
+    didSet {
+      if isEnabled {
+        layer.borderColor = titleColor(for: .normal)?.cgColor
+      } else {
+        layer.borderColor = titleColor(for: .disabled)?.cgColor
+      }
+    }
+  }
+  
   var syncState: SyncState? {
     didSet {
       switch syncState {

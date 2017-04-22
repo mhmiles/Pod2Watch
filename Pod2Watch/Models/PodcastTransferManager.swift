@@ -16,6 +16,17 @@ class PodcastTransferManager: NSObject {
   
   let session: WCSession?
   
+  var shouldClearWatchStorage = false {
+    didSet {
+      if shouldClearWatchStorage {
+        sendDeleteAll()
+      } else {
+        UserDefaults.standard.set(false, forKey: "clear_watch_storage")
+        handlePendingTransfers()
+      }
+    }
+  }
+  
   override init() {
     session = WCSession.isSupported() ? WCSession.default() : nil
     
@@ -23,20 +34,38 @@ class PodcastTransferManager: NSObject {
     
     session?.delegate = self
     session?.activate()
+    
+    checkForDeleteAll()
+    
+    NotificationCenter.default.addObserver(forName: UserDefaults.didChangeNotification,
+                                           object: nil,
+                                           queue: OperationQueue.main) { [unowned self] _ in
+                                            self.checkForDeleteAll()
+    }
   }
   
-  func transfer(_ podcast: LibraryPodcastEpisode) {
-    let episode = PodcastEpisode(podcast)
+  func transfer(_ episode: LibraryEpisode) {
+    guard let assetURL = episode.assetURL else {
+      return
+    }
     
-    let asset = AVAsset(url: podcast.assetURL)
+    let asset = AVAsset(url: assetURL)
     
     let exporter = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetPassthrough)!
     exporter.outputFileType = AVFileTypeQuickTimeMovie
   
-    let outputURL = URL(fileURLWithPath: "\(NSTemporaryDirectory())\(podcast.podcastID).mov")
+    let outputURL = URL(fileURLWithPath: "\(NSTemporaryDirectory())\(episode.persistentID).mov")
     exporter.outputURL = outputURL
     
-    if let episodeTitle = episode.episodeTitle as NSString? {
+    let request: NSFetchRequest<TransferredPodcast> = TransferredPodcast.fetchRequest()
+    request.predicate = NSPredicate(format: "persistentID == %ld", episode.podcast!.persistentID)
+    let context = PersistentContainer.shared.viewContext
+    
+    let transferredPodcast = try! context.fetch(request).first ?? TransferredPodcast(episode.podcast!, context: context)
+    let transferredEpisode = TransferredEpisode(episode)
+    transferredEpisode.podcast = transferredPodcast
+    
+    if let episodeTitle = episode.title as NSString? {
       let metadata = AVMutableMetadataItem()
       metadata.keySpace = AVMetadataKeySpaceCommon
       metadata.key = AVMetadataCommonKeyTitle as NSString
@@ -48,14 +77,14 @@ class PodcastTransferManager: NSObject {
     exporter.exportAsynchronously {
       switch exporter.status {
       case .completed:
-        episode.fileURLString = outputURL.absoluteString
+        transferredEpisode.fileURLString = outputURL.absoluteString
         self.handlePendingTransfers()
         
       default:
         print("Failed")
         
         if FileManager.default.fileExists(atPath: outputURL.absoluteString) {
-          episode.fileURLString = outputURL.absoluteString
+          transferredEpisode.fileURLString = outputURL.absoluteString
           self.handlePendingTransfers()
         }
         break
@@ -69,14 +98,14 @@ class PodcastTransferManager: NSObject {
       return
     }
     
-    let request: NSFetchRequest<PodcastEpisode> = PodcastEpisode.fetchRequest()
+    let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "hasBegunTransfer == NO")
     
     let pendingTransfers = try! PersistentContainer.shared.viewContext.fetch(request)
     
     for episode in pendingTransfers {
       let metadata: [String: Any] = [
-        "podcastID": episode.podcastID,
+        "podcastID": episode.persistentID,
         "podcastTitle": episode.podcastTitle ?? "",
         "episodeTitle": episode.episodeTitle ?? "",
         "playbackDuration": episode.playbackDuration
@@ -88,13 +117,42 @@ class PodcastTransferManager: NSObject {
     
     PersistentContainer.saveContext()
   }
+  
+  func checkForDeleteAll() {
+    if UserDefaults.standard.bool(forKey: "clear_watch_storage") {
+      shouldClearWatchStorage = true
+    }
+  }
+  
+  func sendDeleteAll() {
+    let message = ["type": MessageType.sendDeleteAll]
+    
+    session?.sendMessage(message, replyHandler: { (reply) in
+      guard let messageType = reply["type"] as? String else {
+        fatalError()
+      }
+      
+      if messageType == MessageType.confirmDeletes {
+        self.shouldClearWatchStorage = false
+        
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = TransferredEpisode.fetchRequest()
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        try! PersistentContainer.shared.viewContext.execute(deleteRequest)
+        PersistentContainer.saveContext()
+      }
+    }, errorHandler: nil)
+  }
 }
 
 extension PodcastTransferManager: WCSessionDelegate {
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
     switch activationState {
     case .activated:
-      handlePendingTransfers()
+      if shouldClearWatchStorage {
+        sendDeleteAll()
+      } else {
+        handlePendingTransfers()
+      }
       
     case .inactive:
       break
@@ -111,7 +169,7 @@ extension PodcastTransferManager: WCSessionDelegate {
     
     switch messageType {
     case MessageType.requestDeletes:
-      let request: NSFetchRequest<PodcastEpisode> = PodcastEpisode.fetchRequest()
+      let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
       request.predicate = NSPredicate(format: "shouldDelete == YES")
       
       let context = PersistentContainer.shared.viewContext
@@ -122,7 +180,7 @@ extension PodcastTransferManager: WCSessionDelegate {
       
       let reply: [String: Any] = [
         "type": MessageType.sendDeletes,
-        "payload": episodesToDelete.map { NSNumber(value: $0.podcastID) }
+        "payload": episodesToDelete.map { NSNumber(value: $0.persistentID) }
       ]
       
       replyHandler(reply)
@@ -144,7 +202,7 @@ extension PodcastTransferManager: WCSessionDelegate {
       }
       
       let context = PersistentContainer.shared.viewContext
-      let request: NSFetchRequest<PodcastEpisode> = PodcastEpisode.fetchRequest()
+      let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
       request.predicate = NSPredicate(format: "podcastID IN %@", deletedPodcastIDs)
       let deletedEpisodes = try! context.fetch(request)
       
@@ -163,7 +221,7 @@ extension PodcastTransferManager: WCSessionDelegate {
     if let error = error {
       print(error)
     } else if let podcastID = fileTransfer.file.metadata?["podcastID"] as? Int64 {
-      let request: NSFetchRequest<PodcastEpisode> = PodcastEpisode.fetchRequest()
+      let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
       request.predicate = NSPredicate(format: "podcastID == %@", NSNumber(value: podcastID))
       
       if let episodes = try? PersistentContainer.shared.viewContext.fetch(request) {

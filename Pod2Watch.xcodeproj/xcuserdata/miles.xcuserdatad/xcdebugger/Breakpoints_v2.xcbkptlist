@@ -4,95 +4,91 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pod2Watch WatchKit Extension/ExtensionDelegate.swift"
-            timestampString = "512885774.603087"
+            filePath = "Pod2Watch/Models/LibraryEpisode.swift"
+            timestampString = "514445076.751075"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "handle(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.SymbolicBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            symbolName = ""
-            moduleName = "">
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "podcastArtworkProducer"
+            landmarkType = "24">
             <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Pod2Watch.LibraryEpisode.podcastArtworkProducer.getter : ReactiveSwift.SignalProducer&lt;Swift.Optional&lt;__ObjC.UIImage&gt;, Result.NoError&gt;"
+                  moduleName = "Pod2Watch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
+                  timestampString = "514492355.092918"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "104"
+                  endingLineNumber = "104"
+                  offsetFromSymbolStart = "60">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Pod2Watch.LibraryEpisode.(podcastArtworkProducer.getter : ReactiveSwift.SignalProducer&lt;Swift.Optional&lt;__ObjC.UIImage&gt;, Result.NoError&gt;).(closure #1)"
+                  moduleName = "Pod2Watch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
+                  timestampString = "514492355.094795"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "104"
+                  endingLineNumber = "104"
+                  offsetFromSymbolStart = "24">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Pod2Watch.LibraryEpisode.(podcastArtworkProducer.getter : ReactiveSwift.SignalProducer&lt;Swift.Optional&lt;__ObjC.UIImage&gt;, Result.NoError&gt;).(closure #1).(closure #1)"
+                  moduleName = "Pod2Watch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
+                  timestampString = "514492355.097485"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "104"
+                  endingLineNumber = "104"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Pod2Watch.LibraryEpisode.(podcastArtworkProducer.getter : ReactiveSwift.SignalProducer&lt;Swift.Optional&lt;__ObjC.UIImage&gt;, Result.NoError&gt;).(closure #1).(closure #1).(closure #1)"
+                  moduleName = "Pod2Watch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
+                  timestampString = "514492355.099883"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "104"
+                  endingLineNumber = "104"
+                  offsetFromSymbolStart = "136">
+               </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pod2Watch WatchKit Extension/InterfaceController.swift"
-            timestampString = "512969325.445874"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "266"
-            endingLineNumber = "266"
-            landmarkName = "controller(_:didChange:atSectionIndex:for:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pod2Watch/RecentEpisodeCell.swift"
-            timestampString = "512974797.089753"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "22"
-            endingLineNumber = "22"
-            landmarkName = "handleSyncPress(button:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pod2Watch/RecentEpisodeCell.swift"
-            timestampString = "512975015.851627"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "handleSyncPress(button:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pod2Watch/RecentEpisodeCell.swift"
-            timestampString = "512975016.635694"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
-            landmarkName = "handleSyncPress(button:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

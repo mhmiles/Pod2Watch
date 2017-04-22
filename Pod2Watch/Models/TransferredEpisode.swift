@@ -1,5 +1,5 @@
 //
-//  PodcastEpisode.swift
+//  TransferredEpisode.swift
 //  Pod2Watch
 //
 //  Created by Miles Hollingsworth on 3/25/17.
@@ -14,7 +14,7 @@ import Alamofire
 import AlamofireImage
 import WatchConnectivity.WCSessionFile
 
-class PodcastEpisode: NSManagedObject {
+public class TransferredEpisode: NSManagedObject {
   var transfer: WCSessionFileTransfer?
   
   var fileURL: URL {
@@ -61,18 +61,18 @@ class PodcastEpisode: NSManagedObject {
     }
   }
   
-  convenience init(_ episode: LibraryPodcastEpisode) {
+  convenience init(_ episode: LibraryEpisode) {
     let context = PersistentContainer.shared.viewContext
-    let entity = NSEntityDescription.entity(forEntityName: "PodcastEpisode", in: context)!
+    let entity = NSEntityDescription.entity(forEntityName: "TransferredEpisode", in: context)!
     self.init(entity: entity, insertInto: context)
     
-    podcastID = episode.podcastID
-    podcastTitle = episode.podcastTitle
-    episodeTitle = episode.episodeTitle
+    persistentID = episode.persistentID
+    podcastTitle = episode.podcast?.title
+    episodeTitle = episode.title
     releaseDate = episode.releaseDate
     playbackDuration = episode.playbackDuration
 
-    let request: NSFetchRequest<PodcastEpisode> = PodcastEpisode.fetchRequest()
+    let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
     request.fetchLimit = 1
     request.sortDescriptors = [NSSortDescriptor(key: "sortIndex", ascending: false)]
     
@@ -87,7 +87,7 @@ class PodcastEpisode: NSManagedObject {
   var podcastArtworkProducer: SignalProducer<UIImage?, NoError> {
     return SignalProducer<UIImage?, NoError> { [unowned self] (observer, disposable) in
       if let podcastTitle = self.podcastTitle,
-        let artworkImage = LibraryPodcastEpisode.artworkCache.image(withIdentifier: podcastTitle) {
+        let artworkImage = LibraryPodcast.artworkCache.image(withIdentifier: podcastTitle) {
         observer.send(value: artworkImage)
         observer.sendCompleted()
       } else {
@@ -110,7 +110,7 @@ class PodcastEpisode: NSManagedObject {
                                   switch response.result {
                                   case .success(let image):
                                     if let podcastTitle = self.podcastTitle, podcastTitle != "" {
-                                      LibraryPodcastEpisode.artworkCache.add(image, withIdentifier: podcastTitle)
+                                      LibraryPodcast.artworkCache.add(image, withIdentifier: podcastTitle)
                                     }
                                     
                                     observer.send(value: image)

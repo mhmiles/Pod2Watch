@@ -32,30 +32,57 @@ public final class InMemoryContainer: NSPersistentContainer {
     
     let container = InMemoryContainer(name: "Pod2Watch")
 
-    try! container.persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType,
-                                        configurationName: nil,
-                                        at: nil,
-                                        options: nil)
-    
-
-    
     if MPMediaLibrary.authorizationStatus() == .authorized {
-      container.loadPodcastLibrary()
+      container.reloadPodcastLibrary()
     }
+    
+    NotificationCenter.default.addObserver(forName: Notification.Name.MPMediaLibraryDidChange,
+                                           object: nil,
+                                           queue: OperationQueue.main) { [unowned container] _ in
+                                            container.reloadPodcastLibrary()
+    }
+    
+    MPMediaLibrary.default().beginGeneratingLibraryChangeNotifications()
+    
     
     container.viewContext.mergePolicy = NSMergePolicy.overwrite
     
     return container
   }()
   
-  func loadPodcastLibrary() {
-    let allQuery = MPMediaQuery.podcasts()
+  func reloadPodcastLibrary() {
+    if let store = persistentStoreCoordinator.persistentStores.first {
+      try! persistentStoreCoordinator.remove(store)
+    }
     
-    guard let podcastEpisodes = allQuery.items else {
+    try! persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType,
+                                                       configurationName: nil,
+                                                       at: nil,
+                                                       options: nil)
+    
+    let allQuery = MPMediaQuery.podcasts()
+    allQuery.groupingType = .podcastTitle
+    
+    guard let collections = allQuery.collections else {
       return
     }
     
-    podcastEpisodes.forEach { let _ = LibraryPodcastEpisode(mediaItem:$0, context: viewContext) }
+    for collection in collections {
+      guard let representativeItem = collection.representativeItem else {
+        return
+      }
+      
+      let podcast = LibraryPodcast(mediaItem: representativeItem, context: viewContext)
+      
+      let episodes = collection.items.map({ mediaItem -> LibraryEpisode in
+        let episode = LibraryEpisode(mediaItem: mediaItem, context: viewContext)
+        episode.podcast = podcast
+        
+        return episode
+      })
+      
+      podcast.addToEpisodes(NSOrderedSet(array: episodes))
+    }
   }
   
   class func saveContext () {

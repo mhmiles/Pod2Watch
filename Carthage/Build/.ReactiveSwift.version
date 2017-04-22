@@ -1,19 +1,13 @@
 {
-  "commitish" : "271d8653e00c1a1e31ad3c3d48223bfadac7cc8b",
+  "xcodeVersion" : "Xcode 8.3.1\nBuild version 8E1000a",
+  "commitish" : "1.1.1",
   "iOS" : [
     {
-      "hash" : "045ee33676eec04e8287626c7933fe4b0982f47d5f4faa1266c4055a0a2e80c5",
+      "hash" : "169aad7b7c778c49ade057bbd22664d8c7e7f663dd5190663d85734c86369685",
       "name" : "Result"
     },
     {
-      "hash" : "5f15b989a41f88f1d5169ed5e5d32e030eee019cb264f60112c6054e0701a554",
-      "name" : "ReactiveSwift"
-    }
-  ],
-  "xcodeVersion" : "Xcode 8.3\nBuild version 8E162",
-  "watchOS" : [
-    {
-      "hash" : "6ea4f201aab5f950efa7d87bff6c030854ddae1eff4d9f165ef6abfad4fab42e",
+      "hash" : "599d4079ec3f14999a6b7f82e8c22d83b59153cb8ad7769ccd22b9b2becdaf56",
       "name" : "ReactiveSwift"
     }
   ]

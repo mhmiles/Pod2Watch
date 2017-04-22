@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="watchOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="12029"/>
     </dependencies>
@@ -107,6 +106,21 @@
                 </controller>
             </objects>
             <point key="canvasLocation" x="311" y="134"/>
+        </scene>
+        <!--Static Notification Interface Controller-->
+        <scene sceneID="0US-gK-6Ak">
+            <objects>
+                <notificationController id="JO2-Kq-egb">
+                    <items>
+                        <label alignment="left" text="Alert Label" id="BDC-Av-qYW"/>
+                    </items>
+                    <notificationCategory key="notificationCategory" identifier="myCategory" id="STL-kp-aRZ"/>
+                    <connections>
+                        <outlet property="notificationAlertLabel" destination="BDC-Av-qYW" id="YuK-NI-Lo8"/>
+                    </connections>
+                </notificationController>
+            </objects>
+            <point key="canvasLocation" x="220" y="643"/>
         </scene>
     </scenes>
 </document>

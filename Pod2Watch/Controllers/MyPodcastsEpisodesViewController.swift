@@ -10,63 +10,61 @@ import UIKit
 import CoreData
 
 class MyPodcastsEpisodesViewController: UITableViewController {
-  var podcastTitle: String! {
+  var podcast: LibraryPodcast! {
     didSet {
-      navigationItem.title = podcastTitle
+      navigationItem.title = podcast.title
     }
   }
   
-  fileprivate lazy var libraryResultsController: NSFetchedResultsController<LibraryPodcastEpisode> = {
-    let request: NSFetchRequest<LibraryPodcastEpisode> = LibraryPodcastEpisode.fetchRequest()
+  @IBOutlet weak var autoTransferSwitch: UISwitch!
+  
+  fileprivate lazy var libraryResultsController: NSFetchedResultsController<LibraryEpisode> = {
+    let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
     request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
-    request.predicate = NSPredicate(format: "podcastTitle == %@", self.podcastTitle)
+    request.predicate = NSPredicate(format: "podcast == %@", self.podcast)
     
-    let controller = NSFetchedResultsController<LibraryPodcastEpisode>(fetchRequest: request,
-                                                                managedObjectContext: InMemoryContainer.shared.viewContext,
+    let controller = NSFetchedResultsController<LibraryEpisode>(fetchRequest: request,
+                                                                       managedObjectContext: InMemoryContainer.shared.viewContext,
+                                                                       sectionNameKeyPath: nil,
+                                                                       cacheName: nil)
+    
+    try! controller.performFetch()
+    controller.delegate = self
+    
+    return controller
+  }()
+  
+  fileprivate lazy var syncResultsController: NSFetchedResultsController<TransferredEpisode> = {
+    let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
+    request.predicate = NSPredicate(format: "podcastTitle == %@", self.podcast.title ?? "")
+    request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
+    
+    let controller = NSFetchedResultsController<TransferredEpisode>(fetchRequest: request,
+                                                                managedObjectContext: PersistentContainer.shared.viewContext,
                                                                 sectionNameKeyPath: nil,
                                                                 cacheName: nil)
     
     try! controller.performFetch()
     controller.delegate = self
-
-    return controller
-  }()
-  
-  fileprivate lazy var syncResultsController: NSFetchedResultsController<PodcastEpisode> = {
-    let request: NSFetchRequest<PodcastEpisode> = PodcastEpisode.fetchRequest()
-    request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
-    request.predicate = NSPredicate(format: "podcastTitle == %@", self.podcastTitle)
-    
-    let controller = NSFetchedResultsController<PodcastEpisode>(fetchRequest: request,
-                                                                managedObjectContext: PersistentContainer.shared.viewContext,
-                                                                sectionNameKeyPath: nil,
-                                                                cacheName: nil)
-
-    controller.delegate = self
     
     return controller
   }()
-  
-//  var session: WCSession! {
-//    didSet {
-//      session.delegate = self
-//      session.activate()
-//    }
-//  }
+
+  var isAutoTransferActive = false
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    try! syncResultsController.performFetch()
+    let request: NSFetchRequest<TransferredPodcast> = TransferredPodcast.fetchRequest()
+    request.predicate = NSPredicate(format: "persistentID == %ld", podcast.persistentID)
+    let context = PersistentContainer.shared.viewContext
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = false
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    if let transferredPodcast = try! context.fetch(request).first {
+      isAutoTransferActive = transferredPodcast.isAutoTransferred
+      autoTransferSwitch.isOn = transferredPodcast.isAutoTransferred
+    }
   }
-  
-  
+
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
@@ -86,10 +84,10 @@ class MyPodcastsEpisodesViewController: UITableViewController {
     let cell = tableView.dequeueReusableCell(withIdentifier: "EpisodeCell", for: indexPath) as! MyPodcastsEpisodeCell
     
     let rowEpisode = libraryResultsController.object(at: indexPath)
-    cell.titleLabel.text = rowEpisode.episodeTitle
+    cell.titleLabel.text = rowEpisode.title
     cell.durationLabel.text = rowEpisode.secondaryLabelText
     
-    if let synced = syncResultsController.fetchedObjects?.first(where: { $0.podcastID == rowEpisode.podcastID }) {
+    if let synced = syncResultsController.fetchedObjects?.first(where: { $0.persistentID == rowEpisode.persistentID }) {
       if synced.shouldDelete {
         cell.syncButton.syncState = .pending
       } else if synced.hasBegunTransfer == false {
@@ -107,7 +105,25 @@ class MyPodcastsEpisodesViewController: UITableViewController {
       }
     }
     
+    if isAutoTransferActive {
+      cell.syncButton.isEnabled = false
+    }
+    
     return cell
+  }
+  
+  @IBAction func handleAutoTransferSwitchChange(_ sender: UISwitch) {
+    let request: NSFetchRequest<TransferredPodcast> = TransferredPodcast.fetchRequest()
+    request.predicate = NSPredicate(format: "persistentID == %ld", podcast.persistentID)
+    let context = PersistentContainer.shared.viewContext
+    
+    let transferredPodcast = try! context.fetch(request).first ?? TransferredPodcast(podcast, context: context)
+    transferredPodcast.isAutoTransferred = sender.isOn
+    
+    PersistentContainer.saveContext()
+
+    isAutoTransferActive = sender.isOn
+    tableView.reloadSections([0], with: .fade)
   }
 }
 
@@ -118,8 +134,8 @@ extension MyPodcastsEpisodesViewController: NSFetchedResultsControllerDelegate {
   
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     if controller == syncResultsController,
-      let episode = anObject as? PodcastEpisode,
-      let existing = libraryResultsController.fetchedObjects?.first(where: { $0.podcastID == episode.podcastID }),
+      let episode = anObject as? TransferredEpisode,
+      let existing = libraryResultsController.fetchedObjects?.first(where: { $0.persistentID == episode.persistentID }),
       let existingIndexPath = libraryResultsController.indexPath(forObject: existing) {
       switch type {
       case .insert:

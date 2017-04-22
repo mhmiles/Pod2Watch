@@ -15,15 +15,14 @@ import racAdditions
 import ReactiveSwift
 
 class PodcastSectionController: IGListSectionController, IGListSectionType {
-  var podcast: LibraryPodcastEpisode?
+  var podcast: LibraryPodcast?
   
   func numberOfItems() -> Int {
     return 1
   }
   
   func sizeForItem(at index: Int) -> CGSize {
-    let width = collectionContext!.containerSize.width/2 - 1
-    return CGSize(width: width, height: width)
+
   }
   
   func cellForItem(at index: Int) -> UICollectionViewCell {

@@ -161,8 +161,33 @@
                             </userDefinedRuntimeAttributes>
                         </collectionViewLayout>
                         <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchBar" id="52Y-qH-fkB" customClass="SearchBarCell" customModule="Pod2Watch" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <searchBar opaque="NO" contentMode="redraw" placeholder="Search My Podcasts" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybe-Tt-gZb">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                                            <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </searchBar>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="Ybe-Tt-gZb" firstAttribute="top" secondItem="52Y-qH-fkB" secondAttribute="top" id="St9-qH-f5g"/>
+                                    <constraint firstItem="Ybe-Tt-gZb" firstAttribute="leading" secondItem="52Y-qH-fkB" secondAttribute="leading" id="Txb-ef-jef"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ybe-Tt-gZb" secondAttribute="bottom" id="ksn-PX-ckU"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ybe-Tt-gZb" secondAttribute="trailing" id="o7o-ts-0J6"/>
+                                </constraints>
+                                <size key="customSize" width="375" height="40"/>
+                                <connections>
+                                    <outlet property="searchBar" destination="Ybe-Tt-gZb" id="eoJ-nB-qLG"/>
+                                </connections>
+                            </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PodcastCell" id="yMj-DU-ikC" customClass="PodcastCell" customModule="Pod2Watch">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                <rect key="frame" x="162.5" y="50" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -271,11 +296,51 @@
                             <outlet property="delegate" destination="ave-un-BsK" id="nCZ-q6-veB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Episodes" id="fL9-Pf-XUg"/>
+                    <navigationItem key="navigationItem" title="Episodes" id="fL9-Pf-XUg">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="1Di-FZ-m9T">
+                            <view key="customView" opaque="NO" contentMode="scaleToFill" id="bdM-42-wbj">
+                                <rect key="frame" x="276" y="5" width="83" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CRd-om-f4T">
+                                        <rect key="frame" x="34" y="1" width="51" height="31"/>
+                                        <color key="tintColor" red="0.82745098039999998" green="0.82745098039999998" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <action selector="handleAutoTransferSwitchChange:" destination="ave-un-BsK" eventType="valueChanged" id="KTe-FZ-eZv"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCe-35-isZ">
+                                        <rect key="frame" x="23" y="2" width="8" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="8" id="wcE-C7-hYr"/>
+                                        </constraints>
+                                        <attributedString key="attributedText">
+                                            <fragment content="AUTO">
+                                                <attributes>
+                                                    <font key="NSFont" size="8" name="SFCompactText-SemiboldItalic"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="0.80000000000000004" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="CRd-om-f4T" secondAttribute="trailing" id="On4-Gq-l8W"/>
+                                    <constraint firstItem="CRd-om-f4T" firstAttribute="leading" secondItem="mCe-35-isZ" secondAttribute="trailing" constant="3" id="RTA-7M-ywk"/>
+                                    <constraint firstItem="CRd-om-f4T" firstAttribute="centerY" secondItem="bdM-42-wbj" secondAttribute="centerY" id="i4A-GV-L7N"/>
+                                    <constraint firstItem="mCe-35-isZ" firstAttribute="centerY" secondItem="bdM-42-wbj" secondAttribute="centerY" id="x4N-nn-CMu"/>
+                                </constraints>
+                            </view>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="autoTransferSwitch" destination="CRd-om-f4T" id="vMs-xY-g27"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cJs-zH-x7l" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1236" y="27"/>
+            <point key="canvasLocation" x="1236" y="26.53673163418291"/>
         </scene>
         <!--Podcasts-->
         <scene sceneID="hPf-Gp-No6">

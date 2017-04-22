@@ -12,6 +12,8 @@ struct MessageType {
   static let requestDeletes = "requestDeletes"
   static let sendDeletes = "sendDeletes"
   static let confirmDeletes = "confirmDeletes"
+  static let sendDeleteAll = "sendDeleteAll"
+  static let confirmDeleteAll = "confirmDeleteAll"
   static let requestUsedStorage = "requestUsedStorage"
   static let sendUsedStorage = "sendUsedStorage"
 }

@@ -13,12 +13,12 @@ import racAdditions
 import WatchConnectivity
 
 class MyWatchViewController: UITableViewController {
-  lazy var fetchedResultsController: NSFetchedResultsController<PodcastEpisode> = { () -> NSFetchedResultsController<PodcastEpisode> in
-    let request = NSFetchRequest<PodcastEpisode>(entityName: "PodcastEpisode")
+  lazy var fetchedResultsController: NSFetchedResultsController<TransferredEpisode> = { () -> NSFetchedResultsController<TransferredEpisode> in
+    let request = NSFetchRequest<TransferredEpisode>(entityName: "TransferredEpisode")
     request.sortDescriptors = [NSSortDescriptor(key: "sortIndex", ascending: true)]
     request.predicate = NSPredicate(format: "shouldDelete == NO")
     
-    let controller = NSFetchedResultsController<PodcastEpisode>(fetchRequest: request,
+    let controller = NSFetchedResultsController<TransferredEpisode>(fetchRequest: request,
                                                          managedObjectContext: PersistentContainer.shared.viewContext,
                                                          sectionNameKeyPath: nil,
                                                          cacheName: nil)
@@ -82,7 +82,7 @@ class MyWatchViewController: UITableViewController {
       let episode = fetchedResultsController.object(at: indexPath)
       
       if episode.hasBegunTransfer == false,
-        let transfer = WCSession.default().outstandingFileTransfers.first(where: { $0.file.metadata?["podcastID"] as? Int64 == episode.podcastID}) {
+        let transfer = WCSession.default().outstandingFileTransfers.first(where: { $0.file.metadata?["persistentID"] as? Int64 == episode.persistentID}) {
         transfer.cancel()
         
         let context = PersistentContainer.shared.viewContext
@@ -96,7 +96,7 @@ class MyWatchViewController: UITableViewController {
         if WCSession.default().isReachable {
           let message : [String: Any] = [
             "type": MessageType.sendDeletes,
-            "payload": [NSNumber(value: episode.podcastID)]
+            "payload": [NSNumber(value: episode.persistentID)]
           ]
           
           WCSession.default().sendMessage(message, replyHandler: nil, errorHandler: { (error) in
