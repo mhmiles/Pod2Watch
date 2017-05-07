@@ -180,7 +180,11 @@
                                     <action selector="handleSpeedUp" destination="tY7-tY-WWU" id="J18-tm-kt4"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Seek To" icon="accept" id="H0m-Vh-bgn"/>
+                            <menuItem title="Seek To" icon="accept" id="H0m-Vh-bgn">
+                                <connections>
+                                    <action selector="handleSeekTo" destination="tY7-tY-WWU" id="WMb-Ay-Z5A"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Delete" icon="trash" id="oVC-53-F1q">
                                 <connections>
                                     <action selector="handleDelete" destination="tY7-tY-WWU" id="z9L-R3-w6o"/>
@@ -203,6 +207,26 @@
                 </controller>
             </objects>
             <point key="canvasLocation" x="322.5641025641026" y="57.974358974358978"/>
+        </scene>
+        <!--Seek To-->
+        <scene sceneID="1Kb-OA-2Rf">
+            <objects>
+                <controller identifier="SeekTo" title="Seek To" id="7GR-Hd-RR1">
+                    <items>
+                        <group width="1" alignment="left" verticalAlignment="center" id="nrB-4b-QpT">
+                            <items>
+                                <picker width="0.29999999999999999" height="40" alignment="left" verticalAlignment="center" focusStyle="sequence" id="F9v-YL-H2l"/>
+                                <picker width="0.29999999999999999" height="40" alignment="center" verticalAlignment="center" focusStyle="sequence" id="Sfc-vI-EaL"/>
+                                <picker width="0.29999999999999999" height="40" alignment="right" verticalAlignment="center" focusStyle="sequence" id="MaM-yQ-mmg"/>
+                            </items>
+                        </group>
+                        <button width="1" alignment="left" verticalAlignment="bottom" title="OK" id="ZOW-cD-JS5">
+                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        </button>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="585" y="57"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="0US-gK-6Ak">
