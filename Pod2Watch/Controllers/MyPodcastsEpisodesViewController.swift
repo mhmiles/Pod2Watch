@@ -56,7 +56,7 @@ class MyPodcastsEpisodesViewController: UITableViewController {
     super.viewDidLoad()
     
     let request: NSFetchRequest<TransferredPodcast> = TransferredPodcast.fetchRequest()
-    request.predicate = NSPredicate(format: "persistentID == %ld", podcast.persistentID)
+    request.predicate = NSPredicate(format: "title == %@", podcast.title!)
     let context = PersistentContainer.shared.viewContext
     
     if let transferredPodcast = try! context.fetch(request).first {
@@ -100,7 +100,8 @@ class MyPodcastsEpisodesViewController: UITableViewController {
     } else {
       cell.syncButton.syncState = .noSync
       
-      cell.syncHandler = {
+      cell.syncHandler = { [weak cell] in
+        cell?.syncHandler = nil
         PodcastTransferManager.shared.transfer(rowEpisode)
       }
     }
@@ -114,7 +115,7 @@ class MyPodcastsEpisodesViewController: UITableViewController {
   
   @IBAction func handleAutoTransferSwitchChange(_ sender: UISwitch) {
     let request: NSFetchRequest<TransferredPodcast> = TransferredPodcast.fetchRequest()
-    request.predicate = NSPredicate(format: "persistentID == %ld", podcast.persistentID)
+    request.predicate = NSPredicate(format: "title == %@", podcast.title!)
     let context = PersistentContainer.shared.viewContext
     
     let transferredPodcast = try! context.fetch(request).first ?? TransferredPodcast(podcast, context: context)

@@ -38,7 +38,7 @@ public class LibraryEpisode: NSManagedObject {
     
     persistentID = Int64(bitPattern: mediaItem.persistentID)
     
-    if mediaItem.playbackDuration == 0 {
+    if mediaItem.playbackDuration < 1 {
       let asset = AVURLAsset(url: mediaItem.assetURL!)
       playbackDuration = asset.duration.seconds
     } else {

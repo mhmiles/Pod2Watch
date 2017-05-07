@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
-    <device id="watch38" orientation="portrait">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch42" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="12029"/>
     </dependencies>
     <scenes>
@@ -16,96 +17,192 @@
                         <table alignment="left" id="NDu-g2-b5M">
                             <items>
                                 <tableRow identifier="Podcast" id="b3S-EZ-8YY" customClass="PodcastsTableRowController" customModule="Pod2Watch_WatchKit_Extension">
-                                    <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="tz6-0k-y54">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" spacing="0.0" id="tz6-0k-y54">
                                         <items>
-                                            <label alignment="left" id="K6i-HN-wTE">
-                                                <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
-                                            </label>
-                                            <label alignment="left" id="M5h-O9-lwA">
-                                                <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
-                                            </label>
-                                            <group width="1" height="3" alignment="left" verticalAlignment="bottom" radius="1.5" id="8FB-Bx-Rik">
+                                            <group width="1" alignment="left" id="EWe-4G-QUZ">
                                                 <items>
-                                                    <group width="1" height="1" alignment="left" verticalAlignment="bottom" id="xUd-5M-MpC">
-                                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <group alignment="left" radius="2" spacing="5" id="fK5-3O-DU8">
+                                                        <items>
+                                                            <group width="1" alignment="left" verticalAlignment="center" radius="2" id="mJW-z3-bTp">
+                                                                <items>
+                                                                    <imageView width="10" height="10" alignment="left" verticalAlignment="center" id="58F-ny-FzZ"/>
+                                                                </items>
+                                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </group>
+                                                            <label alignment="left" text="Podcast Title" textAlignment="left" id="K6i-HN-wTE">
+                                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <fontDescription key="font" type="boldSystem" pointSize="11"/>
+                                                            </label>
+                                                        </items>
                                                     </group>
                                                 </items>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </group>
+                                            <group width="1" alignment="left" id="noC-Ud-7Tl">
+                                                <items>
+                                                    <label alignment="left" text="Episode Title" textAlignment="left" id="M5h-O9-lwA">
+                                                        <fontDescription key="font" type="system" pointSize="12"/>
+                                                    </label>
+                                                </items>
+                                                <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="3"/>
+                                            </group>
+                                            <group width="1" height="4" alignment="left" verticalAlignment="bottom" radius="0.0" id="8FB-Bx-Rik">
+                                                <items>
+                                                    <group width="2" height="1" alignment="left" verticalAlignment="bottom" radius="2" id="xUd-5M-MpC">
+                                                        <color key="backgroundColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </group>
+                                                </items>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             </group>
                                         </items>
-                                        <edgeInsets key="margins" left="5" right="5" top="0.0" bottom="5"/>
+                                        <edgeInsets key="margins" left="5" right="5" top="4" bottom="5"/>
                                     </group>
                                     <connections>
+                                        <outlet property="artworkImage" destination="58F-ny-FzZ" id="Bge-7U-aX2"/>
                                         <outlet property="epiosodeTitleLabel" destination="M5h-O9-lwA" id="Dsj-r5-rvh"/>
                                         <outlet property="podcastTitleLabel" destination="K6i-HN-wTE" id="DAR-yn-y5I"/>
                                         <outlet property="progressBar" destination="xUd-5M-MpC" id="0Pd-EG-C1i"/>
                                     </connections>
                                 </tableRow>
+                                <tableRow identifier="NoPodcasts" selectable="NO" id="q5E-uq-20p">
+                                    <group key="rootItem" width="1" height="1" alignment="left" id="mph-aa-e8R">
+                                        <items>
+                                            <label alignment="center" verticalAlignment="center" text="Sync podcasts in the iPhone app" textAlignment="center" numberOfLines="4" id="epJ-vw-bUT"/>
+                                        </items>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </group>
+                                </tableRow>
                             </items>
                         </table>
                     </items>
+                    <menu key="menu" id="TbR-kY-0vr">
+                        <items>
+                            <menuItem title="Delete All" icon="trash" id="UnC-yJ-6BF">
+                                <connections>
+                                    <action selector="handleDeleteAll" destination="AgC-eL-Hgc" id="5BB-mt-GOI"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
                     <connections>
                         <outlet property="podcastsTable" destination="NDu-g2-b5M" id="KAk-Jm-C4R"/>
                     </connections>
                 </controller>
             </objects>
+            <point key="canvasLocation" x="36" y="88"/>
         </scene>
-        <!--Details-->
-        <scene sceneID="RM7-aX-fab">
+        <!--Now Playing-->
+        <scene sceneID="AaR-LZ-vBv">
             <objects>
-                <controller identifier="Details" title="Details" id="8on-nl-ngG" customClass="EpisodeDetailsController" customModule="Pod2Watch_WatchKit_Extension">
+                <controller identifier="NowPlaying" title="Now Playing" id="tY7-tY-WWU" customClass="NowPlayingController" customModule="Pod2Watch_WatchKit_App" customModuleProvider="target">
                     <items>
-                        <group width="1" alignment="left" layout="vertical" id="cWZ-F6-KLG">
+                        <group width="1" height="1" alignment="left" layout="vertical" radius="0.0" spacing="0.0" id="d2K-0f-P3v">
                             <items>
-                                <label alignment="left" id="z1g-Fr-PDC"/>
-                                <label alignment="left" numberOfLines="2" id="BfV-kQ-bvG">
-                                    <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
-                                </label>
-                            </items>
-                        </group>
-                        <button width="1" alignment="right" verticalAlignment="bottom" title="Play" id="Iht-lr-rrq">
-                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="handlePlay" destination="8on-nl-ngG" id="gQ5-rQ-XGn"/>
-                            </connections>
-                        </button>
-                        <group width="1" alignment="left" verticalAlignment="center" layout="vertical" id="Aa9-4Z-MZG">
-                            <items>
-                                <label alignment="left" text="Start at:" id="uAw-zn-msG">
-                                    <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
-                                </label>
-                                <group width="1" height="40" alignment="left" verticalAlignment="bottom" id="qCv-H2-5gM">
+                                <group width="1" height="6" alignment="left" radius="2" spacing="0.0" id="xKN-Wy-a7L">
                                     <items>
-                                        <picker width="0.29999999999999999" height="1" alignment="left" verticalAlignment="bottom" focusStyle="sequence" id="PU3-6e-9wu">
+                                        <group width="4" height="1" alignment="left" radius="2" id="5FH-1p-9ai">
+                                            <color key="backgroundColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </group>
+                                    </items>
+                                    <edgeInsets key="margins" left="0.0" right="0.0" top="1" bottom="1"/>
+                                </group>
+                                <group width="1" alignment="left" id="wv0-mF-mWS">
+                                    <items>
+                                        <label alignment="left" text="0:00" id="KdV-Do-wHk">
+                                            <fontDescription key="font" type="system" weight="medium" pointSize="10"/>
+                                        </label>
+                                        <label alignment="center" id="9Lr-Zl-baJ">
+                                            <fontDescription key="font" type="boldSystem" pointSize="10"/>
+                                        </label>
+                                        <label alignment="right" text="-0:00" id="7Xk-vB-93c">
+                                            <fontDescription key="font" type="system" weight="medium" pointSize="10"/>
+                                        </label>
+                                    </items>
+                                </group>
+                                <group width="1" height="2" alignment="left" id="JLN-rl-jbA"/>
+                                <group width="1" alignment="left" layout="vertical" id="8fc-0h-F4q">
+                                    <items>
+                                        <label alignment="center" text="Podcast Title" id="5w4-Vh-uK7">
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="font" type="boldSystem" pointSize="12"/>
+                                        </label>
+                                        <label alignment="left" text="Episode Title _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _" numberOfLines="2" id="YaP-Zp-IgQ">
+                                            <fontDescription key="font" type="system" pointSize="14"/>
+                                        </label>
+                                    </items>
+                                    <edgeInsets key="margins" left="5" right="5" top="3" bottom="0.0"/>
+                                </group>
+                                <group width="1" alignment="left" verticalAlignment="bottom" id="LB6-69-aFD" userLabel="Buttons">
+                                    <items>
+                                        <button width="35" height="35" alignment="left" verticalAlignment="center" backgroundImage="Back" id="bLe-TC-LPE">
+                                            <variation key="device=watch38mm" height="35" width="35"/>
+                                            <variation key="device=watch42mm" height="40" width="40"/>
                                             <connections>
-                                                <action selector="handleHoursSelection:" destination="8on-nl-ngG" id="qQL-nM-fnW"/>
+                                                <action selector="handleBack" destination="tY7-tY-WWU" id="bDe-gV-hpx"/>
                                             </connections>
-                                        </picker>
-                                        <picker width="0.29999999999999999" height="1" alignment="center" focusStyle="sequence" id="FpN-mB-auH">
+                                        </button>
+                                        <button width="60" height="60" alignment="center" verticalAlignment="center" backgroundImage="Pause" id="HgB-6D-mFN">
                                             <connections>
-                                                <action selector="handleMinutesSelection:" destination="8on-nl-ngG" id="ENQ-0t-Aah"/>
+                                                <action selector="handlePlayPause" destination="tY7-tY-WWU" id="CuK-mc-ScJ"/>
                                             </connections>
-                                        </picker>
-                                        <picker width="0.29999999999999999" height="1" alignment="right" focusStyle="sequence" id="hdO-IL-Yck">
+                                        </button>
+                                        <button width="35" height="35" alignment="right" verticalAlignment="center" backgroundImage="Forward" id="9WH-Hf-mEL">
+                                            <variation key="device=watch38mm" height="35" width="35"/>
+                                            <variation key="device=watch42mm" height="40" width="40"/>
                                             <connections>
-                                                <action selector="handleSecondsSelection:" destination="8on-nl-ngG" id="thD-Uu-Gbp"/>
+                                                <action selector="handleForward" destination="tY7-tY-WWU" id="zAg-jS-9j9"/>
                                             </connections>
-                                        </picker>
+                                        </button>
+                                    </items>
+                                    <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="6"/>
+                                </group>
+                                <group width="1" alignment="left" verticalAlignment="bottom" radius="6" id="qAt-6y-Y51" customClass="BorderedGroup" customModule="Pod2Watch_WatchKit_App" customModuleProvider="target">
+                                    <items>
+                                        <slider width="1" height="30" alignment="left" verticalAlignment="bottom" continuous="YES" value="0.69999999999999996" steps="6" minimumImage="VolDown" maximumImage="VolUp" id="QkL-L8-9cI">
+                                            <color key="color" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <connections>
+                                                <action selector="handleVolumePress:" destination="tY7-tY-WWU" id="de2-ej-94c"/>
+                                            </connections>
+                                        </slider>
                                     </items>
                                 </group>
                             </items>
                         </group>
                     </items>
+                    <menu key="menu" id="TaY-33-RAa">
+                        <items>
+                            <menuItem title="Speed Down" image="Speed Down" id="z1S-wO-bDg">
+                                <connections>
+                                    <action selector="handleSpeedDown" destination="tY7-tY-WWU" id="1wo-AJ-Vqh"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Speed Up" image="Speed Up" id="b8M-Wp-hoo">
+                                <connections>
+                                    <action selector="handleSpeedUp" destination="tY7-tY-WWU" id="J18-tm-kt4"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Seek To" icon="accept" id="H0m-Vh-bgn"/>
+                            <menuItem title="Delete" icon="trash" id="oVC-53-F1q">
+                                <connections>
+                                    <action selector="handleDelete" destination="tY7-tY-WWU" id="z9L-R3-w6o"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
                     <connections>
-                        <outlet property="episodeTitleLabel" destination="BfV-kQ-bvG" id="Ytl-m6-awJ"/>
-                        <outlet property="hourPicker" destination="PU3-6e-9wu" id="DPw-Ob-cIz"/>
-                        <outlet property="minutePicker" destination="FpN-mB-auH" id="Ap1-LR-pMY"/>
-                        <outlet property="podcastTitleLabel" destination="z1g-Fr-PDC" id="hdW-NR-E82"/>
-                        <outlet property="secondPicker" destination="hdO-IL-Yck" id="B4L-Su-MXq"/>
+                        <outlet property="containerGroup" destination="d2K-0f-P3v" id="Hkt-IC-Xo1"/>
+                        <outlet property="currentLabel" destination="KdV-Do-wHk" id="khJ-hQ-0Pm"/>
+                        <outlet property="episodeTitleLabel" destination="YaP-Zp-IgQ" id="yi9-fQ-R6G"/>
+                        <outlet property="playPauseButton" destination="HgB-6D-mFN" id="tpj-Y6-XmD"/>
+                        <outlet property="podcastTitleLabel" destination="5w4-Vh-uK7" id="Xu7-VH-eBi"/>
+                        <outlet property="progressBar" destination="5FH-1p-9ai" id="feu-mw-Yqa"/>
+                        <outlet property="rateLabel" destination="9Lr-Zl-baJ" id="LVc-PC-LjY"/>
+                        <outlet property="remainingLabel" destination="7Xk-vB-93c" id="kb9-xz-RHh"/>
+                        <outlet property="volumeSlider" destination="QkL-L8-9cI" id="6L3-RA-T7H"/>
+                        <outlet property="volumeSliderBackground" destination="qAt-6y-Y51" id="njZ-hh-Lgh"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="311" y="134"/>
+            <point key="canvasLocation" x="322.5641025641026" y="57.974358974358978"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="0US-gK-6Ak">
@@ -115,6 +212,7 @@
                         <label alignment="left" text="Alert Label" id="BDC-Av-qYW"/>
                     </items>
                     <notificationCategory key="notificationCategory" identifier="myCategory" id="STL-kp-aRZ"/>
+                    <edgeInsets key="margins" left="1" right="1" top="0.0" bottom="0.0"/>
                     <connections>
                         <outlet property="notificationAlertLabel" destination="BDC-Av-qYW" id="YuK-NI-Lo8"/>
                     </connections>

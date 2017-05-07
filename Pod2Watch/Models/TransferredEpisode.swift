@@ -17,10 +17,6 @@ import WatchConnectivity.WCSessionFile
 public class TransferredEpisode: NSManagedObject {
   var transfer: WCSessionFileTransfer?
   
-  var fileURL: URL {
-    return URL(string: fileURLString!)!
-  }
-  
   @objc var releaseDateLabel: String! {
     guard let releaseDate = releaseDate else {
       return "Unknown Date"
@@ -79,10 +75,15 @@ public class TransferredEpisode: NSManagedObject {
     if let maxSortIndex = try! context.fetch(request).first?.sortIndex {
       sortIndex = maxSortIndex+1
     }
-      
-    try! context.save()
   }
   
+  var podcastArtworkImage: UIImage? {
+    guard let podcastTitle = podcastTitle else {
+      return nil
+    }
+    
+    return LibraryPodcast.artworkCache.image(withIdentifier: podcastTitle)
+  }
   
   var podcastArtworkProducer: SignalProducer<UIImage?, NoError> {
     return SignalProducer<UIImage?, NoError> { [unowned self] (observer, disposable) in

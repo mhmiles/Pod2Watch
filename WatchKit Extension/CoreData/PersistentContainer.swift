@@ -28,6 +28,9 @@ public final class PersistentContainer: NSPersistentContainer {
      error conditions that could cause the creation of the store to fail.
      */
     
+    ValueTransformer.setValueTransformer(URLTransformer(), forName: NSValueTransformerName("URLTransformer"))
+    ValueTransformer.setValueTransformer(UIImageTransformer(), forName: NSValueTransformerName("UIImageTransformer"))
+    
     let container = PersistentContainer(name: "Pod2WatchOnWatch")
     
     container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -47,7 +50,7 @@ public final class PersistentContainer: NSPersistentContainer {
       }
     })
     
-    container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
+    container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
     
     return container
   }()

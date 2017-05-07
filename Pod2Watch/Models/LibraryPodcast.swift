@@ -88,13 +88,12 @@ extension LibraryPodcast {
     self.init(context: context)
 
     title = mediaItem.podcastTitle
-    persistentID = Int64(bitPattern: mediaItem.podcastPersistentID)
   }
 }
 
 extension LibraryPodcast: IGListDiffable {
   public func diffIdentifier() -> NSObjectProtocol {
-    return NSNumber(value: persistentID) as NSObjectProtocol
+    return (title ?? "") as NSObjectProtocol
   }
   
   public func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {

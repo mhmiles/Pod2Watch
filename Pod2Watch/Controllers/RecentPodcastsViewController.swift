@@ -91,7 +91,9 @@ class RecentPodcastsViewController: UITableViewController {
     } else {
       cell.syncButton.syncState = .noSync
       
-      cell.syncHandler = {
+      cell.syncHandler = { [weak cell] in
+        cell?.syncHandler = nil
+        
         PodcastTransferManager.shared.transfer(episode)
       }
     }

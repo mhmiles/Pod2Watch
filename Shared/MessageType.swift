@@ -9,6 +9,7 @@
 import Foundation
 
 struct MessageType {
+  static let requestPending = "requestPending"
   static let requestDeletes = "requestDeletes"
   static let sendDeletes = "sendDeletes"
   static let confirmDeletes = "confirmDeletes"

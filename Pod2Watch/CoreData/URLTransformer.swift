@@ -9,17 +9,17 @@
 import UIKit
 import CoreData
 
-@objc class NSURLTransformer: ValueTransformer {
+@objc class URLTransformer: ValueTransformer {
   override class func transformedValueClass() -> Swift.AnyClass {
-    return NSString.self
+    return NSData.self
   }
   
   override func transformedValue(_ value: Any?) -> Any? {
-    guard let url = value as? NSURL, let urlString = url.absoluteString else {
+    guard let url = value as? URL else {
       return nil
     }
     
-    return urlString as NSString
+    return url.absoluteString.data(using: .utf8)
   }
   
   override class func allowsReverseTransformation() -> Bool {
@@ -27,10 +27,11 @@ import CoreData
   }
   
   override func reverseTransformedValue(_ value: Any?) -> Any? {
-    guard let urlString = value as? String else {
-      return nil
+    guard let data = value as? Data,
+      let urlString = String(data: data, encoding: .utf8) else {
+        return nil
     }
     
-    return NSURL(string: urlString)
+    return URL(string: urlString)
   }
 }

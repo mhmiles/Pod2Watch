@@ -9,6 +9,7 @@
 import WatchKit
 
 class PodcastsTableRowController: NSObject {
+  @IBOutlet var artworkImage: WKInterfaceImage!
   @IBOutlet var podcastTitleLabel: WKInterfaceLabel!
   @IBOutlet var epiosodeTitleLabel: WKInterfaceLabel!
   

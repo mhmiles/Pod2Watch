@@ -62,17 +62,17 @@ class MyWatchViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "MyWatchCell", for: indexPath) as! MyWatchEpisodeCell
     
-    let podcast = fetchedResultsController.object(at: indexPath)
-    cell.titleLabel.text = podcast.episodeTitle
-    cell.durationLabel.text = podcast.secondaryLabelText
+    let episode = fetchedResultsController.object(at: indexPath)
+    cell.titleLabel.text = episode.episodeTitle
+    cell.durationLabel.text = episode.secondaryLabelText
     
-    if podcast.isTransferred == false {
+    if episode.isTransferred == false {
       cell.syncButton.syncState = .syncing
     } else {
       cell.syncButton.syncState = nil
     }
     
-    cell.artworkView.rac_image <~ podcast.podcastArtworkProducer
+    cell.artworkView.image = episode.podcast?.artworkImage
     
     return cell
   }

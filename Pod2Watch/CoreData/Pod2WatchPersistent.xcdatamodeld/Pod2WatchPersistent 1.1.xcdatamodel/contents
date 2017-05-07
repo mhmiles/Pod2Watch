@@ -2,7 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="1.1">
     <entity name="TransferredEpisode" representedClassName=".TransferredEpisode" syncable="YES" codeGenerationType="category">
         <attribute name="episodeTitle" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="fileURLString" optional="YES" attributeType="String" valueTransformerName="NSURLTransformer" customClassName="NSURL" syncable="YES"/>
+        <attribute name="fileURL" attributeType="Transformable" valueTransformerName="URLTransformer" customClassName=".URL" syncable="YES"/>
         <attribute name="hasBegunTransfer" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isTransferred" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="persistentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -18,9 +18,9 @@
             </compoundIndex>
         </compoundIndexes>
     </entity>
-    <entity name="TransferredPodcast" representedClassName="TransferredPodcast" syncable="YES" codeGenerationType="class">
+    <entity name="TransferredPodcast" representedClassName=".TransferredPodcast" syncable="YES">
+        <attribute name="artworkImage" optional="YES" attributeType="Transformable" valueTransformerName="UIImageTransformer" customClassName=".UIImage" syncable="YES"/>
         <attribute name="isAutoTransferred" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="persistentID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="episodes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TransferredEpisode" inverseName="podcast" inverseEntity="TransferredEpisode" syncable="YES"/>
     </entity>

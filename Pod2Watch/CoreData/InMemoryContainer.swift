@@ -72,9 +72,25 @@ public final class InMemoryContainer: NSPersistentContainer {
         return
       }
       
-      let podcast = LibraryPodcast(mediaItem: representativeItem, context: viewContext)
+      let request: NSFetchRequest<LibraryPodcast> = LibraryPodcast.fetchRequest()
+      request.predicate = NSPredicate(format: "title == %@", representativeItem.podcastTitle ?? "")
+      request.fetchLimit = 1
       
-      let episodes = collection.items.map({ mediaItem -> LibraryEpisode in
+      let podcast: LibraryPodcast
+      
+      if let existingPodcast = (try? viewContext.fetch(request))?.first {
+        podcast = existingPodcast
+      } else {
+        podcast = LibraryPodcast(mediaItem: representativeItem, context: viewContext)
+      }
+      
+      let episodes = collection.items.filter({ mediaItem in
+        if let _ = mediaItem.assetURL {
+          return true
+        } else {
+          return false
+        }
+      }).map({ mediaItem -> LibraryEpisode in
         let episode = LibraryEpisode(mediaItem: mediaItem, context: viewContext)
         episode.podcast = podcast
         

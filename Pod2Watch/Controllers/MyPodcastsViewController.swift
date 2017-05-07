@@ -34,13 +34,13 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
   
   fileprivate lazy var libraryResultsController: NSFetchedResultsController<LibraryPodcast> = {
     let request: NSFetchRequest<LibraryPodcast> = LibraryPodcast.fetchRequest()
-
+    
     request.sortDescriptors = [NSSortDescriptor(key: "titleWithoutThe", ascending: true)]
-
+    
     let controller = NSFetchedResultsController<LibraryPodcast>(fetchRequest: request,
-                                                                       managedObjectContext: InMemoryContainer.shared.viewContext,
-                                                                       sectionNameKeyPath: nil,
-                                                                       cacheName: nil)
+                                                                managedObjectContext: InMemoryContainer.shared.viewContext,
+                                                                sectionNameKeyPath: nil,
+                                                                cacheName: nil)
     
     controller.delegate = self
     try! controller.performFetch()
@@ -66,7 +66,7 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
       adapter.performUpdates(animated: true, completion: nil)
     }
   }
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -74,8 +74,8 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
                                           for: .normal)
     
     collectionView.setContentOffset(searchBarBottomOffset, animated: false)
-//    loadPodcasts()
-//    _ = libraryResultsController
+    //    loadPodcasts()
+    //    _ = libraryResultsController
     
     adapter.collectionView = collectionView
     adapter.dataSource = self
@@ -83,19 +83,19 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
   
   
   
-//  fileprivate func loadPodcasts() {
-//    let request: NSFetchRequest<LibraryPodcastEpisode> = LibraryPodcastEpisode.fetchRequest()
-//    request.sortDescriptors = [NSSortDescriptor(key: "podcastTitleWithoutThe", ascending: true)]
-//    
-//    let episodes = try! InMemoryContainer.shared.viewContext.fetch(request)
-//    podcasts = episodes.reduce([], { (accum, episode) -> [LibraryEpisode] in
-//      if accum.last?.podcastTitle == episode.podcastTitle {
-//        return accum
-//      } else {
-//        return accum + [episode]
-//      }
-//    })
-//  }
+  //  fileprivate func loadPodcasts() {
+  //    let request: NSFetchRequest<LibraryPodcastEpisode> = LibraryPodcastEpisode.fetchRequest()
+  //    request.sortDescriptors = [NSSortDescriptor(key: "podcastTitleWithoutThe", ascending: true)]
+  //
+  //    let episodes = try! InMemoryContainer.shared.viewContext.fetch(request)
+  //    podcasts = episodes.reduce([], { (accum, episode) -> [LibraryEpisode] in
+  //      if accum.last?.podcastTitle == episode.podcastTitle {
+  //        return accum
+  //      } else {
+  //        return accum + [episode]
+  //      }
+  //    })
+  //  }
   
   @IBAction func handleSegmentPress(_ sender: UISegmentedControl) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -108,7 +108,7 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
     MPMediaLibrary.requestAuthorization { (status) in
       if status == .authorized {
         InMemoryContainer.shared.reloadPodcastLibrary()
-//        self.loadPodcasts()
+        //        self.loadPodcasts()
       } else {
       }
       
@@ -118,7 +118,7 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
   
   @IBAction func openSettings() {
     guard let settingsURL = URL(string: UIApplicationOpenSettingsURLString) else {
-        return
+      return
     }
     
     UIApplication.shared.open(settingsURL)
@@ -144,7 +144,7 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
   func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
     guard let podcasts = libraryResultsController.fetchedObjects,
       podcasts.count > 0 || titleSearchQuery != nil else {
-      return []
+        return []
     }
     
     return [searchToken] + podcasts
@@ -159,12 +159,12 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
                                             }
                                             
                                             self.searchBar = searchBarCell.searchBar
-      }, sizeBlock: { (item, context) -> CGSize in
-        guard let context = context else {
-          return CGSize.zero
-        }
-        
-        return CGSize(width: context.containerSize.width, height: 40.0)
+        }, sizeBlock: { (item, context) -> CGSize in
+          guard let context = context else {
+            return CGSize.zero
+          }
+          
+          return CGSize(width: context.containerSize.width, height: 40.0)
       })
     }
     
@@ -191,8 +191,8 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
     
     switch authorizationStatus {
     case .authorized:
-       return UINib(nibName: "OpenPodcastsView", bundle: nil).instantiate(withOwner: self, options: nil).first as? UIView
-
+      return UINib(nibName: "OpenPodcastsView", bundle: nil).instantiate(withOwner: self, options: nil).first as? UIView
+      
     case .restricted:
       fallthrough
     case .denied:
@@ -237,6 +237,7 @@ extension MyPodcastsViewController: UIScrollViewDelegate {
     
     if offset.y < -44 {
       scrollView.setContentOffset(CGPoint(x: 0, y: -64), animated: true)
+      searchBar?.becomeFirstResponder()
     } else if offset.y < -24 {
       scrollView.setContentOffset(CGPoint(x: 0, y: -22), animated: true)
     }

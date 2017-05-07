@@ -4,91 +4,19 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            scope = "0"
-            stopOnStyle = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pod2Watch/Models/LibraryEpisode.swift"
-            timestampString = "514445076.751075"
+            filePath = "WatchKit Extension/BorderedGroup.swift"
+            timestampString = "515658510.557997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "podcastArtworkProducer"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "isBorderVisible"
             landmarkType = "24">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pod2Watch.LibraryEpisode.podcastArtworkProducer.getter : ReactiveSwift.SignalProducer&lt;Swift.Optional&lt;__ObjC.UIImage&gt;, Result.NoError&gt;"
-                  moduleName = "Pod2Watch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
-                  timestampString = "514523351.615963"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "104"
-                  endingLineNumber = "104"
-                  offsetFromSymbolStart = "60">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pod2Watch.LibraryEpisode.(podcastArtworkProducer.getter : ReactiveSwift.SignalProducer&lt;Swift.Optional&lt;__ObjC.UIImage&gt;, Result.NoError&gt;).(closure #1)"
-                  moduleName = "Pod2Watch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
-                  timestampString = "514523351.618278"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "104"
-                  endingLineNumber = "104"
-                  offsetFromSymbolStart = "24">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pod2Watch.LibraryEpisode.(podcastArtworkProducer.getter : ReactiveSwift.SignalProducer&lt;Swift.Optional&lt;__ObjC.UIImage&gt;, Result.NoError&gt;).(closure #1).(closure #1)"
-                  moduleName = "Pod2Watch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
-                  timestampString = "514523351.619632"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "104"
-                  endingLineNumber = "104"
-                  offsetFromSymbolStart = "20">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pod2Watch.LibraryEpisode.(podcastArtworkProducer.getter : ReactiveSwift.SignalProducer&lt;Swift.Optional&lt;__ObjC.UIImage&gt;, Result.NoError&gt;).(closure #1).(closure #1).(closure #1)"
-                  moduleName = "Pod2Watch"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/LibraryEpisode.swift"
-                  timestampString = "514523351.621002"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "104"
-                  endingLineNumber = "104"
-                  offsetFromSymbolStart = "136">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
