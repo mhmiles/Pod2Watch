@@ -20,7 +20,7 @@ public class Podcast: NSManagedObject {
   
   class func existing(title: String) -> Podcast? {
     let request: NSFetchRequest<Podcast> = fetchRequest()
-    request.predicate = NSPredicate(format: "title == %@", title)
+    request.predicate = NSPredicate(format: "title MATCHES[cd] %@", title)
     request.fetchLimit = 1
     
     return (try? PersistentContainer.shared.viewContext.fetch(request))?.first

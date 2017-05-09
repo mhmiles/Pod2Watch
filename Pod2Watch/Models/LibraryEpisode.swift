@@ -36,13 +36,13 @@ public class LibraryEpisode: NSManagedObject {
     return (try? InMemoryContainer.shared.viewContext.fetch(request))?.first
   }
   
-  class func latestEpisode(title: String, context: NSManagedObjectContext) -> LibraryEpisode? {
+  class func latestEpisode(title: String) -> LibraryEpisode? {
     let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "podcast.title == %@", title)
     request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
     request.fetchLimit = 1
     
-    return (try? context.fetch(request))?.first
+    return (try? InMemoryContainer.shared.viewContext.fetch(request))?.first
   }
   
   convenience init(mediaItem: MPMediaItem, context: NSManagedObjectContext) {

@@ -30,20 +30,28 @@ public class TransferredPodcast: NSManagedObject {
   
   class func existing(title: String) -> TransferredPodcast? {
     let transferredRequest: NSFetchRequest<TransferredPodcast> = fetchRequest()
-    transferredRequest.predicate = NSPredicate(format: "title == %@", title)
+    transferredRequest.predicate = NSPredicate(format: "title MATCHES[cd] %@", title)
     transferredRequest.fetchLimit = 1
     
     return (try? PersistentContainer.shared.viewContext.fetch(transferredRequest))?.first
   }
   
   class func all() -> [TransferredPodcast] {
-    let transferredRequest: NSFetchRequest<TransferredPodcast> = fetchRequest()
+    let request: NSFetchRequest<TransferredPodcast> = fetchRequest()
     
-    return try! PersistentContainer.shared.viewContext.fetch(transferredRequest)
+    return try! PersistentContainer.shared.viewContext.fetch(request)
+  }
+  
+  class func autoTransfers() -> [TransferredPodcast] {
+    let request: NSFetchRequest<TransferredPodcast> = fetchRequest()
+    request.predicate = NSPredicate(format: "isAutoTransferred == YES")
+    
+    return try! PersistentContainer.shared.viewContext.fetch(request)
   }
 }
 
 // MARK: Generated accessors for episodes
+
 extension TransferredPodcast {
   
   @objc(addEpisodesObject:)

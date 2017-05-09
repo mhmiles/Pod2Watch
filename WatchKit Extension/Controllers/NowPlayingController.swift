@@ -46,11 +46,10 @@ class NowPlayingController: WKInterfaceController {
   }
   
   private let tickDisposable = SerialDisposable()
+  private var deinitDisposable: ScopedDisposable<AnyDisposable>!
   
   override func awake(withContext context: Any?) {
     super.awake(withContext: context)
-    
-    play()
     
     crownSequencer.delegate = self
     
@@ -68,29 +67,30 @@ class NowPlayingController: WKInterfaceController {
     currentTimeChangedSignal.debounce(0.25, on: QueueScheduler.main).observeValues { [weak self] _ in
       if let _self = self, _self.wasPlaying {
         _self.wasPlaying = false
-        _self.play()
+        AudioPlayer.shared.play()
       }
     }
     
-    NotificationCenter.default.addObserver(forName: NSNotification.Name.AVAudioSessionRouteChange,
-                                           object: nil,
-                                           queue: OperationQueue.main) { [weak self] notification in
-                                            guard let reasonValue = notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt,
-                                              let reason = AVAudioSessionRouteChangeReason(rawValue: reasonValue) else {
-                                              return
-                                            }
-                                            
-                                            switch reason {
-                                            case .newDeviceAvailable:
-                                              self?.play()
-                                              
-                                            case .oldDeviceUnavailable:
-                                              self?.pause()
-                                              
-                                            default:
-                                              break
-                                            }
+    let disposable = AudioPlayer.shared.isPlaying.producer.startWithValues { [unowned self] isPlaying in
+      if isPlaying {
+        WKInterfaceDevice.current().play(.click)
+        
+        self.playPauseButton.setBackgroundImage(#imageLiteral(resourceName: "Pause"))
+        
+        let interval = DispatchTimeInterval.milliseconds(1000/Int(AudioPlayer.shared.rate))
+        self.tickDisposable.inner = timer(interval: interval, on: QueueScheduler.main).map({ _ in () }).startWithValues(self.updateTimeLabels)
+      } else {
+        WKInterfaceDevice.current().play(.click)
+        
+        self.tickDisposable.inner = nil
+
+        self.playPauseButton.setBackgroundImage(#imageLiteral(resourceName: "Play"))
+        
+        self.updateTimeLabels()
+      }
     }
+    
+    deinitDisposable = ScopedDisposable(disposable)
   }
   
   override func willActivate() {
@@ -180,38 +180,11 @@ class NowPlayingController: WKInterfaceController {
   }
   
   @IBAction func handlePlayPause() {
-    if AudioPlayer.shared.isPlaying {
-      pause()
+    if AudioPlayer.shared.isPlaying.value {
+      AudioPlayer.shared.pause()
     } else {
-      play()
+      AudioPlayer.shared.play()
     }
-  }
-  
-  fileprivate func pause() {
-    WKInterfaceDevice.current().play(.click)
-    
-    tickDisposable.inner = nil
-    AudioPlayer.shared.pause()
-    
-    playPauseButton.setBackgroundImage(#imageLiteral(resourceName: "Play"))
-    
-    updateTimeLabels()
-  }
-  
-  private func play() {
-    WKInterfaceDevice.current().play(.click)
-    
-    playPauseButton.setBackgroundImage(#imageLiteral(resourceName: "Pause"))
-    
-    let session = AVAudioSession.sharedInstance()
-    try! session.setActive(true)
-    try! session.setCategory(AVAudioSessionCategoryPlayback, with: .duckOthers)
-    
-    let player = AudioPlayer.shared
-    player.play()
-    
-    let interval = DispatchTimeInterval.milliseconds(1000/Int(player.rate))
-    tickDisposable.inner = timer(interval: interval, on: QueueScheduler.main).map({ _ in () }).startWithValues(updateTimeLabels)
   }
   
   @IBAction func handleBack() {
@@ -281,6 +254,8 @@ class NowPlayingController: WKInterfaceController {
   }
 }
 
+//MARK: - WKCrownDelegate
+
 extension NowPlayingController: WKCrownDelegate {
   func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
     let player = AudioPlayer.shared
@@ -291,9 +266,9 @@ extension NowPlayingController: WKCrownDelegate {
       volumeChangedObserver.send(value: ())
       volumeSlider.setValue(volume)
     } else {
-      if player.isPlaying {
+      if player.isPlaying.value {
         wasPlaying = true
-        pause()
+        player.pause()
       }
       
       let delta = rotationalDelta*20*pow(1+rotationalDelta, 4)

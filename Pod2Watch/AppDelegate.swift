@@ -21,6 +21,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    completionHandler(.newData)
+    if PodcastTransferManager.shared.handleAutoTransfers() {
+      completionHandler(.newData)
+    } else {
+      completionHandler(.noData)
+    }
   }
 }

@@ -112,6 +112,8 @@ public final class InMemoryContainer: NSPersistentContainer {
   }
 }
 
+//MARK: - Notifications
+
 extension InMemoryContainer {
   static let PodcastLibraryDidReload = Notification.Name(rawValue: "PodcastLibraryDidReload")
 }

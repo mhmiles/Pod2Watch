@@ -95,6 +95,8 @@ class MyWatchViewController: UITableViewController {
    }
 }
 
+//MARK: - NSFetchedResultsControllerDelegate
+
 extension MyWatchViewController: NSFetchedResultsControllerDelegate {
   func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     tableView.beginUpdates()

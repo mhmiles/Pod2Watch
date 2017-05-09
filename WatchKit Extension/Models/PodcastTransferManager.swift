@@ -37,15 +37,34 @@ class PodcastTransferManager: NSObject {
     deletePodcasts(persistentIDs: [episode.persistentID])
   }
   
-  func deleteAllPodcasts() {
-    let context = PersistentContainer.shared.viewContext
-    let request: NSFetchRequest<Episode> = Episode.fetchRequest()
-    guard let episodes = try? context.fetch(request) else {
-      return
+  
+  fileprivate func deletePodcasts(persistentIDs: [Int64]) {
+    let episodes = Episode.existing(persistentIDs: persistentIDs)
+    AudioPlayer.shared.removeFromQueue(episodes: episodes)
+    
+    for episode in episodes {
+      try? FileManager.default.removeItem(at: episode.fileURL)
+      
+      PersistentContainer.shared.viewContext.delete(episode)
     }
     
+    PersistentContainer.saveContext()
+    
+    let message: [String: Any] = [
+      "type": MessageType.confirmDeletes,
+      "payload": persistentIDs
+    ]
+    
+    session.sendMessage(message, replyHandler: nil) { (error) in
+      print(error)
+    }
+  }
+  
+  func deleteAllPodcasts() {
+    let context = PersistentContainer.shared.viewContext
+    
     context.perform {
-      for episode in episodes {
+      for episode in Episode.all() {
         context.delete(episode)
       }
     }
@@ -74,47 +93,22 @@ class PodcastTransferManager: NSObject {
   fileprivate func requestDeletes() {
     let message = ["type": MessageType.requestDeletes]
     
-    session.sendMessage(message,
-                        replyHandler: { [unowned self] (deletes) in
-                          guard let persistentIDs = deletes["payload"] as? [Int64] else {
-                            return
-                          }
-                          
-                          self.deletePodcasts(persistentIDs: persistentIDs)
-    }) { (error) in
+    session.sendMessage(message, replyHandler: nil) { (error) in
       print(error)
     }
   }
 }
 
+//MARK: - WCSessionDelegate
+
 extension PodcastTransferManager: WCSessionDelegate {
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
     switch activationState {
     case .activated:
-      break
-//      requestDeletes()
+      requestDeletes()
       
     default:
       break
-    }
-  }
-  
-  fileprivate func deletePodcasts(persistentIDs: [Int64]) {
-    for episode in Episode.existing(persistentIDs: persistentIDs) {
-      try? FileManager.default.removeItem(at: episode.fileURL)
-      
-      PersistentContainer.shared.viewContext.delete(episode)
-    }
-    
-    PersistentContainer.saveContext()
-    
-    let message: [String: Any] = [
-      "type": MessageType.confirmDeletes,
-      "payload": persistentIDs
-    ]
-    
-    session.sendMessage(message, replyHandler: nil) { (error) in
-      print(error)
     }
   }
   
@@ -131,6 +125,9 @@ extension PodcastTransferManager: WCSessionDelegate {
       
       deletePodcasts(persistentIDs: persistentIDsToDelete)
       
+    case MessageType.sendDeleteAll:
+      deleteAllPodcasts()
+      
     default:
       break
     }
@@ -146,7 +143,6 @@ extension PodcastTransferManager: WCSessionDelegate {
     switch type {
     case MessageType.sendEpisode:
       let fileManager = FileManager.default
-      fileManager.delegate = self
       
       if fileManager.fileExists(atPath: saveDirectoryURL.absoluteString) == false {
         try? fileManager.createDirectory(at: saveDirectoryURL,
@@ -198,9 +194,6 @@ extension PodcastTransferManager: WCSessionDelegate {
         podcast.artworkImage = UIImage(data: artworkData)
       }
       
-    case MessageType.sendDeleteAll:
-      deleteAllPodcasts()
-      
     default:
       break
     }
@@ -208,7 +201,4 @@ extension PodcastTransferManager: WCSessionDelegate {
     
     PersistentContainer.saveContext()
   }
-}
-
-extension PodcastTransferManager: FileManagerDelegate {
 }

@@ -67,7 +67,6 @@ class RecentPodcastsViewController: UITableViewController {
     NotificationCenter.default.removeObserver(self)
   }
   
-  
   // MARK: - Table view data source
   
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -128,6 +127,8 @@ class RecentPodcastsViewController: UITableViewController {
     navigationController?.viewControllers = [viewController]
   }
 }
+
+//MARK: - NSFetchedResultsControllerDelegate
 
 extension RecentPodcastsViewController: NSFetchedResultsControllerDelegate {
   func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

@@ -99,6 +99,8 @@ extension LibraryPodcast {
   }
 }
 
+//MARK: - IGListDiffable
+
 extension LibraryPodcast: IGListDiffable {
   public func diffIdentifier() -> NSObjectProtocol {
     return (title ?? "") as NSObjectProtocol

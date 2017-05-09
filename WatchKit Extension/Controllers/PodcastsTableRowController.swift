@@ -20,6 +20,18 @@ class PodcastsTableRowController: NSObject {
   
   var artworkImageDisposable: Disposable?
   
+  var isSelected = false {
+    didSet {
+      if isSelected {
+        backgroundGroup.setBackgroundImage(#imageLiteral(resourceName: "Now Playing Border"))
+        backgroundGroup.setCornerRadius(6)
+      } else {
+        backgroundGroup.setBackgroundImage(nil)
+        backgroundGroup.setCornerRadius(6)
+      }
+    }
+  }
+  
   func setProgressBarCompletion(_ fraction: TimeInterval) {
     progressBar.setWidth(progressBarWidth*CGFloat(fraction))
   }

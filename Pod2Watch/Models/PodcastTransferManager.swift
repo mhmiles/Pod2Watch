@@ -22,7 +22,7 @@ class PodcastTransferManager: NSObject {
         sendDeleteAll()
       } else {
         UserDefaults.standard.set(false, forKey: "clear_watch_storage")
-        handlePendingTransfers()
+        sendPendingTransfers()
       }
     }
   }
@@ -44,13 +44,8 @@ class PodcastTransferManager: NSObject {
     
     NotificationCenter.default.addObserver(forName: InMemoryContainer.PodcastLibraryDidReload,
                                            object: nil,
-                                           queue: OperationQueue.main) {  [unowned self] notification in
-                                            //Pull context from sender to avoid infinite recursion
-                                            guard let container = notification.object as? InMemoryContainer else {
-                                              return
-                                            }
-                                            
-                                            self.handleAutoTransfers(context: container.viewContext)
+                                           queue: OperationQueue.main) {  [unowned self] _ in
+                                            _ = self.handleAutoTransfers()
     }
   }
   
@@ -96,15 +91,15 @@ class PodcastTransferManager: NSObject {
       let transferredEpisode = TransferredEpisode(episode)
       transferredPodcast.addToEpisodes(transferredEpisode)
       transferredEpisode.fileURL = outputURL
-      transferredEpisode.isAutoTransfer = true
+      transferredEpisode.isAutoTransfer = isAutoTransfer
     }
     
     PersistentContainer.saveContext()
     
-    exporter.exportAsynchronously(completionHandler: handlePendingTransfers)
+    exporter.exportAsynchronously(completionHandler: sendPendingTransfers)
   }
   
-  func handlePendingTransfers() {
+  func sendPendingTransfers() {
     guard let session = session, session.activationState == .activated else {
       self.session?.activate()
       return
@@ -160,6 +155,19 @@ class PodcastTransferManager: NSObject {
     session?.sendMessage(["type": MessageType.sendDeleteAll], replyHandler: nil)
   }
   
+  func sendPendingDeletes() {
+    let episodesToDelete = TransferredEpisode.pendingDeletes()
+    
+    if episodesToDelete.count > 0 {
+      let message: [String: Any] = [
+        "type": MessageType.sendDeletes,
+        "payload": episodesToDelete.map { $0.persistentID }
+      ]
+      
+      session?.sendMessage(message, replyHandler: nil)
+    }
+  }
+  
   func sendArtwork(_ podcast: TransferredPodcast) {
     if let artworkImage = podcast.artworkImage {
       
@@ -181,18 +189,11 @@ class PodcastTransferManager: NSObject {
     shouldClearWatchStorage = false
     
     let context = PersistentContainer.shared.viewContext
-    let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
-    
-    guard let episodes = try? context.fetch(request) else {
-      return
-    }
-    
-    let fileManager = FileManager.default
-    
+
     context.perform {
-      for episode in episodes {
+      for episode in TransferredEpisode.all() {
         if let fileURL = episode.fileURL {
-          try? fileManager.removeItem(at: fileURL)
+          try? FileManager.default.removeItem(at: fileURL)
         }
         
         context.delete(episode)
@@ -200,34 +201,58 @@ class PodcastTransferManager: NSObject {
     }
   }
   
-  func handleAutoTransfers(context: NSManagedObjectContext) {
-    for podcast in TransferredPodcast.all() {
-      handleAutoTransfer(podcast: podcast, context: context)
-    }
-  }
-  
-  func handleAutoTransfer(podcast: TransferredPodcast, context: NSManagedObjectContext = InMemoryContainer.shared.viewContext) {
-    if podcast.isAutoTransferred == false {
-      return
+  func handleAutoTransfers() -> Bool {
+    var wasNewTransfer = false
+    
+    for podcast in TransferredPodcast.autoTransfers() {
+      wasNewTransfer = handleAutoTransfer(podcast: podcast) || wasNewTransfer
     }
     
-    guard let latestAutoSyncEpisode = LibraryEpisode.latestEpisode(title: podcast.title, context: context) else {
-      return
+    if wasNewTransfer {
+      sendPendingDeletes()
+    }
+    
+    return wasNewTransfer
+  }
+  
+  func handleAutoTransfer(podcast: TransferredPodcast) -> Bool {
+    if podcast.isAutoTransferred == false {
+      return false
+    }
+    
+    guard let latestAutoSyncEpisode = LibraryEpisode.latestEpisode(title: podcast.title) else {
+      return false
     }
     
     let latestAutoSyncEpisodeReleaseDate = (latestAutoSyncEpisode.releaseDate as Date?) ?? Date.distantPast
     
     if let lastAutoSyncDate = podcast.lastAutoSyncDate {
       if latestAutoSyncEpisodeReleaseDate > lastAutoSyncDate {
-        PodcastTransferManager.shared.transfer(latestAutoSyncEpisode, isAutoTransfer: true)
+        let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
+        request.predicate = NSPredicate(format: "podcast == %@ AND isAutoTransfer == YES", podcast)
+        let episodes = try! PersistentContainer.shared.viewContext.fetch(request)
+        
+        for episode in episodes {
+          episode.shouldDelete = true
+        }
+        
+        transfer(latestAutoSyncEpisode, isAutoTransfer: true)
         podcast.lastAutoSyncDate = latestAutoSyncEpisodeReleaseDate
+        
+        return true
       }
+      
+      return false
     } else {
-      PodcastTransferManager.shared.transfer(latestAutoSyncEpisode, isAutoTransfer: true)
+      transfer(latestAutoSyncEpisode, isAutoTransfer: true)
       podcast.lastAutoSyncDate = latestAutoSyncEpisodeReleaseDate
+      
+      return true
     }
   }
 }
+
+//MARK: - WCSessionDelegate
 
 extension PodcastTransferManager: WCSessionDelegate {
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -236,7 +261,7 @@ extension PodcastTransferManager: WCSessionDelegate {
       if shouldClearWatchStorage {
         sendDeleteAll()
       } else {
-        handlePendingTransfers()
+        sendPendingTransfers()
       }
       
     case .inactive:
@@ -254,7 +279,7 @@ extension PodcastTransferManager: WCSessionDelegate {
     
     switch messageType {
     case MessageType.requestPending:
-      handlePendingTransfers()
+      sendPendingTransfers()
       
     case MessageType.confirmDeletes:
       guard let deletedPersistentIDs = message["payload"] as? [Int64] else {
@@ -264,6 +289,9 @@ extension PodcastTransferManager: WCSessionDelegate {
       for episode in TransferredEpisode.existing(persistentIDs: deletedPersistentIDs) {
         PersistentContainer.shared.viewContext.delete(episode)
       }
+      
+    case MessageType.requestDeletes:
+      sendPendingDeletes()
       
     case MessageType.confirmDeleteAll:
       handleConfirmDeleteAll()
@@ -282,20 +310,6 @@ extension PodcastTransferManager: WCSessionDelegate {
     }
     
     switch messageType {
-    case MessageType.requestDeletes:
-      let episodesToDelete = TransferredEpisode.pendingDeletes()
-      
-      if episodesToDelete.count > 0 {
-        let reply: [String: Any] = [
-          "type": MessageType.sendDeletes,
-          "payload": episodesToDelete.map { $0.persistentID }
-        ]
-        
-        replyHandler(reply)
-      }
-      
-      replyHandler([:])
-      
     case MessageType.requestArtwork:
       if let podcast = TransferredPodcast.existing(title: message["title"] as! String) {
         if let artworkImage = podcast.artworkImage {
@@ -351,9 +365,6 @@ extension PodcastTransferManager: WCSessionDelegate {
     try? FileManager.default.removeItem(at: fileTransfer.file.fileURL)
     
     PersistentContainer.saveContext()
-  }
-  
-  func sessionReachabilityDidChange(_ session: WCSession) {
   }
   
   func sessionDidBecomeInactive(_ session: WCSession) {

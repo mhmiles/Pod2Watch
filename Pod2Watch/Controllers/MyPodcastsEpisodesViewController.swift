@@ -24,9 +24,9 @@ class MyPodcastsEpisodesViewController: UITableViewController {
     request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
     
     let controller = NSFetchedResultsController<LibraryEpisode>(fetchRequest: request,
-                                                                       managedObjectContext: InMemoryContainer.shared.viewContext,
-                                                                       sectionNameKeyPath: nil,
-                                                                       cacheName: nil)
+                                                                managedObjectContext: InMemoryContainer.shared.viewContext,
+                                                                sectionNameKeyPath: nil,
+                                                                cacheName: nil)
     
     try! controller.performFetch()
     controller.delegate = self
@@ -40,16 +40,16 @@ class MyPodcastsEpisodesViewController: UITableViewController {
     request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
     
     let controller = NSFetchedResultsController<TransferredEpisode>(fetchRequest: request,
-                                                                managedObjectContext: PersistentContainer.shared.viewContext,
-                                                                sectionNameKeyPath: nil,
-                                                                cacheName: nil)
+                                                                    managedObjectContext: PersistentContainer.shared.viewContext,
+                                                                    sectionNameKeyPath: nil,
+                                                                    cacheName: nil)
     
     try! controller.performFetch()
     controller.delegate = self
     
     return controller
   }()
-
+  
   var isAutoTransferActive = false
   
   override func viewDidLoad() {
@@ -69,7 +69,7 @@ class MyPodcastsEpisodesViewController: UITableViewController {
     
     _ = syncResultsController
   }
-
+  
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
@@ -117,20 +117,22 @@ class MyPodcastsEpisodesViewController: UITableViewController {
     guard let libraryPodcast = LibraryPodcast.existing(title: podcastTitle) else {
       return
     }
-
+    
     let transferredPodcast = TransferredPodcast.existing(title: podcastTitle) ?? TransferredPodcast(libraryPodcast)
     transferredPodcast.isAutoTransferred = sender.isOn
     
     PersistentContainer.saveContext()
-
+    
     isAutoTransferActive = sender.isOn
     tableView.reloadSections([0], with: .fade)
     
     if isAutoTransferActive {
-      PodcastTransferManager.shared.handleAutoTransfer(podcast: transferredPodcast)
+      _ = PodcastTransferManager.shared.handleAutoTransfer(podcast: transferredPodcast)
     }
   }
 }
+
+//MARK: - NSFetchedResultsControllerDelegate
 
 extension MyPodcastsEpisodesViewController: NSFetchedResultsControllerDelegate {
   func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {

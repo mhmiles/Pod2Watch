@@ -37,4 +37,9 @@ public class Episode: NSManagedObject {
     
     return try! PersistentContainer.shared.viewContext.fetch(request)
   }
+  
+  class func all() -> [Episode] {
+    let request: NSFetchRequest<Episode> = Episode.fetchRequest()
+    return try! PersistentContainer.shared.viewContext.fetch(request)
+  }
 }

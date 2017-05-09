@@ -29,10 +29,13 @@ class AudioPlayer: NSObject {
       player?.volume = volume
     }
   }
+//  
+//  var isPlaying: Bool {
+//    return player?.isPlaying ?? false
+//  }
   
-  var isPlaying: Bool {
-    return player?.isPlaying ?? false
-  }
+  lazy var isPlaying: Property<Bool> = Property(self._isPlaying)
+  private let _isPlaying = MutableProperty(false)
   
   var volume: Float = 0.5 {
     didSet {
@@ -79,6 +82,26 @@ class AudioPlayer: NSObject {
       }
       
       self.player?.currentTime = episode?.startTime ?? 0
+    }
+    
+    NotificationCenter.default.addObserver(forName: NSNotification.Name.AVAudioSessionRouteChange,
+                                           object: nil,
+                                           queue: OperationQueue.main) { [unowned self] notification in
+                                            guard let reasonValue = notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt,
+                                              let reason = AVAudioSessionRouteChangeReason(rawValue: reasonValue) else {
+                                                return
+                                            }
+                                            
+                                            switch reason {
+                                            case .newDeviceAvailable:
+                                              self.play()
+                                              
+                                            case .oldDeviceUnavailable:
+                                              self.pause()
+                                              
+                                            default:
+                                              break
+                                            }
     }
   }
   
@@ -143,7 +166,27 @@ class AudioPlayer: NSObject {
     _currentEpisode.value = nextEpisode
     play()
   }
+  
+  func removeFromQueue(episodes: [Episode]) {
+    guard let episodeQueue = episodeQueue, episodeQueue.count > 0 else {
+      return
+    }
+    
+    self.episodeQueue = episodeQueue.filter { episodes.contains($0) == false }
+    
+    if let currentEpisode = _currentEpisode.value, episodes.contains(currentEpisode) {
+      let wasPaused = !isPlaying.value
+      
+      handleNextInQueue()
+      
+      if wasPaused {
+        pause()
+      }
+    }
+  }
 }
+
+//MARK: - AVAudioPlayerDelegate
 
 extension AudioPlayer: AVAudioPlayerDelegate {
   func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {

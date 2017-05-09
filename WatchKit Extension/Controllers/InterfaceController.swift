@@ -45,14 +45,12 @@ class InterfaceController: WKInterfaceController, URLSessionDelegate {
       
       if let previous = previous, let index = episodes.index(of: previous),
         let rowController = self?.podcastsTable.rowController(at: index) as? PodcastsTableRowController {
-        rowController.backgroundGroup.setBackgroundImage(nil)
-        rowController.backgroundGroup.setCornerRadius(6)
+        rowController.isSelected = false
       }
       
       if let current = current, let index = episodes.index(of: current),
         let rowController = self?.podcastsTable.rowController(at: index) as? PodcastsTableRowController {
-        rowController.backgroundGroup.setBackgroundImage(#imageLiteral(resourceName: "Now Playing Border"))
-        rowController.backgroundGroup.setCornerRadius(6)
+        rowController.isSelected = true
       }
     }
   }
@@ -87,19 +85,8 @@ class InterfaceController: WKInterfaceController, URLSessionDelegate {
     }
   }
   
-  override func didDeactivate() {
-    // This method is called when watch view controller is no longer visible
-    super.didDeactivate()
-  }
-  
   func setStartTime(atIndex index: Int) {
     pushController(withName: "StartTime", context: nil)
-  }
-  
-  override func willDisappear() {
-    super.willDisappear()
-    
-    
   }
   
   override func table(_ table: WKInterfaceTable, didSelectRowAt rowIndex: Int) {
@@ -124,15 +111,7 @@ class InterfaceController: WKInterfaceController, URLSessionDelegate {
   }
 }
 
-extension InterfaceController: URLSessionDownloadDelegate {
-  func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-    print("DONE: \(location)")
-  }
-  
-  func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-    print(Float(bytesWritten)/Float(totalBytesExpectedToWrite))
-  }
-}
+//MARK: - NSFetchedResultsControllerDelegate
 
 extension InterfaceController: NSFetchedResultsControllerDelegate {
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
@@ -170,6 +149,8 @@ extension InterfaceController: NSFetchedResultsControllerDelegate {
       
       rowController.setProgressBarCompletion(episode.startTime/max(1, episode.playbackDuration))
       
+      rowController.artworkImage.setImage(episode.artworkImage.value)
+      
     case .delete:
       if controller.fetchedObjects?.count ?? 0 > 0 {
         let rows = IndexSet(integer: indexPath!.row)
@@ -181,12 +162,5 @@ extension InterfaceController: NSFetchedResultsControllerDelegate {
     default:
       break
     }
-  }
-  
-  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
-                  didChange sectionInfo: NSFetchedResultsSectionInfo,
-                  atSectionIndex sectionIndex: Int,
-                  for type: NSFetchedResultsChangeType) {
-    
   }
 }

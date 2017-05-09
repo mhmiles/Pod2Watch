@@ -134,7 +134,7 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
     podcastsEpisodesController.podcastTitle = podcast?.title
   }
   
-  //MARK: IGListAdapterDataSource
+  //MARK: - IGListAdapterDataSource
   
   func objects(for listAdapter: IGListAdapter) -> [IGListDiffable] {
     guard let podcasts = libraryResultsController.fetchedObjects,
@@ -199,17 +199,23 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
   }
 }
 
+//MARK: - NSFetchedResultsControllerDelegate
+
 extension MyPodcastsViewController: NSFetchedResultsControllerDelegate {
   func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     adapter.reloadData()
   }
 }
 
+//MARK: - UISearchBarDelegate
+
 extension MyPodcastsViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     titleSearchQuery = searchText
   }
 }
+
+//MARK: - UIScrollViewDelegate
 
 extension MyPodcastsViewController: UIScrollViewDelegate {
   func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
