@@ -40,6 +40,14 @@ extension LibraryPodcast {
       if let artworkImage = self.artworkImage {
         observer.send(value: artworkImage)
         observer.sendCompleted()
+      } else if let podcast = TransferredPodcast.existing(title: self.title!),
+        let artworkImage = podcast.artworkImage {
+        if let title = self.title, title != "" {
+          LibraryPodcast.artworkCache.add(artworkImage, withIdentifier: title)
+        }
+        
+        observer.send(value: artworkImage)
+        observer.sendCompleted()
       } else {
         observer.send(value: nil)
         
