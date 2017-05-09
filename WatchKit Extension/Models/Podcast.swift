@@ -18,11 +18,29 @@ public class Podcast: NSManagedObject {
   @NSManaged public var episodes: NSSet
   @NSManaged public var artworkImage: UIImage?
   
+  class func existing(title: String) -> Podcast? {
+    let request: NSFetchRequest<Podcast> = fetchRequest()
+    request.predicate = NSPredicate(format: "title == %@", title)
+    request.fetchLimit = 1
+    
+    return (try? PersistentContainer.shared.viewContext.fetch(request))?.first
+  }
+  
   convenience init(title: String, context: NSManagedObjectContext) {
     let entity = NSEntityDescription.entity(forEntityName: "Podcast", in: context)!
     self.init(entity: entity, insertInto: context)
     
     self.title = title
+  }
+  
+  public override func awakeFromFetch() {
+    if artworkImage == nil {
+      PodcastTransferManager.shared.requestArtwork(podcast: self)
+    }
+  }
+  
+  public override func awakeFromInsert() {
+    PodcastTransferManager.shared.requestArtwork(podcast: self)
   }
 }
 

@@ -28,6 +28,23 @@ public class LibraryEpisode: NSManagedObject {
     return mediaItem.artwork
   }
   
+  class func existing(persistentID: Int64) -> LibraryEpisode? {
+    let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
+    request.predicate = NSPredicate(format: "persistentID == %ld", persistentID)
+    request.fetchLimit = 1
+    
+    return (try? InMemoryContainer.shared.viewContext.fetch(request))?.first
+  }
+  
+  class func latestEpisode(title: String, context: NSManagedObjectContext) -> LibraryEpisode? {
+    let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
+    request.predicate = NSPredicate(format: "podcast.title == %@", title)
+    request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
+    request.fetchLimit = 1
+    
+    return (try? context.fetch(request))?.first
+  }
+  
   convenience init(mediaItem: MPMediaItem, context: NSManagedObjectContext) {
     let entity = NSEntityDescription.entity(forEntityName: "LibraryEpisode",
                                in: context)!

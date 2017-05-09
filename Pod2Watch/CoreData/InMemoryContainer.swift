@@ -31,9 +31,14 @@ public final class InMemoryContainer: NSPersistentContainer {
      */
     
     let container = InMemoryContainer(name: "Pod2Watch")
+    
+    try! container.persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType,
+                                                       configurationName: nil,
+                                                       at: nil,
+                                                       options: nil)
 
     if MPMediaLibrary.authorizationStatus() == .authorized {
-      container.reloadPodcastLibrary()
+      container.loadPodcastLibrary()
     }
     
     NotificationCenter.default.addObserver(forName: Notification.Name.MPMediaLibraryDidChange,
@@ -51,15 +56,14 @@ public final class InMemoryContainer: NSPersistentContainer {
   }()
   
   func reloadPodcastLibrary() {
-    if let store = persistentStoreCoordinator.persistentStores.first {
-      try! persistentStoreCoordinator.remove(store)
-    }
+    viewContext.reset()
     
-    try! persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType,
-                                                       configurationName: nil,
-                                                       at: nil,
-                                                       options: nil)
+    loadPodcastLibrary()
     
+    NotificationCenter.default.post(name: InMemoryContainer.PodcastLibraryDidReload, object: self)
+  }
+  
+  private func loadPodcastLibrary() {
     let allQuery = MPMediaQuery.podcasts()
     allQuery.groupingType = .podcastTitle
     
@@ -67,37 +71,29 @@ public final class InMemoryContainer: NSPersistentContainer {
       return
     }
     
-    for collection in collections {
-      guard let representativeItem = collection.representativeItem else {
-        return
-      }
-      
-      let request: NSFetchRequest<LibraryPodcast> = LibraryPodcast.fetchRequest()
-      request.predicate = NSPredicate(format: "title == %@", representativeItem.podcastTitle ?? "")
-      request.fetchLimit = 1
-      
-      let podcast: LibraryPodcast
-      
-      if let existingPodcast = (try? viewContext.fetch(request))?.first {
-        podcast = existingPodcast
-      } else {
-        podcast = LibraryPodcast(mediaItem: representativeItem, context: viewContext)
-      }
-      
-      let episodes = collection.items.filter({ mediaItem in
-        if let _ = mediaItem.assetURL {
-          return true
-        } else {
-          return false
+    viewContext.performAndWait {
+      for collection in collections {
+        guard let representativeItem = collection.representativeItem else {
+          continue
         }
-      }).map({ mediaItem -> LibraryEpisode in
-        let episode = LibraryEpisode(mediaItem: mediaItem, context: viewContext)
-        episode.podcast = podcast
         
-        return episode
-      })
-      
-      podcast.addToEpisodes(NSOrderedSet(array: episodes))
+        let episodes = collection.items.filter({ mediaItem in
+          if let _ = mediaItem.assetURL {
+            return true
+          } else {
+            return false
+          }
+        }).map{ LibraryEpisode(mediaItem: $0, context: self.viewContext) }
+        
+        if episodes.count == 0 {
+          continue
+        }
+        
+        let podcast = LibraryPodcast.existing(title: representativeItem.podcastTitle ?? "",
+                                              context: self.viewContext) ?? LibraryPodcast(mediaItem: representativeItem, context: self.viewContext)
+        
+        podcast.addToEpisodes(NSOrderedSet(array: episodes))
+      }
     }
   }
   
@@ -114,4 +110,8 @@ public final class InMemoryContainer: NSPersistentContainer {
       }
     }
   }
+}
+
+extension InMemoryContainer {
+  static let PodcastLibraryDidReload = Notification.Name(rawValue: "PodcastLibraryDidReload")
 }

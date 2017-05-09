@@ -115,6 +115,16 @@ class AudioPlayer: NSObject {
   }
   
   func play() {
+    let audioSession = AVAudioSession.sharedInstance()
+    
+    do {
+      try audioSession.setCategory(AVAudioSessionCategoryPlayback,
+                               with: [.allowBluetoothA2DP, .duckOthers])
+      try audioSession.setActive(true)
+    } catch let error {
+      print(error)
+    }
+    
     player?.play()
   }
   

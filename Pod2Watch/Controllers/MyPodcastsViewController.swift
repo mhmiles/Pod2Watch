@@ -42,8 +42,8 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
                                                                 sectionNameKeyPath: nil,
                                                                 cacheName: nil)
     
-    controller.delegate = self
     try! controller.performFetch()
+    controller.delegate = self
     
     return controller
   }()
@@ -74,28 +74,24 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
                                           for: .normal)
     
     collectionView.setContentOffset(searchBarBottomOffset, animated: false)
-    //    loadPodcasts()
-    //    _ = libraryResultsController
+
+    //Force library load to prevent infinite recursion
+    _ = libraryResultsController
     
     adapter.collectionView = collectionView
     adapter.dataSource = self
+
+    NotificationCenter.default.addObserver(forName: InMemoryContainer.PodcastLibraryDidReload,
+                                           object: InMemoryContainer.shared,
+                                           queue: OperationQueue.main) { [weak self] _ in
+                                            try! self?.libraryResultsController.performFetch()
+                                            self?.adapter.reloadData()
+    }
   }
   
-  
-  
-  //  fileprivate func loadPodcasts() {
-  //    let request: NSFetchRequest<LibraryPodcastEpisode> = LibraryPodcastEpisode.fetchRequest()
-  //    request.sortDescriptors = [NSSortDescriptor(key: "podcastTitleWithoutThe", ascending: true)]
-  //
-  //    let episodes = try! InMemoryContainer.shared.viewContext.fetch(request)
-  //    podcasts = episodes.reduce([], { (accum, episode) -> [LibraryEpisode] in
-  //      if accum.last?.podcastTitle == episode.podcastTitle {
-  //        return accum
-  //      } else {
-  //        return accum + [episode]
-  //      }
-  //    })
-  //  }
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
   
   @IBAction func handleSegmentPress(_ sender: UISegmentedControl) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -108,7 +104,6 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
     MPMediaLibrary.requestAuthorization { (status) in
       if status == .authorized {
         InMemoryContainer.shared.reloadPodcastLibrary()
-        //        self.loadPodcasts()
       } else {
       }
       
@@ -136,7 +131,7 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
     let podcastsEpisodesController = segue.destination as! MyPodcastsEpisodesViewController
     
     let podcast = libraryResultsController.fetchedObjects?[indexPath.section-1]
-    podcastsEpisodesController.podcast = podcast
+    podcastsEpisodesController.podcastTitle = podcast?.title
   }
   
   //MARK: IGListAdapterDataSource

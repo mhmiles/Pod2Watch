@@ -54,10 +54,10 @@ class NowPlayingController: WKInterfaceController {
     
     crownSequencer.delegate = self
     
-    currentEpisode.producer.skip(first: 1).take(while: { $0 != nil }).startWithCompleted(pop)
+    currentEpisode.producer.skip(first: 1).take(while: { $0 != nil }).startWithCompleted(popToRootController)
     
     currentEpisode.producer.startWithValues { [weak self] episode in
-      self?.updateBackground(image: episode?.artworkImage)
+      self?.updateBackground(image: episode?.artworkImage.value)
       
       self?.podcastTitleLabel.setText(episode?.podcast.title)
       self?.episodeTitleLabel.setText(episode?.title)
@@ -94,7 +94,7 @@ class NowPlayingController: WKInterfaceController {
   }
   
   override func willActivate() {
-    super.willActivate()
+    updateTimeLabels()
     
     crownSequencer.focus()
   }
@@ -131,7 +131,7 @@ class NowPlayingController: WKInterfaceController {
         return
     }
 
-    volumeSliderBackground.setBackgroundImage(UIImage(named: "Volume Border")!)
+    volumeSliderBackground.setBackgroundImage(#imageLiteral(resourceName: "Volume Border"))
   }
   
   fileprivate func updateTimeLabels() {
@@ -193,7 +193,7 @@ class NowPlayingController: WKInterfaceController {
     tickDisposable.inner = nil
     AudioPlayer.shared.pause()
     
-    playPauseButton.setBackgroundImage(UIImage(named: "Play"))
+    playPauseButton.setBackgroundImage(#imageLiteral(resourceName: "Play"))
     
     updateTimeLabels()
   }
@@ -201,7 +201,7 @@ class NowPlayingController: WKInterfaceController {
   private func play() {
     WKInterfaceDevice.current().play(.click)
     
-    playPauseButton.setBackgroundImage(UIImage(named: "Pause"))
+    playPauseButton.setBackgroundImage(#imageLiteral(resourceName: "Pause"))
     
     let session = AVAudioSession.sharedInstance()
     try! session.setActive(true)
@@ -253,8 +253,9 @@ class NowPlayingController: WKInterfaceController {
   }
   
   @IBAction func handleSeekTo() {
-    WKInterfaceDevice.current().play(.success)
+    WKInterfaceDevice.current().play(.click)
     
+    currentEpisode.value?.startTime = AudioPlayer.shared.currentTime
     pushController(withName: "SeekTo", context: nil)
   }
   

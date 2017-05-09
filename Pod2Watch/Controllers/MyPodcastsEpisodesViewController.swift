@@ -10,9 +10,9 @@ import UIKit
 import CoreData
 
 class MyPodcastsEpisodesViewController: UITableViewController {
-  var podcast: LibraryPodcast! {
+  var podcastTitle: String! {
     didSet {
-      navigationItem.title = podcast.title
+      navigationItem.title = podcastTitle
     }
   }
   
@@ -20,8 +20,8 @@ class MyPodcastsEpisodesViewController: UITableViewController {
   
   fileprivate lazy var libraryResultsController: NSFetchedResultsController<LibraryEpisode> = {
     let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
+    request.predicate = NSPredicate(format: "podcast.title == %@", self.podcastTitle)
     request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
-    request.predicate = NSPredicate(format: "podcast == %@", self.podcast)
     
     let controller = NSFetchedResultsController<LibraryEpisode>(fetchRequest: request,
                                                                        managedObjectContext: InMemoryContainer.shared.viewContext,
@@ -36,7 +36,7 @@ class MyPodcastsEpisodesViewController: UITableViewController {
   
   fileprivate lazy var syncResultsController: NSFetchedResultsController<TransferredEpisode> = {
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
-    request.predicate = NSPredicate(format: "podcastTitle == %@", self.podcast.title ?? "")
+    request.predicate = NSPredicate(format: "podcast.title == %@", self.podcastTitle)
     request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
     
     let controller = NSFetchedResultsController<TransferredEpisode>(fetchRequest: request,
@@ -55,19 +55,23 @@ class MyPodcastsEpisodesViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let request: NSFetchRequest<TransferredPodcast> = TransferredPodcast.fetchRequest()
-    request.predicate = NSPredicate(format: "title == %@", podcast.title!)
-    let context = PersistentContainer.shared.viewContext
-    
-    if let transferredPodcast = try! context.fetch(request).first {
+    if let transferredPodcast = TransferredPodcast.existing(title: podcastTitle) {
       isAutoTransferActive = transferredPodcast.isAutoTransferred
       autoTransferSwitch.isOn = transferredPodcast.isAutoTransferred
     }
+    
+    NotificationCenter.default.addObserver(forName: InMemoryContainer.PodcastLibraryDidReload,
+                                           object: InMemoryContainer.shared,
+                                           queue: OperationQueue.main) { [weak self] _ in
+                                            try! self?.libraryResultsController.performFetch()
+                                            self?.tableView.reloadData()
+    }
+    
+    _ = syncResultsController
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
   
   // MARK: - Table view data source
@@ -87,15 +91,15 @@ class MyPodcastsEpisodesViewController: UITableViewController {
     cell.titleLabel.text = rowEpisode.title
     cell.durationLabel.text = rowEpisode.secondaryLabelText
     
-    if let synced = syncResultsController.fetchedObjects?.first(where: { $0.persistentID == rowEpisode.persistentID }) {
+    if let synced = TransferredEpisode.existing(persistentID: rowEpisode.persistentID) {
       if synced.shouldDelete {
         cell.syncButton.syncState = .pending
-      } else if synced.hasBegunTransfer == false {
-        cell.syncButton.syncState = .preparing
       } else if synced.isTransferred {
         cell.syncButton.syncState = .synced
-      } else {
+      } else if synced.hasBegunTransfer {
         cell.syncButton.syncState = .syncing
+      } else {
+        cell.syncButton.syncState = .pending
       }
     } else {
       cell.syncButton.syncState = .noSync
@@ -106,25 +110,25 @@ class MyPodcastsEpisodesViewController: UITableViewController {
       }
     }
     
-    if isAutoTransferActive {
-      cell.syncButton.isEnabled = false
-    }
-    
     return cell
   }
   
   @IBAction func handleAutoTransferSwitchChange(_ sender: UISwitch) {
-    let request: NSFetchRequest<TransferredPodcast> = TransferredPodcast.fetchRequest()
-    request.predicate = NSPredicate(format: "title == %@", podcast.title!)
-    let context = PersistentContainer.shared.viewContext
-    
-    let transferredPodcast = try! context.fetch(request).first ?? TransferredPodcast(podcast, context: context)
+    guard let libraryPodcast = LibraryPodcast.existing(title: podcastTitle) else {
+      return
+    }
+
+    let transferredPodcast = TransferredPodcast.existing(title: podcastTitle) ?? TransferredPodcast(libraryPodcast)
     transferredPodcast.isAutoTransferred = sender.isOn
     
     PersistentContainer.saveContext()
 
     isAutoTransferActive = sender.isOn
     tableView.reloadSections([0], with: .fade)
+    
+    if isAutoTransferActive {
+      PodcastTransferManager.shared.handleAutoTransfer(podcast: transferredPodcast)
+    }
   }
 }
 
@@ -136,7 +140,7 @@ extension MyPodcastsEpisodesViewController: NSFetchedResultsControllerDelegate {
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     if controller == syncResultsController,
       let episode = anObject as? TransferredEpisode,
-      let existing = libraryResultsController.fetchedObjects?.first(where: { $0.persistentID == episode.persistentID }),
+      let existing = LibraryEpisode.existing(persistentID: episode.persistentID),
       let existingIndexPath = libraryResultsController.indexPath(forObject: existing) {
       switch type {
       case .insert:
@@ -150,7 +154,19 @@ extension MyPodcastsEpisodesViewController: NSFetchedResultsControllerDelegate {
         break
       }
     } else if controller == libraryResultsController {
-      print(anObject)
+      switch type {
+      case .insert:
+        tableView.insertRows(at: [newIndexPath!], with: .automatic)
+        
+      case .delete:
+        tableView.deleteRows(at: [indexPath!], with: .automatic)
+        
+      case .update:
+        tableView.reloadRows(at: [indexPath!], with: .fade)
+        
+      case .move:
+        tableView.moveRow(at: indexPath!, to: newIndexPath!)
+      }
     }
   }
   

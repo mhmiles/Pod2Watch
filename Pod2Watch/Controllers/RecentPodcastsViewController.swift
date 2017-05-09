@@ -16,7 +16,7 @@ class RecentPodcastsViewController: UITableViewController {
   
   @IBOutlet weak var segmentedTitle: UISegmentedControl!
 
-  fileprivate lazy var fetchedResultsController: NSFetchedResultsController<LibraryEpisode> = {
+  fileprivate lazy var libraryResultsController: NSFetchedResultsController<LibraryEpisode> = {
     let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
     request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
     
@@ -40,6 +40,7 @@ class RecentPodcastsViewController: UITableViewController {
                                                                 sectionNameKeyPath: nil,
                                                                 cacheName: nil)
     
+    try! controller.performFetch()
     controller.delegate = self
     
     return controller
@@ -52,35 +53,42 @@ class RecentPodcastsViewController: UITableViewController {
     segmentedTitle.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 16)],
                                           for: .normal)
     
-    try! syncResultsController.performFetch()
+    _ = syncResultsController
+    
+    NotificationCenter.default.addObserver(forName: InMemoryContainer.PodcastLibraryDidReload,
+                                           object: InMemoryContainer.shared,
+                                           queue: OperationQueue.main) { [weak self] _ in
+                                            try! self?.libraryResultsController.performFetch()
+                                            self?.tableView.reloadData()
+    }
   }
   
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
+  
   
   // MARK: - Table view data source
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return fetchedResultsController.sections?.count ?? 0
+    return libraryResultsController.sections?.count ?? 0
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return fetchedResultsController.sections?[section].numberOfObjects ?? 0
+    return libraryResultsController.sections?[section].numberOfObjects ?? 0
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "RecentEpisodeCell", for: indexPath) as! RecentEpisodeCell
     
-    let episode = fetchedResultsController.object(at: indexPath)
+    let episode = libraryResultsController.object(at: indexPath)
     
     cell.artworkView.rac_image <~ episode.podcastArtworkProducer
     
     cell.titleLabel.text = episode.title
     cell.durationLabel.text = episode.recentSecondaryLabelText
     
-    if let synced = syncResultsController.fetchedObjects?.first(where: { $0.persistentID == episode.persistentID }) {
+    if let synced = TransferredEpisode.existing(persistentID: episode.persistentID) {
       if synced.shouldDelete {
         cell.syncButton.syncState = .pending
       } else if synced.isTransferred {
@@ -104,7 +112,7 @@ class RecentPodcastsViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let header = Bundle.main.loadNibNamed("RecentPodcastsHeaderView", owner: nil, options: nil)?.first as! RecentPodcastsHeaderView
     
-    header.label.text = fetchedResultsController.sections?[section].name
+    header.label.text = libraryResultsController.sections?[section].name
     
     return header
   }
@@ -129,8 +137,8 @@ extension RecentPodcastsViewController: NSFetchedResultsControllerDelegate {
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
     if controller == syncResultsController,
       let episode = anObject as? TransferredEpisode,
-      let existing = fetchedResultsController.fetchedObjects?.first(where: { $0.persistentID == episode.persistentID }),
-      let existingIndexPath = fetchedResultsController.indexPath(forObject: existing) {
+      let existing = LibraryEpisode.existing(persistentID: episode.persistentID),
+      let existingIndexPath = libraryResultsController.indexPath(forObject: existing) {
       switch type {
       case .insert:
         fallthrough
@@ -142,8 +150,6 @@ extension RecentPodcastsViewController: NSFetchedResultsControllerDelegate {
       default:
         break
       }
-    } else if controller == fetchedResultsController {
-      print(anObject)
     }
   }
   

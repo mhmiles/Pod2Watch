@@ -9,6 +9,7 @@
 import WatchKit
 import UIKit
 import CoreData
+import ReactiveCocoa
 
 public class Episode: NSManagedObject {
   @nonobjc public class func fetchRequest() -> NSFetchRequest<Episode> {
@@ -24,11 +25,16 @@ public class Episode: NSManagedObject {
   @NSManaged public var sortIndex: Int16
   @NSManaged public var startTime: Double
   
-  var artworkImage: UIImage? {
-    return podcast.artworkImage
-  }
+  lazy var artworkImage: DynamicProperty<UIImage> = DynamicProperty(object: self, keyPath: "podcast.artworkImage")
   
   var isPlayed: Bool {
     return playbackDuration - startTime > 15
+  }
+  
+  class func existing(persistentIDs: [Int64]) -> [Episode] {
+    let request: NSFetchRequest<Episode> = fetchRequest()
+    request.predicate = NSPredicate(format: "persistentID IN %@", persistentIDs)
+    
+    return try! PersistentContainer.shared.viewContext.fetch(request)
   }
 }

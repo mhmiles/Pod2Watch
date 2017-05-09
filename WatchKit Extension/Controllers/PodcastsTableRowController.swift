@@ -7,8 +7,10 @@
 //
 
 import WatchKit
+import ReactiveSwift
 
 class PodcastsTableRowController: NSObject {
+  @IBOutlet var backgroundGroup: WKInterfaceGroup!
   @IBOutlet var artworkImage: WKInterfaceImage!
   @IBOutlet var podcastTitleLabel: WKInterfaceLabel!
   @IBOutlet var epiosodeTitleLabel: WKInterfaceLabel!
@@ -16,7 +18,13 @@ class PodcastsTableRowController: NSObject {
   @IBOutlet var progressBar: WKInterfaceGroup!
   var progressBarWidth: CGFloat!
   
+  var artworkImageDisposable: Disposable?
+  
   func setProgressBarCompletion(_ fraction: TimeInterval) {
     progressBar.setWidth(progressBarWidth*CGFloat(fraction))
+  }
+  
+  deinit {
+    artworkImageDisposable?.dispose()
   }
 }

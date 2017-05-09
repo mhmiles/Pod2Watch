@@ -57,14 +57,42 @@ public class TransferredEpisode: NSManagedObject {
     }
   }
   
+  class func existing(persistentID: Int64) -> TransferredEpisode? {
+    let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
+    request.predicate = NSPredicate(format: "persistentID == %ld", persistentID)
+    request.fetchLimit = 1
+    
+    return (try? PersistentContainer.shared.viewContext.fetch(request))?.first
+  }
+  
+  class func existing(persistentIDs: [Int64]) -> [TransferredEpisode] {
+    let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
+    request.predicate = NSPredicate(format: "persistentID IN %@", persistentIDs)
+    
+    return  try! PersistentContainer.shared.viewContext.fetch(request)
+  }
+  
+  class func pendingTransfers() -> [TransferredEpisode] {
+    let request: NSFetchRequest<TransferredEpisode> = fetchRequest()
+    request.predicate = NSPredicate(format: "hasBegunTransfer == NO")
+    
+    return try! PersistentContainer.shared.viewContext.fetch(request)
+  }
+  
+  class func pendingDeletes() -> [TransferredEpisode] {
+    let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
+    request.predicate = NSPredicate(format: "shouldDelete == YES")
+    
+    return try! PersistentContainer.shared.viewContext.fetch(request)
+  }
+  
   convenience init(_ episode: LibraryEpisode) {
     let context = PersistentContainer.shared.viewContext
     let entity = NSEntityDescription.entity(forEntityName: "TransferredEpisode", in: context)!
     self.init(entity: entity, insertInto: context)
     
     persistentID = episode.persistentID
-    podcastTitle = episode.podcast?.title
-    episodeTitle = episode.title
+    title = episode.title
     releaseDate = episode.releaseDate
     playbackDuration = episode.playbackDuration
 
@@ -78,7 +106,7 @@ public class TransferredEpisode: NSManagedObject {
   }
   
   var podcastArtworkImage: UIImage? {
-    guard let podcastTitle = podcastTitle else {
+    guard let podcastTitle = podcast?.title else {
       return nil
     }
     
@@ -87,14 +115,14 @@ public class TransferredEpisode: NSManagedObject {
   
   var podcastArtworkProducer: SignalProducer<UIImage?, NoError> {
     return SignalProducer<UIImage?, NoError> { [unowned self] (observer, disposable) in
-      if let podcastTitle = self.podcastTitle,
+      if let podcastTitle = self.podcast?.title,
         let artworkImage = LibraryPodcast.artworkCache.image(withIdentifier: podcastTitle) {
         observer.send(value: artworkImage)
         observer.sendCompleted()
       } else {
         observer.send(value: nil)
         
-        guard let podcastTitle = self.podcastTitle, podcastTitle != "" else {
+        guard let podcastTitle = self.podcast?.title, podcastTitle != "" else {
           return
         }
         
@@ -110,7 +138,7 @@ public class TransferredEpisode: NSManagedObject {
                                 Alamofire.request(artworkURL).responseImage(completionHandler: { response in
                                   switch response.result {
                                   case .success(let image):
-                                    if let podcastTitle = self.podcastTitle, podcastTitle != "" {
+                                    if let podcastTitle = self.podcast?.title, podcastTitle != "" {
                                       LibraryPodcast.artworkCache.add(image, withIdentifier: podcastTitle)
                                     }
                                     

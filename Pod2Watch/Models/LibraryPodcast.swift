@@ -59,8 +59,8 @@ extension LibraryPodcast {
                                 Alamofire.request(artworkURL).responseImage(completionHandler: { response in
                                   switch response.result {
                                   case .success(let image):
-                                    if let podcastTitle = self.title, podcastTitle != "" {
-                                      LibraryPodcast.artworkCache.add(image, withIdentifier: podcastTitle)
+                                    if let title = self.title, title != "" {
+                                      LibraryPodcast.artworkCache.add(image, withIdentifier: title)
                                     }
                                     
                                     observer.send(value: image)
@@ -82,6 +82,14 @@ extension LibraryPodcast {
         
       }
     }
+  }
+  
+  class func existing(title: String, context: NSManagedObjectContext = InMemoryContainer.shared.viewContext) -> LibraryPodcast? {
+    let request: NSFetchRequest<LibraryPodcast> = fetchRequest()
+    request.predicate = NSPredicate(format: "title MATCHES[cd] %@", title)
+    request.fetchLimit = 1
+    
+    return (try? context.fetch(request))?.first
   }
   
   convenience init(mediaItem: MPMediaItem, context: NSManagedObjectContext) {

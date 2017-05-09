@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zn0-cR-RQU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zn0-cR-RQU">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,49 +21,55 @@
                         <color key="selectedImageTintColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="31v-MW-gmD" kind="relationship" relationship="viewControllers" id="Qsl-S3-W6u"/>
-                        <segue destination="DVu-Vw-aNJ" kind="relationship" relationship="viewControllers" id="YsO-Uu-9ux"/>
+                        <segue destination="Qhr-L3-sXz" kind="relationship" relationship="viewControllers" id="N9Z-Y0-x6h"/>
+                        <segue destination="DVu-Vw-aNJ" kind="relationship" relationship="viewControllers" id="Nd6-OO-y8L"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QjC-ej-Npv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-71" y="161"/>
         </scene>
-        <!--Podcasts-->
-        <scene sceneID="jvh-cf-CSL">
+        <!--My Podcasts-->
+        <scene sceneID="agV-2V-aIN">
             <objects>
-                <viewController id="Z0R-Rg-0n6" sceneMemberID="viewController">
+                <viewController id="Qhr-L3-sXz" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="BsE-1O-t9t"/>
-                        <viewControllerLayoutGuide type="bottom" id="buF-QE-f0a"/>
+                        <viewControllerLayoutGuide type="top" id="DpS-aS-XtV"/>
+                        <viewControllerLayoutGuide type="bottom" id="dPi-K5-0ed"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="RYS-kb-jG9">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="JPD-II-9cf">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="17V-MW-HM0">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="dDm-ga-Ibt"/>
+                                </constraints>
+                                <items/>
+                            </toolbar>
+                            <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Nav Title" translatesAutoresizingMaskIntoConstraints="NO" id="b48-NE-ipn">
+                                <rect key="frame" x="106" y="27" width="163" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="JpH-UU-0sW"/>
+                                    <constraint firstAttribute="width" constant="163" id="v0v-Se-pOs"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="b48-NE-ipn" firstAttribute="centerX" secondItem="17V-MW-HM0" secondAttribute="centerX" id="3qN-Bj-Wpz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="17V-MW-HM0" secondAttribute="trailing" constant="-16" id="Wh5-L8-3l7"/>
+                            <constraint firstItem="17V-MW-HM0" firstAttribute="bottom" secondItem="b48-NE-ipn" secondAttribute="bottom" constant="7" id="bsx-n3-0A6"/>
+                            <constraint firstItem="17V-MW-HM0" firstAttribute="leading" secondItem="JPD-II-9cf" secondAttribute="leadingMargin" constant="-16" id="eik-R3-Msu"/>
+                            <constraint firstItem="17V-MW-HM0" firstAttribute="top" secondItem="DpS-aS-XtV" secondAttribute="bottom" constant="-20" id="hfr-OP-Uby"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Podcasts" id="hgc-I5-aVh"/>
+                    <tabBarItem key="tabBarItem" title="My Podcasts" image="Podcasts" id="vjN-BF-PQ0"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2p3-ow-x7i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iyn-4Z-Z2S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1583" y="-18"/>
-        </scene>
-        <!--My Podcasts-->
-        <scene sceneID="UDs-9D-q87">
-            <objects>
-                <navigationController id="31v-MW-gmD" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Podcasts" image="Podcasts" id="IrL-lI-n5x"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2Ox-fU-grH">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="Z0R-Rg-0n6" kind="relationship" relationship="rootViewController" id="9v4-tY-yZ5"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XUd-UK-mAT" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="758" y="-18"/>
+            <point key="canvasLocation" x="799" y="-57"/>
         </scene>
         <!--My Watch-->
         <scene sceneID="CLu-3q-SaR">
@@ -85,6 +92,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Nav Title" width="163" height="30"/>
         <image name="Podcasts" width="25" height="25"/>
         <image name="Watch" width="25" height="25"/>
     </resources>

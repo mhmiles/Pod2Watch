@@ -37,6 +37,24 @@ class InterfaceController: WKInterfaceController, URLSessionDelegate {
     _ = PodcastTransferManager.shared
     
     setUpRows()
+    
+    AudioPlayer.shared.currentEpisode.producer.combinePrevious(nil).startWithValues { [weak self] previous, current in
+      guard let episodes = self?.resultsController.fetchedObjects else {
+        return
+      }
+      
+      if let previous = previous, let index = episodes.index(of: previous),
+        let rowController = self?.podcastsTable.rowController(at: index) as? PodcastsTableRowController {
+        rowController.backgroundGroup.setBackgroundImage(nil)
+        rowController.backgroundGroup.setCornerRadius(6)
+      }
+      
+      if let current = current, let index = episodes.index(of: current),
+        let rowController = self?.podcastsTable.rowController(at: index) as? PodcastsTableRowController {
+        rowController.backgroundGroup.setBackgroundImage(#imageLiteral(resourceName: "Now Playing Border"))
+        rowController.backgroundGroup.setCornerRadius(6)
+      }
+    }
   }
   
   override func willActivate() {
@@ -56,12 +74,13 @@ class InterfaceController: WKInterfaceController, URLSessionDelegate {
         
         let episode = resultsController.object(at: IndexPath(row: index, section: 0))
         
-        rowController.artworkImage.setImage(episode.artworkImage)
         rowController.podcastTitleLabel.setText(episode.podcast.title)
         rowController.epiosodeTitleLabel.setText(episode.title)
         
         rowController.progressBarWidth = contentFrame.width-12.0
         rowController.setProgressBarCompletion(episode.startTime/max(1, episode.playbackDuration))
+        
+        rowController.artworkImageDisposable = episode.artworkImage.producer.startWithValues(rowController.artworkImage.setImage)
       }
     } else {
       podcastsTable.setNumberOfRows(1, withRowType: "NoPodcasts")
@@ -133,9 +152,10 @@ extension InterfaceController: NSFetchedResultsControllerDelegate {
         
         let rowController = podcastsTable.rowController(at: newIndexPath!.row) as! PodcastsTableRowController
         
-        rowController.artworkImage.setImage(episode.artworkImage)
         rowController.podcastTitleLabel.setText(episode.podcast.title)
         rowController.epiosodeTitleLabel.setText(episode.title)
+        
+        rowController.artworkImageDisposable = episode.artworkImage.producer.startWithValues(rowController.artworkImage.setImage)
         
         rowController.progressBarWidth = contentFrame.width-12.0
         rowController.setProgressBarCompletion(episode.startTime/max(1, episode.playbackDuration))
@@ -147,9 +167,9 @@ extension InterfaceController: NSFetchedResultsControllerDelegate {
       guard let rowController = podcastsTable.rowController(at: newIndexPath!.row) as? PodcastsTableRowController else {
         return
       }
-
+      
       rowController.setProgressBarCompletion(episode.startTime/max(1, episode.playbackDuration))
-    
+      
     case .delete:
       if controller.fetchedObjects?.count ?? 0 > 0 {
         let rows = IndexSet(integer: indexPath!.row)

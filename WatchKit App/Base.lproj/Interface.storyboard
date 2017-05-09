@@ -45,7 +45,7 @@
                                                 </items>
                                                 <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="3"/>
                                             </group>
-                                            <group width="1" height="4" alignment="left" verticalAlignment="bottom" radius="0.0" id="8FB-Bx-Rik">
+                                            <group width="1" height="4" alignment="left" verticalAlignment="bottom" semanticContentAttribute="forceLeftToRight" radius="0.0" id="8FB-Bx-Rik">
                                                 <items>
                                                     <group width="2" height="1" alignment="left" verticalAlignment="bottom" radius="2" id="xUd-5M-MpC">
                                                         <color key="backgroundColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -58,6 +58,7 @@
                                     </group>
                                     <connections>
                                         <outlet property="artworkImage" destination="58F-ny-FzZ" id="Bge-7U-aX2"/>
+                                        <outlet property="backgroundGroup" destination="tz6-0k-y54" id="For-7H-N1o"/>
                                         <outlet property="epiosodeTitleLabel" destination="M5h-O9-lwA" id="Dsj-r5-rvh"/>
                                         <outlet property="podcastTitleLabel" destination="K6i-HN-wTE" id="DAR-yn-y5I"/>
                                         <outlet property="progressBar" destination="xUd-5M-MpC" id="0Pd-EG-C1i"/>
@@ -97,7 +98,7 @@
                     <items>
                         <group width="1" height="1" alignment="left" layout="vertical" radius="0.0" spacing="0.0" id="d2K-0f-P3v">
                             <items>
-                                <group width="1" height="6" alignment="left" radius="2" spacing="0.0" id="xKN-Wy-a7L">
+                                <group width="1" height="6" alignment="left" semanticContentAttribute="forceLeftToRight" radius="2" spacing="0.0" id="xKN-Wy-a7L">
                                     <items>
                                         <group width="4" height="1" alignment="left" radius="2" id="5FH-1p-9ai">
                                             <color key="backgroundColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -105,7 +106,7 @@
                                     </items>
                                     <edgeInsets key="margins" left="0.0" right="0.0" top="1" bottom="1"/>
                                 </group>
-                                <group width="1" alignment="left" id="wv0-mF-mWS">
+                                <group width="1" alignment="left" semanticContentAttribute="forceLeftToRight" id="wv0-mF-mWS">
                                     <items>
                                         <label alignment="left" text="0:00" id="KdV-Do-wHk">
                                             <fontDescription key="font" type="system" weight="medium" pointSize="10"/>
@@ -131,7 +132,7 @@
                                     </items>
                                     <edgeInsets key="margins" left="5" right="5" top="3" bottom="0.0"/>
                                 </group>
-                                <group width="1" alignment="left" verticalAlignment="bottom" id="LB6-69-aFD" userLabel="Buttons">
+                                <group width="1" alignment="left" verticalAlignment="bottom" semanticContentAttribute="playback" id="LB6-69-aFD" userLabel="Buttons">
                                     <items>
                                         <button width="35" height="35" alignment="left" verticalAlignment="center" backgroundImage="Back" id="bLe-TC-LPE">
                                             <variation key="device=watch38mm" height="35" width="35"/>
@@ -157,7 +158,7 @@
                                 </group>
                                 <group width="1" alignment="left" verticalAlignment="bottom" radius="6" id="qAt-6y-Y51" customClass="BorderedGroup" customModule="Pod2Watch_WatchKit_App" customModuleProvider="target">
                                     <items>
-                                        <slider width="1" height="30" alignment="left" verticalAlignment="bottom" continuous="YES" value="0.69999999999999996" steps="6" minimumImage="VolDown" maximumImage="VolUp" id="QkL-L8-9cI">
+                                        <slider width="1" height="30" alignment="left" verticalAlignment="bottom" semanticContentAttribute="forceLeftToRight" continuous="YES" value="0.69999999999999996" steps="6" minimumImage="VolDown" maximumImage="VolUp" id="QkL-L8-9cI">
                                             <color key="color" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <connections>
                                                 <action selector="handleVolumePress:" destination="tY7-tY-WWU" id="de2-ej-94c"/>
@@ -180,7 +181,7 @@
                                     <action selector="handleSpeedUp" destination="tY7-tY-WWU" id="J18-tm-kt4"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Seek To" icon="accept" id="H0m-Vh-bgn">
+                            <menuItem title="Seek To" image="Seek" id="H0m-Vh-bgn">
                                 <connections>
                                     <action selector="handleSeekTo" destination="tY7-tY-WWU" id="WMb-Ay-Z5A"/>
                                 </connections>
@@ -211,19 +212,40 @@
         <!--Seek To-->
         <scene sceneID="1Kb-OA-2Rf">
             <objects>
-                <controller identifier="SeekTo" title="Seek To" id="7GR-Hd-RR1">
+                <controller identifier="SeekTo" title="Seek To" id="7GR-Hd-RR1" customClass="SeekToController" customModule="Pod2Watch_WatchKit_Extension">
                     <items>
-                        <group width="1" alignment="left" verticalAlignment="center" id="nrB-4b-QpT">
+                        <group width="1" height="0.27000000000000002" alignment="left" id="rSJ-6m-tpR"/>
+                        <group width="1" alignment="left" id="nrB-4b-QpT">
                             <items>
-                                <picker width="0.29999999999999999" height="40" alignment="left" verticalAlignment="center" focusStyle="sequence" id="F9v-YL-H2l"/>
-                                <picker width="0.29999999999999999" height="40" alignment="center" verticalAlignment="center" focusStyle="sequence" id="Sfc-vI-EaL"/>
-                                <picker width="0.29999999999999999" height="40" alignment="right" verticalAlignment="center" focusStyle="sequence" id="MaM-yQ-mmg"/>
+                                <picker width="0.29999999999999999" height="40" alignment="left" verticalAlignment="center" focusStyle="sequence" id="F9v-YL-H2l">
+                                    <connections>
+                                        <action selector="handleHoursSelection:" destination="7GR-Hd-RR1" id="rGL-xJ-XL2"/>
+                                    </connections>
+                                </picker>
+                                <picker width="0.29999999999999999" height="40" alignment="center" verticalAlignment="center" focusStyle="sequence" id="Sfc-vI-EaL">
+                                    <connections>
+                                        <action selector="handleMinutesSelection:" destination="7GR-Hd-RR1" id="gt6-p8-Gj2"/>
+                                    </connections>
+                                </picker>
+                                <picker width="0.29999999999999999" height="40" alignment="right" verticalAlignment="center" focusStyle="sequence" id="MaM-yQ-mmg">
+                                    <connections>
+                                        <action selector="handleSecondsSelection:" destination="7GR-Hd-RR1" id="e5g-ij-Ef7"/>
+                                    </connections>
+                                </picker>
                             </items>
                         </group>
                         <button width="1" alignment="left" verticalAlignment="bottom" title="OK" id="ZOW-cD-JS5">
                             <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="handleOK" destination="7GR-Hd-RR1" id="BMd-8I-Exe"/>
+                            </connections>
                         </button>
                     </items>
+                    <connections>
+                        <outlet property="hourPicker" destination="F9v-YL-H2l" id="OfW-Sm-8SM"/>
+                        <outlet property="minutePicker" destination="Sfc-vI-EaL" id="0OJ-bD-TtK"/>
+                        <outlet property="secondPicker" destination="MaM-yQ-mmg" id="JuQ-mQ-vpa"/>
+                    </connections>
                 </controller>
             </objects>
             <point key="canvasLocation" x="585" y="57"/>

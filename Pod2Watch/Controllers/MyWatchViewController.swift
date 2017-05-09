@@ -23,21 +23,11 @@ class MyWatchViewController: UITableViewController {
                                                          sectionNameKeyPath: nil,
                                                          cacheName: nil)
     
+    try! controller.performFetch()
     controller.delegate = self
     
     return controller
   }()
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    try! fetchedResultsController.performFetch()
-  }
-  
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
   
   @objc @IBAction func handleEditPress() {
     if tableView.isEditing {
@@ -63,13 +53,15 @@ class MyWatchViewController: UITableViewController {
     let cell = tableView.dequeueReusableCell(withIdentifier: "MyWatchCell", for: indexPath) as! MyWatchEpisodeCell
     
     let episode = fetchedResultsController.object(at: indexPath)
-    cell.titleLabel.text = episode.episodeTitle
+    cell.titleLabel.text = episode.title
     cell.durationLabel.text = episode.secondaryLabelText
     
-    if episode.isTransferred == false {
+    if episode.isTransferred {
+      cell.syncButton.syncState = nil
+    } else if episode.hasBegunTransfer {
       cell.syncButton.syncState = .syncing
     } else {
-      cell.syncButton.syncState = nil
+      cell.syncButton.syncState = .pending
     }
     
     cell.artworkView.image = episode.podcast?.artworkImage
@@ -79,31 +71,7 @@ class MyWatchViewController: UITableViewController {
   
    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
-      let episode = fetchedResultsController.object(at: indexPath)
-      
-      if episode.hasBegunTransfer == false,
-        let transfer = WCSession.default().outstandingFileTransfers.first(where: { $0.file.metadata?["persistentID"] as? Int64 == episode.persistentID}) {
-        transfer.cancel()
-        
-        let context = PersistentContainer.shared.viewContext
-        context.delete(episode)
-        PersistentContainer.saveContext()
-      } else {
-        episode.shouldDelete = true
-        
-        PersistentContainer.saveContext()
-        
-        if WCSession.default().isReachable {
-          let message : [String: Any] = [
-            "type": MessageType.sendDeletes,
-            "payload": [NSNumber(value: episode.persistentID)]
-          ]
-          
-          WCSession.default().sendMessage(message, replyHandler: nil, errorHandler: { (error) in
-            print(error)
-          })
-        }
-      }
+      PodcastTransferManager.shared.delete(fetchedResultsController.object(at: indexPath))
     }
    }
   

@@ -15,16 +15,31 @@ public class TransferredPodcast: NSManagedObject {
   }
   
   @NSManaged public var artworkImage: UIImage?
+  @NSManaged public var lastAutoSyncDate: Date?
   @NSManaged public var isAutoTransferred: Bool
-  @NSManaged public var title: String?
-  @NSManaged public var episodes: NSSet?
+  @NSManaged public var title: String
+  @NSManaged public var episodes: NSSet
 
-  convenience init(_ podcast: LibraryPodcast, context: NSManagedObjectContext) {
+  convenience init(_ podcast: LibraryPodcast, context: NSManagedObjectContext = PersistentContainer.shared.viewContext) {
     let entity = NSEntityDescription.entity(forEntityName: "TransferredPodcast", in: context)!
     self.init(entity: entity, insertInto: context)
     
-    title = podcast.title
+    title = podcast.title ?? ""
     artworkImage = podcast.artworkImage
+  }
+  
+  class func existing(title: String) -> TransferredPodcast? {
+    let transferredRequest: NSFetchRequest<TransferredPodcast> = fetchRequest()
+    transferredRequest.predicate = NSPredicate(format: "title == %@", title)
+    transferredRequest.fetchLimit = 1
+    
+    return (try? PersistentContainer.shared.viewContext.fetch(transferredRequest))?.first
+  }
+  
+  class func all() -> [TransferredPodcast] {
+    let transferredRequest: NSFetchRequest<TransferredPodcast> = fetchRequest()
+    
+    return try! PersistentContainer.shared.viewContext.fetch(transferredRequest)
   }
 }
 
