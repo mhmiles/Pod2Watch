@@ -181,7 +181,7 @@
                                     <action selector="handleSpeedUp" destination="tY7-tY-WWU" id="J18-tm-kt4"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Seek To" image="Seek" id="H0m-Vh-bgn">
+                            <menuItem title="Seek" image="Seek" id="H0m-Vh-bgn">
                                 <connections>
                                     <action selector="handleSeekTo" destination="tY7-tY-WWU" id="WMb-Ay-Z5A"/>
                                 </connections>
@@ -209,10 +209,10 @@
             </objects>
             <point key="canvasLocation" x="322.5641025641026" y="57.974358974358978"/>
         </scene>
-        <!--Seek To-->
+        <!--Seek-->
         <scene sceneID="1Kb-OA-2Rf">
             <objects>
-                <controller identifier="SeekTo" title="Seek To" id="7GR-Hd-RR1" customClass="SeekToController" customModule="Pod2Watch_WatchKit_Extension">
+                <controller identifier="Seek" title="Seek" id="7GR-Hd-RR1" customClass="SeekToController" customModule="Pod2Watch_WatchKit_Extension">
                     <items>
                         <group width="1" height="0.27000000000000002" alignment="left" id="rSJ-6m-tpR"/>
                         <group width="1" alignment="left" id="nrB-4b-QpT">

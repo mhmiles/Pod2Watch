@@ -229,7 +229,7 @@ class NowPlayingController: WKInterfaceController {
     WKInterfaceDevice.current().play(.click)
     
     currentEpisode.value?.startTime = AudioPlayer.shared.currentTime
-    pushController(withName: "SeekTo", context: nil)
+    pushController(withName: "Seek", context: nil)
   }
   
   @IBAction func handleDelete() {

@@ -188,6 +188,12 @@ class PodcastTransferManager: NSObject {
   func handleConfirmDeleteAll() {
     shouldClearWatchStorage = false
     
+    if let transfers = session?.outstandingFileTransfers {
+      for transfer in transfers {
+        transfer.cancel()
+      }
+    }
+    
     let context = PersistentContainer.shared.viewContext
 
     context.perform {
