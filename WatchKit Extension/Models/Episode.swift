@@ -25,7 +25,8 @@ public class Episode: NSManagedObject {
   @NSManaged public var sortIndex: Int16
   @NSManaged public var startTime: Double
   
-  lazy var artworkImage: DynamicProperty<UIImage> = DynamicProperty(object: self, keyPath: "podcast.artworkImage")
+  lazy var artworkImage: DynamicProperty<UIImage> = DynamicProperty(object: self,
+                                                                    keyPath: #keyPath(Episode.podcast.artworkImage))
   
   var isPlayed: Bool {
     return playbackDuration - startTime > 15
