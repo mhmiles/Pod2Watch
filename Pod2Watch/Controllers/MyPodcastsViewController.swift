@@ -35,7 +35,8 @@ class MyPodcastsViewController: UIViewController, IGListAdapterDataSource {
   fileprivate lazy var libraryResultsController: NSFetchedResultsController<LibraryPodcast> = {
     let request: NSFetchRequest<LibraryPodcast> = LibraryPodcast.fetchRequest()
     
-    request.sortDescriptors = [NSSortDescriptor(key: "titleWithoutThe", ascending: true)]
+    request.sortDescriptors = [NSSortDescriptor(key: #keyPath(LibraryPodcast.titleWithoutThe),
+                                                ascending: true)]
     
     let controller = NSFetchedResultsController<LibraryPodcast>(fetchRequest: request,
                                                                 managedObjectContext: InMemoryContainer.shared.viewContext,

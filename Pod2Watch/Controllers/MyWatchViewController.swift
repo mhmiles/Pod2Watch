@@ -15,7 +15,8 @@ import WatchConnectivity
 class MyWatchViewController: UITableViewController {
   lazy var fetchedResultsController: NSFetchedResultsController<TransferredEpisode> = { () -> NSFetchedResultsController<TransferredEpisode> in
     let request = NSFetchRequest<TransferredEpisode>(entityName: "TransferredEpisode")
-    request.sortDescriptors = [NSSortDescriptor(key: "sortIndex", ascending: true)]
+    request.sortDescriptors = [NSSortDescriptor(key: #keyPath(TransferredEpisode.sortIndex),
+                                                ascending: true)]
     request.predicate = NSPredicate(format: "shouldDelete == NO")
     
     let controller = NSFetchedResultsController<TransferredEpisode>(fetchRequest: request,

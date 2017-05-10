@@ -18,7 +18,8 @@ class InterfaceController: WKInterfaceController, URLSessionDelegate {
     let context = PersistentContainer.shared.viewContext
     
     let request: NSFetchRequest<Episode> = Episode.fetchRequest()
-    request.sortDescriptors = [NSSortDescriptor(key: "sortIndex", ascending: true)]
+    request.sortDescriptors = [NSSortDescriptor(key: #keyPath(Episode.sortIndex),
+                                                ascending: true)]
     
     let controller = NSFetchedResultsController(fetchRequest: request,
                                                 managedObjectContext: context,

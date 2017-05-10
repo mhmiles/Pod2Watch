@@ -39,7 +39,8 @@ public class LibraryEpisode: NSManagedObject {
   class func latestEpisode(title: String) -> LibraryEpisode? {
     let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "podcast.title == %@", title)
-    request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
+    request.sortDescriptors = [NSSortDescriptor(key: #keyPath(LibraryEpisode.releaseDate),
+                                                ascending: false)]
     request.fetchLimit = 1
     
     return (try? InMemoryContainer.shared.viewContext.fetch(request))?.first

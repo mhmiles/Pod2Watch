@@ -21,7 +21,8 @@ class MyPodcastsEpisodesViewController: UITableViewController {
   fileprivate lazy var libraryResultsController: NSFetchedResultsController<LibraryEpisode> = {
     let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "podcast.title == %@", self.podcastTitle)
-    request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
+    request.sortDescriptors = [NSSortDescriptor(key: #keyPath(LibraryEpisode.releaseDate),
+                                                ascending: false)]
     
     let controller = NSFetchedResultsController<LibraryEpisode>(fetchRequest: request,
                                                                 managedObjectContext: InMemoryContainer.shared.viewContext,
@@ -37,7 +38,8 @@ class MyPodcastsEpisodesViewController: UITableViewController {
   fileprivate lazy var syncResultsController: NSFetchedResultsController<TransferredEpisode> = {
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "podcast.title == %@", self.podcastTitle)
-    request.sortDescriptors = [NSSortDescriptor(key: "releaseDate", ascending: false)]
+    request.sortDescriptors = [NSSortDescriptor(key: #keyPath(TransferredEpisode.releaseDate),
+                                                ascending: false)]
     
     let controller = NSFetchedResultsController<TransferredEpisode>(fetchRequest: request,
                                                                     managedObjectContext: PersistentContainer.shared.viewContext,

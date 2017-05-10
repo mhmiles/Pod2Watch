@@ -104,7 +104,8 @@ public class TransferredEpisode: NSManagedObject {
 
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
     request.fetchLimit = 1
-    request.sortDescriptors = [NSSortDescriptor(key: "sortIndex", ascending: false)]
+    request.sortDescriptors = [NSSortDescriptor(key: #keyPath(TransferredEpisode.sortIndex),
+                                                ascending: false)]
     
     if let maxSortIndex = try! context.fetch(request).first?.sortIndex {
       sortIndex = maxSortIndex+1
