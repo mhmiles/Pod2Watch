@@ -13,6 +13,7 @@
 		020E296E1E920E2A008013C0 /* Pod2WatchOnWatch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 021C82671E88545700E2265E /* Pod2WatchOnWatch.xcdatamodeld */; };
 		020E29721E920E7A008013C0 /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E29711E920E7A008013C0 /* PersistentContainer.swift */; };
 		020E29731E920E91008013C0 /* PersistentContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DD201E4B94C7000C760D /* PersistentContainer.swift */; };
+		0210C4361EC2D02700AE4B07 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0210C4351EC2D02700AE4B07 /* HealthKit.framework */; };
 		0212D6861E52DF7C002DD840 /* IGListKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0212D6851E52DF7C002DD840 /* IGListKit.framework */; };
 		021B615B1E4FCBA2007CD7A2 /* MyWatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021B615A1E4FCBA2007CD7A2 /* MyWatchViewController.swift */; };
 		021B615D1E4FCF1F007CD7A2 /* MyWatchEpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021B615C1E4FCF1F007CD7A2 /* MyWatchEpisodeCell.swift */; };
@@ -137,6 +138,7 @@
 		0209328E1E93321700948002 /* Episode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Episode.swift; sourceTree = "<group>"; };
 		020E296B1E920258008013C0 /* MessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		020E29711E920E7A008013C0 /* PersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentContainer.swift; sourceTree = "<group>"; };
+		0210C4351EC2D02700AE4B07 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS3.2.sdk/System/Library/Frameworks/HealthKit.framework; sourceTree = DEVELOPER_DIR; };
 		0212D6851E52DF7C002DD840 /* IGListKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IGListKit.framework; path = Carthage/Build/iOS/IGListKit.framework; sourceTree = "<group>"; };
 		021B615A1E4FCBA2007CD7A2 /* MyWatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyWatchViewController.swift; sourceTree = "<group>"; };
 		021B615C1E4FCF1F007CD7A2 /* MyWatchEpisodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyWatchEpisodeCell.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02CED0B31EBEDA9200EE8AB1 /* ReactiveCocoa.framework in Frameworks */,
+				0210C4361EC2D02700AE4B07 /* HealthKit.framework in Frameworks */,
 				02F686C81EBA799000F19D72 /* ReactiveSwift.framework in Frameworks */,
 				02F686C91EBA799000F19D72 /* Result.framework in Frameworks */,
 			);
@@ -258,6 +261,7 @@
 		02310CDD1E4BA75F00D427EE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0210C4351EC2D02700AE4B07 /* HealthKit.framework */,
 				02CED0B21EBEDA9200EE8AB1 /* ReactiveCocoa.framework */,
 				02F686C61EBA799000F19D72 /* ReactiveSwift.framework */,
 				02F686C71EBA799000F19D72 /* Result.framework */,
@@ -579,6 +583,9 @@
 								enabled = 1;
 							};
 							com.apple.BackgroundModes.watchos.extension = {
+								enabled = 1;
+							};
+							com.apple.HealthKit.watchos = {
 								enabled = 1;
 							};
 						};
