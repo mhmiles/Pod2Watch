@@ -212,7 +212,7 @@
         <!--Seek-->
         <scene sceneID="1Kb-OA-2Rf">
             <objects>
-                <controller identifier="Seek" title="Seek" id="7GR-Hd-RR1" customClass="SeekToController" customModule="Pod2Watch_WatchKit_Extension">
+                <controller identifier="Seek" title="Seek" id="7GR-Hd-RR1" customClass="SeekController" customModule="Pod2Watch_WatchKit_Extension">
                     <items>
                         <group width="1" height="0.27000000000000002" alignment="left" id="rSJ-6m-tpR"/>
                         <group width="1" alignment="left" id="nrB-4b-QpT">

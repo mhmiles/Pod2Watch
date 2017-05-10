@@ -1,5 +1,5 @@
 //
-//  SeekToController.swift
+//  SeekController.swift
 //  Pod2Watch
 //
 //  Created by Miles Hollingsworth on 5/6/17.
@@ -10,7 +10,7 @@ import WatchKit
 import Foundation
 import ReactiveSwift
 
-class SeekToController: WKInterfaceController {
+class SeekController: WKInterfaceController {
 
   @IBOutlet var hourPicker: WKInterfacePicker!
   @IBOutlet var minutePicker: WKInterfacePicker!

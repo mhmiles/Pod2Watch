@@ -149,15 +149,18 @@ class AudioPlayer: NSObject {
     }
     
     player?.play()
+    _isPlaying.value = player?.isPlaying ?? false
   }
   
   func pause() {
     player?.pause()
+    _isPlaying.value = false
   }
   
   func handleNextInQueue() {
     guard let nextEpisode = episodeQueue.first else {
       _currentEpisode.value = nil
+      _isPlaying.value = false
       
       return
     }

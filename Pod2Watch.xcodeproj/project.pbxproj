@@ -69,7 +69,7 @@
 		02C1DD081E4B9281000C760D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DD071E4B9281000C760D /* ExtensionDelegate.swift */; };
 		02C1DD0A1E4B9281000C760D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DD091E4B9281000C760D /* Assets.xcassets */; };
 		02C1DD1D1E4B929D000C760D /* Pod2Watch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DD1B1E4B929D000C760D /* Pod2Watch.xcdatamodeld */; };
-		02CED0B11EBEC42000EE8AB1 /* SeekToController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CED0AF1EBEC3EC00EE8AB1 /* SeekToController.swift */; };
+		02CED0B11EBEC42000EE8AB1 /* SeekController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CED0AF1EBEC3EC00EE8AB1 /* SeekController.swift */; };
 		02CED0B31EBEDA9200EE8AB1 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CED0B21EBEDA9200EE8AB1 /* ReactiveCocoa.framework */; };
 		02CED0B51EBEE10C00EE8AB1 /* String + SanitizeFilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CED0B41EBEE10C00EE8AB1 /* String + SanitizeFilePath.swift */; };
 		02EC2EEE1EAAF5D30077DF84 /* Versioned.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02EC2EEC1EAAF5D30077DF84 /* Versioned.xcdatamodeld */; };
@@ -203,7 +203,7 @@
 		02C1DD1F1E4B94B3000C760D /* Pod2Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pod2Watch.entitlements; sourceTree = "<group>"; };
 		02C1DD201E4B94C7000C760D /* PersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentContainer.swift; sourceTree = "<group>"; };
 		02C61FBD1E4D27310022FBB1 /* Pod2Watch WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Pod2Watch WatchKit App.entitlements"; path = "Pod2Watch WatchKit App/Pod2Watch WatchKit App.entitlements"; sourceTree = "<group>"; };
-		02CED0AF1EBEC3EC00EE8AB1 /* SeekToController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekToController.swift; sourceTree = "<group>"; };
+		02CED0AF1EBEC3EC00EE8AB1 /* SeekController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekController.swift; sourceTree = "<group>"; };
 		02CED0B21EBEDA9200EE8AB1 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/watchOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		02CED0B41EBEE10C00EE8AB1 /* String + SanitizeFilePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String + SanitizeFilePath.swift"; sourceTree = "<group>"; };
 		02EC2EED1EAAF5D30077DF84 /* Versioned.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Versioned.xcdatamodel; sourceTree = "<group>"; };
@@ -292,7 +292,7 @@
 				02C1DD051E4B9281000C760D /* InterfaceController.swift */,
 				02BB4D281E4E914600F08B7F /* PodcastsTableRowController.swift */,
 				02FACB261EB8F32400036B9F /* NowPlayingController.swift */,
-				02CED0AF1EBEC3EC00EE8AB1 /* SeekToController.swift */,
+				02CED0AF1EBEC3EC00EE8AB1 /* SeekController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -738,7 +738,7 @@
 				020932901E93326200948002 /* Episode.swift in Sources */,
 				02256CED1EB901FF00BDFD4B /* NowPlayingController.swift in Sources */,
 				020E296D1E9202EA008013C0 /* MessageType.swift in Sources */,
-				02CED0B11EBEC42000EE8AB1 /* SeekToController.swift in Sources */,
+				02CED0B11EBEC42000EE8AB1 /* SeekController.swift in Sources */,
 				026481AE1EBD0310002A3B2B /* AudioPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
