@@ -50,22 +50,6 @@ class PodcastTransferManager: NSObject {
   }
   
   func transfer(_ episode: LibraryEpisode, isAutoTransfer: Bool = false) {
-    if let session = session, session.isWatchAppInstalled == false {
-      let alertController = UIAlertController(title: "Watch App Not Installed", message: "The Pod2Watch Watch app is not installed.", preferredStyle: .alert)
-      
-      let watchAppURL = URL(string: "itms-watch://")!
-      
-      alertController.addAction(UIAlertAction(title: "OK", style: .cancel))
-      
-      if UIApplication.shared.canOpenURL(watchAppURL) {
-        alertController.addAction(UIAlertAction(title: "Open Watch App", style: .default) { _ in
-          UIApplication.shared.open(watchAppURL)
-        })
-      }
-      
-      UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true)
-    }
-    
     guard let assetURL = episode.assetURL else {
       return
     }
