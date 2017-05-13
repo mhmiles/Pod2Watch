@@ -55,6 +55,7 @@
 		02BB4D1F1E4E674300F08B7F /* MyPodcastsEpisodesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB4D1E1E4E674300F08B7F /* MyPodcastsEpisodesViewController.swift */; };
 		02BB4D211E4E693200F08B7F /* MyPodcastsEpisodeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB4D201E4E693200F08B7F /* MyPodcastsEpisodeCell.swift */; };
 		02BB4D291E4E914600F08B7F /* PodcastsTableRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB4D281E4E914600F08B7F /* PodcastsTableRowController.swift */; };
+		02C0ABD21EC663EE00D9876E /* ComplicationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C0ABD01EC663E600D9876E /* ComplicationDataSource.swift */; };
 		02C0BCBD1EBBD3D200E34329 /* UIImageTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C0BCBC1EBBD3D200E34329 /* UIImageTransformer.swift */; };
 		02C0BCBF1EBBE4D000E34329 /* URLTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C0BCBE1EBBE4D000E34329 /* URLTransformer.swift */; };
 		02C0BCC01EBBE5AF00E34329 /* URLTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C0BCBE1EBBE4D000E34329 /* URLTransformer.swift */; };
@@ -184,6 +185,7 @@
 		02BB4D1E1E4E674300F08B7F /* MyPodcastsEpisodesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPodcastsEpisodesViewController.swift; sourceTree = "<group>"; };
 		02BB4D201E4E693200F08B7F /* MyPodcastsEpisodeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPodcastsEpisodeCell.swift; sourceTree = "<group>"; };
 		02BB4D281E4E914600F08B7F /* PodcastsTableRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastsTableRowController.swift; sourceTree = "<group>"; };
+		02C0ABD01EC663E600D9876E /* ComplicationDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationDataSource.swift; sourceTree = "<group>"; };
 		02C0BCBC1EBBD3D200E34329 /* UIImageTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageTransformer.swift; path = "../WatchKit Extension/CoreData/UIImageTransformer.swift"; sourceTree = "<group>"; };
 		02C0BCBE1EBBE4D000E34329 /* URLTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = URLTransformer.swift; path = ../Pod2Watch/CoreData/URLTransformer.swift; sourceTree = "<group>"; };
 		02C1DCDF1E4B9281000C760D /* Pod2Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pod2Watch.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -444,6 +446,7 @@
 		02C1DD041E4B9281000C760D /* WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				02C0ABD01EC663E600D9876E /* ComplicationDataSource.swift */,
 				025E6E8A1E92CBCE00AB2D98 /* Controllers */,
 				020E296F1E920E3F008013C0 /* CoreData */,
 				025E6E8B1E92CBD300AB2D98 /* Models */,
@@ -747,6 +750,7 @@
 				020E296D1E9202EA008013C0 /* MessageType.swift in Sources */,
 				02CED0B11EBEC42000EE8AB1 /* SeekController.swift in Sources */,
 				026481AE1EBD0310002A3B2B /* AudioPlayer.swift in Sources */,
+				02C0ABD21EC663EE00D9876E /* ComplicationDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
