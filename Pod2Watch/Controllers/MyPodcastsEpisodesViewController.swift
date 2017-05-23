@@ -15,45 +15,47 @@ class MyPodcastsEpisodesViewController: UITableViewController {
       navigationItem.title = podcastTitle
     }
   }
-  
+
   @IBOutlet weak var autoTransferSwitch: UISwitch!
-  
+
   fileprivate lazy var libraryResultsController: NSFetchedResultsController<LibraryEpisode> = {
     let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "podcast.title == %@", self.podcastTitle)
     request.sortDescriptors = [NSSortDescriptor(key: #keyPath(LibraryEpisode.releaseDate),
                                                 ascending: false)]
     
+    let context = InMemoryContainer.shared.viewContext
     let controller = NSFetchedResultsController<LibraryEpisode>(fetchRequest: request,
-                                                                managedObjectContext: InMemoryContainer.shared.viewContext,
+                                                                managedObjectContext: context,
                                                                 sectionNameKeyPath: nil,
                                                                 cacheName: nil)
     
     try! controller.performFetch()
     controller.delegate = self
-    
+
     return controller
   }()
-  
+
   fileprivate lazy var syncResultsController: NSFetchedResultsController<TransferredEpisode> = {
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "podcast.title == %@", self.podcastTitle)
     request.sortDescriptors = [NSSortDescriptor(key: #keyPath(TransferredEpisode.releaseDate),
                                                 ascending: false)]
     
+    let context = PersistentContainer.shared.viewContext
     let controller = NSFetchedResultsController<TransferredEpisode>(fetchRequest: request,
-                                                                    managedObjectContext: PersistentContainer.shared.viewContext,
+                                                                    managedObjectContext: context,
                                                                     sectionNameKeyPath: nil,
                                                                     cacheName: nil)
     
     try! controller.performFetch()
     controller.delegate = self
-    
+
     return controller
   }()
-  
+
   var isAutoTransferActive = false
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -61,23 +63,23 @@ class MyPodcastsEpisodesViewController: UITableViewController {
       isAutoTransferActive = transferredPodcast.isAutoTransferred
       autoTransferSwitch.isOn = transferredPodcast.isAutoTransferred
     }
-    
+
     NotificationCenter.default.addObserver(forName: InMemoryContainer.PodcastLibraryDidReload,
                                            object: InMemoryContainer.shared,
                                            queue: OperationQueue.main) { [weak self] _ in
                                             try! self?.libraryResultsController.performFetch()
                                             self?.tableView.reloadData()
     }
-    
+
     _ = syncResultsController
   }
-  
+
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
   
   // MARK: - Table view data source
-  
+
   override func numberOfSections(in tableView: UITableView) -> Int {
     return libraryResultsController.sections?.count ?? 0
   }
@@ -85,14 +87,14 @@ class MyPodcastsEpisodesViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return libraryResultsController.sections?[section].numberOfObjects ?? 0
   }
-  
+
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "EpisodeCell", for: indexPath) as! MyPodcastsEpisodeCell
-    
+
     let rowEpisode = libraryResultsController.object(at: indexPath)
     cell.titleLabel.text = rowEpisode.title
     cell.durationLabel.text = rowEpisode.secondaryLabelText
-    
+
     if let synced = TransferredEpisode.existing(persistentID: rowEpisode.persistentID) {
       if synced.shouldDelete {
         cell.syncButton.syncState = .pending
