@@ -11,15 +11,15 @@ import UIKit
 class BorderButton: UIButton {
   override func awakeFromNib() {
     super.awakeFromNib()
-    
+
     layer.cornerRadius = 3.0
     layer.borderWidth = 1.0
     layer.borderColor = tintColor.cgColor
   }
-  
+
   override func tintColorDidChange() {
     super.tintColorDidChange()
-    
+
     layer.borderColor = tintColor.cgColor
   }
 }

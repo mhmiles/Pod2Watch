@@ -1,4 +1,3 @@
-
 //
 //  SyncButton.swift
 //  Pod2Watch
@@ -27,14 +26,14 @@ class SyncButton: BorderButton {
       }
     }
   }
-  
+
   var syncState: SyncState? {
     didSet {
       switch syncState {
       case .noSync?:
         layer.borderWidth = 1.0
         setTitle("SYNC", for: .normal)
-        
+
       case .preparing?:
         layer.borderWidth = 0.0
         setTitle("PREPARING", for: .normal)
@@ -42,15 +41,15 @@ class SyncButton: BorderButton {
       case .pending?:
         layer.borderWidth = 0.0
         setTitle("PENDING", for: .normal)
-        
+
       case .syncing?:
         layer.borderWidth = 0.0
         setTitle("SYNCING", for: .normal)
-        
+
       case .synced?:
         layer.borderWidth = 0.0
         setTitle("SYNCED", for: .normal)
-        
+
       case nil:
         layer.borderWidth = 0.0
         setTitle(nil, for: .normal)

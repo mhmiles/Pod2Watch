@@ -15,69 +15,69 @@ import Alamofire
 
 public class LibraryEpisode: NSManagedObject {
   var mediaItem: MPMediaItem!
-  
+
   var assetURL: URL? {
     return mediaItem.assetURL
   }
-  
+
   var title: String? {
     return mediaItem.title
   }
-  
+
   var artwork: MPMediaItemArtwork? {
     return mediaItem.artwork
   }
-  
+
   class func existing(persistentID: Int64) -> LibraryEpisode? {
     let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "persistentID == %ld", persistentID)
     request.fetchLimit = 1
-    
+
     return (try? InMemoryContainer.shared.viewContext.fetch(request))?.first
   }
-  
+
   class func latestEpisode(title: String) -> LibraryEpisode? {
     let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "podcast.title == %@", title)
     request.sortDescriptors = [NSSortDescriptor(key: #keyPath(LibraryEpisode.releaseDate),
                                                 ascending: false)]
     request.fetchLimit = 1
-    
+
     return (try? InMemoryContainer.shared.viewContext.fetch(request))?.first
   }
-  
+
   convenience init(mediaItem: MPMediaItem, context: NSManagedObjectContext) {
     let entity = NSEntityDescription.entity(forEntityName: "LibraryEpisode",
                                in: context)!
-    
+
     self.init(entity: entity, insertInto: context)
-    
+
     self.mediaItem = mediaItem
-    
+
     persistentID = Int64(bitPattern: mediaItem.persistentID)
-    
+
     if mediaItem.playbackDuration < 1 {
       let asset = AVURLAsset(url: mediaItem.assetURL!)
       playbackDuration = asset.duration.seconds
     } else {
       playbackDuration = mediaItem.playbackDuration
     }
-    
+
     releaseDate = mediaItem.releaseDate as NSDate?
   }
-  
+
   @objc var releaseDateLabel: String! {
     guard let releaseDate = releaseDate else {
       return "Unknown Date"
     }
-    
+
     let calendar = NSCalendar.current
-    
+
     let startOfCurrentDay = calendar.startOfDay(for: Date())
-    
+
     let formatter = DateFormatter()
     formatter.dateFormat = "EEEE"
-    
+
     let cutoffDates: [(Date, String)] = [
       (calendar.date(byAdding: .day, value: 1, to: startOfCurrentDay), "Future"),
       (startOfCurrentDay, "Today"),
@@ -93,19 +93,19 @@ public class LibraryEpisode: NSManagedObject {
       ].map {
         return ($0!, $1 ?? formatter.string(from: $0!))
     }
-    
-    if let label = cutoffDates.first(where: { releaseDate as Date > $0.0 })?.1  {
+
+    if let label = cutoffDates.first(where: { releaseDate as Date > $0.0 })?.1 {
       return label
     } else {
       let cutoffDateComponents = calendar.dateComponents([.year, .month, .day], from: releaseDate as Date)
       let startOfYear = calendar.date(from: DateComponents(year: cutoffDateComponents.year!))!
-      
+
       formatter.dateFormat = "yyyy"
-      
+
       return formatter.string(from: startOfYear)
     }
   }
-  
+
   var artworkImage: UIImage? {
     if let artwork = mediaItem.artwork {
       return artwork.image(at: artwork.bounds.size)
@@ -117,22 +117,22 @@ public class LibraryEpisode: NSManagedObject {
       return nil
     }
   }
-  
+
   var podcastArtworkProducer: SignalProducer<UIImage?, NoError> {
-    return SignalProducer<UIImage?, NoError> { [unowned self] (observer, disposable) in
+    return SignalProducer<UIImage?, NoError> { [unowned self] (observer, _) in
       if let artworkImage = self.artworkImage {
         observer.send(value: artworkImage)
         observer.sendCompleted()
       } else {
         observer.send(value: nil)
-        
+
         guard let podcastTitle = self.title, podcastTitle != "" else {
           return
         }
-        
+
         let searchParameters = ["term": podcastTitle,
                                 "media": "podcast"]
-        
+
         Alamofire.request("https://itunes.apple.com/search",
                           parameters: searchParameters).responseJSON { response in
                             switch response.result {
@@ -145,94 +145,94 @@ public class LibraryEpisode: NSManagedObject {
                                     if let podcastTitle = self.title, podcastTitle != "" {
                                       LibraryPodcast.artworkCache.add(image, withIdentifier: podcastTitle)
                                     }
-                                    
+
                                     observer.send(value: image)
                                     observer.sendCompleted()
-                                    
+
                                   case .failure(let error):
                                     print(error)
                                   }
                                 })
                               }
-                              
+
                             case .failure(let error):
                               print(error)
-                              
+
                             default:
                               print("Invalid response")
                             }
         }
-        
+
       }
     }
   }
-  
+
   var secondaryLabelText: String {
     var durationString = ""
-    
+
     if let releaseDate = releaseDate as Date? {
       let calendar = Calendar.current
       let formatter = DateFormatter()
-      
+
       formatter.timeZone = calendar.timeZone
-      
+
       if calendar.dateComponents([.day], from: calendar.startOfDay(for: releaseDate), to: calendar.startOfDay(for: Date())).day! > 6 {
         if calendar.dateComponents([.year], from: Date()) != calendar.dateComponents([.year], from: releaseDate) {
           formatter.dateFormat = "MMM d, YYYY"
         } else {
           formatter.dateFormat = "MMM d"
         }
-        
+
         durationString += formatter.string(from: releaseDate) + " • "
       } else {
         durationString += releaseDateLabel + " • "
       }
     }
-    
+
     let minuteDuration = Int(ceil(playbackDuration/60.0))
-    
+
     if minuteDuration > 60 {
       durationString += "\(minuteDuration/60) hr "
     }
-    
+
     if minuteDuration % 60 > 0 {
       durationString += "\(minuteDuration%60) min"
     }
-    
+
     return durationString
   }
-  
+
   var recentSecondaryLabelText: String {
     var durationString = ""
-    
+
     if let releaseDate = releaseDate as Date? {
       let calendar = Calendar.current
       let formatter = DateFormatter()
-      
+
       formatter.timeZone = calendar.timeZone
-      
+
       if calendar.dateComponents([.day], from: calendar.startOfDay(for: releaseDate), to: calendar.startOfDay(for: Date())).day! > 6 {
         if calendar.dateComponents([.year], from: Date()) != calendar.dateComponents([.year], from: releaseDate) {
           formatter.dateFormat = "MMM d, YYYY"
         } else {
           formatter.dateFormat = "MMM d"
         }
-        
+
         durationString += formatter.string(from: releaseDate) + " • "
       }
     }
-    
+
     let minuteDuration = Int(ceil(playbackDuration/60.0))
-    
+
     if minuteDuration > 60 {
       durationString += "\(minuteDuration/60) hr "
     }
-    
+
     if minuteDuration % 60 > 0 {
       durationString += "\(minuteDuration%60) min"
     }
-    
+
     return durationString
   }
-  
+
 }

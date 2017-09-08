@@ -23,13 +23,13 @@ class MyPodcastsEpisodesViewController: UITableViewController {
     request.predicate = NSPredicate(format: "podcast.title == %@", self.podcastTitle)
     request.sortDescriptors = [NSSortDescriptor(key: #keyPath(LibraryEpisode.releaseDate),
                                                 ascending: false)]
-    
+
     let context = InMemoryContainer.shared.viewContext
     let controller = NSFetchedResultsController<LibraryEpisode>(fetchRequest: request,
                                                                 managedObjectContext: context,
                                                                 sectionNameKeyPath: nil,
                                                                 cacheName: nil)
-    
+
     try! controller.performFetch()
     controller.delegate = self
 
@@ -41,13 +41,13 @@ class MyPodcastsEpisodesViewController: UITableViewController {
     request.predicate = NSPredicate(format: "podcast.title == %@", self.podcastTitle)
     request.sortDescriptors = [NSSortDescriptor(key: #keyPath(TransferredEpisode.releaseDate),
                                                 ascending: false)]
-    
+
     let context = PersistentContainer.shared.viewContext
     let controller = NSFetchedResultsController<TransferredEpisode>(fetchRequest: request,
                                                                     managedObjectContext: context,
                                                                     sectionNameKeyPath: nil,
                                                                     cacheName: nil)
-    
+
     try! controller.performFetch()
     controller.delegate = self
 
@@ -58,7 +58,7 @@ class MyPodcastsEpisodesViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     if let transferredPodcast = TransferredPodcast.existing(title: podcastTitle) {
       isAutoTransferActive = transferredPodcast.isAutoTransferred
       autoTransferSwitch.isOn = transferredPodcast.isAutoTransferred
@@ -77,13 +77,13 @@ class MyPodcastsEpisodesViewController: UITableViewController {
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
-  
+
   // MARK: - Table view data source
 
   override func numberOfSections(in tableView: UITableView) -> Int {
     return libraryResultsController.sections?.count ?? 0
   }
-  
+
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return libraryResultsController.sections?[section].numberOfObjects ?? 0
   }
@@ -107,43 +107,47 @@ class MyPodcastsEpisodesViewController: UITableViewController {
       }
     } else {
       cell.syncButton.syncState = .noSync
-      
+
       cell.syncHandler = { [weak cell] in
         cell?.syncHandler = nil
         PodcastTransferManager.shared.transfer(rowEpisode)
       }
     }
-    
+
     return cell
   }
-  
+
   @IBAction func handleAutoTransferSwitchChange(_ sender: UISwitch) {
     guard let libraryPodcast = LibraryPodcast.existing(title: podcastTitle) else {
       return
     }
-    
+
     let transferredPodcast = TransferredPodcast.existing(title: podcastTitle) ?? TransferredPodcast(libraryPodcast)
     transferredPodcast.isAutoTransferred = sender.isOn
-    
+
     PersistentContainer.saveContext()
-    
+
     isAutoTransferActive = sender.isOn
     tableView.reloadSections([0], with: .fade)
-    
+
     if isAutoTransferActive {
       _ = PodcastTransferManager.shared.handleAutoTransfer(podcast: transferredPodcast)
     }
   }
 }
 
-//MARK: - NSFetchedResultsControllerDelegate
+// MARK: - NSFetchedResultsControllerDelegate
 
 extension MyPodcastsEpisodesViewController: NSFetchedResultsControllerDelegate {
   func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     tableView.beginUpdates()
   }
-  
-  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+
+  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                  didChange anObject: Any,
+                  at indexPath: IndexPath?,
+                  for type: NSFetchedResultsChangeType,
+                  newIndexPath: IndexPath?) {
     if controller == syncResultsController,
       let episode = anObject as? TransferredEpisode,
       let existing = LibraryEpisode.existing(persistentID: episode.persistentID),
@@ -155,7 +159,7 @@ extension MyPodcastsEpisodesViewController: NSFetchedResultsControllerDelegate {
         fallthrough
       case .delete:
         tableView.reloadRows(at: [existingIndexPath], with: .fade)
-        
+
       default:
         break
       }
@@ -163,21 +167,20 @@ extension MyPodcastsEpisodesViewController: NSFetchedResultsControllerDelegate {
       switch type {
       case .insert:
         tableView.insertRows(at: [newIndexPath!], with: .automatic)
-        
+
       case .delete:
         tableView.deleteRows(at: [indexPath!], with: .automatic)
-        
+
       case .update:
         tableView.reloadRows(at: [indexPath!], with: .fade)
-        
+
       case .move:
         tableView.moveRow(at: indexPath!, to: newIndexPath!)
       }
     }
   }
-  
+
   func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     tableView.endUpdates()
   }
 }
-

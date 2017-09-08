@@ -13,32 +13,32 @@ public class Podcast: NSManagedObject {
   @nonobjc public class func fetchRequest() -> NSFetchRequest<Podcast> {
     return NSFetchRequest<Podcast>(entityName: "Podcast")
   }
-  
+
   @NSManaged public var title: String
   @NSManaged public var episodes: NSSet
   @NSManaged public var artworkImage: UIImage?
-  
+
   class func existing(title: String) -> Podcast? {
     let request: NSFetchRequest<Podcast> = fetchRequest()
     request.predicate = NSPredicate(format: "title MATCHES[cd] %@", title)
     request.fetchLimit = 1
-    
+
     return (try? PersistentContainer.shared.viewContext.fetch(request))?.first
   }
-  
+
   convenience init(title: String, context: NSManagedObjectContext) {
     let entity = NSEntityDescription.entity(forEntityName: "Podcast", in: context)!
     self.init(entity: entity, insertInto: context)
-    
+
     self.title = title
   }
-  
+
   public override func awakeFromFetch() {
     if artworkImage == nil {
       PodcastTransferManager.shared.requestArtwork(podcast: self)
     }
   }
-  
+
   public override func awakeFromInsert() {
     PodcastTransferManager.shared.requestArtwork(podcast: self)
   }
@@ -46,17 +46,17 @@ public class Podcast: NSManagedObject {
 
 // MARK: Generated accessors for episodes
 extension Podcast {
-  
+
   @objc(addEpisodesObject:)
   @NSManaged public func addToEpisodes(_ value: Episode)
-  
+
   @objc(removeEpisodesObject:)
   @NSManaged public func removeFromEpisodes(_ value: Episode)
-  
+
   @objc(addEpisodes:)
   @NSManaged public func addToEpisodes(_ values: NSSet)
-  
+
   @objc(removeEpisodes:)
   @NSManaged public func removeFromEpisodes(_ values: NSSet)
-  
+
 }

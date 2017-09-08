@@ -11,7 +11,7 @@ import UIKit
 class BorderImageView: UIImageView {
   override func awakeFromNib() {
     super.awakeFromNib()
-    
+
     layer.borderColor = UIColor(white: 0.8, alpha: 1.0).cgColor
     layer.cornerRadius = 3
     layer.masksToBounds = true

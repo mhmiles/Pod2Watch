@@ -7,4 +7,5 @@ framework module racAdditions {
 
 module racAdditions.Swift {
     header "racAdditions-Swift.h"
+    requires objc
 }

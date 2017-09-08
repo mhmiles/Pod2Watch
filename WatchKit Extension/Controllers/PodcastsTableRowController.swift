@@ -14,12 +14,12 @@ class PodcastsTableRowController: NSObject {
   @IBOutlet var artworkImage: WKInterfaceImage!
   @IBOutlet var podcastTitleLabel: WKInterfaceLabel!
   @IBOutlet var epiosodeTitleLabel: WKInterfaceLabel!
-  
+
   @IBOutlet var progressBar: WKInterfaceGroup!
   var progressBarWidth: CGFloat!
-  
+
   var artworkImageDisposable: Disposable?
-  
+
   var isSelected = false {
     didSet {
       if isSelected {
@@ -31,11 +31,11 @@ class PodcastsTableRowController: NSObject {
       }
     }
   }
-  
+
   func setProgressBarCompletion(_ fraction: TimeInterval) {
     progressBar.setWidth(progressBarWidth*CGFloat(fraction))
   }
-  
+
   deinit {
     artworkImageDisposable?.dispose()
   }

@@ -16,19 +16,19 @@ import WatchConnectivity.WCSessionFile
 
 public class TransferredEpisode: NSManagedObject {
   var transfer: WCSessionFileTransfer?
-  
+
   @objc var releaseDateLabel: String! {
     guard let releaseDate = releaseDate else {
       return "Unknown Date"
     }
-    
+
     let calendar = NSCalendar.current
-    
+
     let startOfCurrentDay = calendar.startOfDay(for: Date())
-    
+
     let formatter = DateFormatter()
     formatter.dateFormat = "EEEE"
-    
+
     let cutoffDates: [(Date, String)] = [
       (calendar.date(byAdding: .day, value: 1, to: startOfCurrentDay), "Future"),
       (startOfCurrentDay, "Today"),
@@ -44,59 +44,59 @@ public class TransferredEpisode: NSManagedObject {
       ].map {
         return ($0!, $1 ?? formatter.string(from: $0!))
     }
-    
-    if let label = cutoffDates.first(where: { releaseDate as Date > $0.0 })?.1  {
+
+    if let label = cutoffDates.first(where: { releaseDate as Date > $0.0 })?.1 {
       return label
     } else {
       let cutoffDateComponents = calendar.dateComponents([.year, .month, .day], from: releaseDate as Date)
       let startOfYear = calendar.date(from: DateComponents(year: cutoffDateComponents.year!))!
-      
+
       formatter.dateFormat = "yyyy"
-      
+
       return formatter.string(from: startOfYear)
     }
   }
-  
+
   class func existing(persistentID: Int64) -> TransferredEpisode? {
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "persistentID == %ld", persistentID)
     request.fetchLimit = 1
-    
+
     return (try? PersistentContainer.shared.viewContext.fetch(request))?.first
   }
-  
+
   class func existing(persistentIDs: [Int64]) -> [TransferredEpisode] {
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "persistentID IN %@", persistentIDs)
-    
+
     return  try! PersistentContainer.shared.viewContext.fetch(request)
   }
-  
+
   class func pendingTransfers() -> [TransferredEpisode] {
     let request: NSFetchRequest<TransferredEpisode> = fetchRequest()
     request.predicate = NSPredicate(format: "hasBegunTransfer == NO")
-    
+
     return try! PersistentContainer.shared.viewContext.fetch(request)
   }
-  
+
   class func pendingDeletes() -> [TransferredEpisode] {
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
     request.predicate = NSPredicate(format: "shouldDelete == YES")
-    
+
     return try! PersistentContainer.shared.viewContext.fetch(request)
   }
-  
+
   class func all() -> [TransferredEpisode] {
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
-    
+
     return try! PersistentContainer.shared.viewContext.fetch(request)
   }
-  
+
   convenience init(_ episode: LibraryEpisode) {
     let context = PersistentContainer.shared.viewContext
     let entity = NSEntityDescription.entity(forEntityName: "TransferredEpisode", in: context)!
     self.init(entity: entity, insertInto: context)
-    
+
     persistentID = episode.persistentID
     title = episode.title
     releaseDate = episode.releaseDate
@@ -106,36 +106,36 @@ public class TransferredEpisode: NSManagedObject {
     request.fetchLimit = 1
     request.sortDescriptors = [NSSortDescriptor(key: #keyPath(TransferredEpisode.sortIndex),
                                                 ascending: false)]
-    
+
     if let maxSortIndex = try! context.fetch(request).first?.sortIndex {
       sortIndex = maxSortIndex+1
     }
   }
-  
+
   var podcastArtworkImage: UIImage? {
     guard let podcastTitle = podcast?.title else {
       return nil
     }
-    
+
     return LibraryPodcast.artworkCache.image(withIdentifier: podcastTitle)
   }
-  
+
   var podcastArtworkProducer: SignalProducer<UIImage?, NoError> {
-    return SignalProducer<UIImage?, NoError> { [unowned self] (observer, disposable) in
+    return SignalProducer<UIImage?, NoError> { [unowned self] (observer, _) in
       if let podcastTitle = self.podcast?.title,
         let artworkImage = LibraryPodcast.artworkCache.image(withIdentifier: podcastTitle) {
         observer.send(value: artworkImage)
         observer.sendCompleted()
       } else {
         observer.send(value: nil)
-        
+
         guard let podcastTitle = self.podcast?.title, podcastTitle != "" else {
           return
         }
-        
+
         let searchParameters = ["term": podcastTitle,
                                 "media": "podcast"]
-        
+
         Alamofire.request("https://itunes.apple.com/search",
                           parameters: searchParameters).responseJSON { response in
                             switch response.result {
@@ -148,64 +148,64 @@ public class TransferredEpisode: NSManagedObject {
                                     if let podcastTitle = self.podcast?.title, podcastTitle != "" {
                                       LibraryPodcast.artworkCache.add(image, withIdentifier: podcastTitle)
                                     }
-                                    
+
                                     observer.send(value: image)
                                     observer.sendCompleted()
-                                    
+
                                   case .failure(let error):
                                     print(error)
                                   }
                                 })
                               }
-                              
+
                             case .failure(let error):
                               print(error)
-                              
+
                             default:
                               print("Invalid response")
                             }
         }
-        
+
       }
     }
   }
-  
+
   var secondaryLabelText: String {
     var durationString = ""
-    
+
     if let releaseDate = releaseDate as Date? {
       let calendar = Calendar.current
       let formatter = DateFormatter()
-      
+
       formatter.timeZone = calendar.timeZone
-      
+
       if calendar.dateComponents([.day], from: calendar.startOfDay(for: releaseDate), to: calendar.startOfDay(for: Date())).day! > 6 {
         if calendar.dateComponents([.year], from: Date()) != calendar.dateComponents([.year], from: releaseDate) {
           formatter.dateFormat = "MMM d, YYYY"
         } else {
           formatter.dateFormat = "MMM d"
         }
-        
+
         durationString += formatter.string(from: releaseDate) + " • "
       } else {
         durationString += releaseDateLabel + " • "
       }
     }
-    
+
     let minuteDuration = Int(ceil(playbackDuration/60.0))
-    
+
     if minuteDuration > 60 {
       durationString += "\(minuteDuration/60) hr "
     }
-    
+
     if minuteDuration % 60 > 0 {
       durationString += "\(minuteDuration%60) min"
     }
-    
+
     return durationString
   }
-  
+
   class func attemptTransfer() {
-    
+
   }
 }

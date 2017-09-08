@@ -13,7 +13,7 @@ import NotificationCenter
 
 public final class InMemoryContainer: NSPersistentContainer {
   public static var applicationGroupIdentifier: String?
-  
+
   public override class func defaultDirectoryURL() -> URL {
     if let applicationGroupIdentifier = applicationGroupIdentifier {
       return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: applicationGroupIdentifier)!
@@ -21,7 +21,7 @@ public final class InMemoryContainer: NSPersistentContainer {
       return super.defaultDirectoryURL()
     }
   }
-  
+
   public static var shared: InMemoryContainer = {
     /*
      The persistent container for the application. This implementation
@@ -29,9 +29,9 @@ public final class InMemoryContainer: NSPersistentContainer {
      application to it. This property is optional since there are legitimate
      error conditions that could cause the creation of the store to fail.
      */
-    
+
     let container = InMemoryContainer(name: "Pod2Watch")
-    
+
     try! container.persistentStoreCoordinator.addPersistentStore(ofType: NSInMemoryStoreType,
                                                        configurationName: nil,
                                                        at: nil,
@@ -40,63 +40,62 @@ public final class InMemoryContainer: NSPersistentContainer {
     if MPMediaLibrary.authorizationStatus() == .authorized {
       container.loadPodcastLibrary()
     }
-    
+
     NotificationCenter.default.addObserver(forName: Notification.Name.MPMediaLibraryDidChange,
                                            object: nil,
                                            queue: OperationQueue.main) { [unowned container] _ in
                                             container.reloadPodcastLibrary()
     }
-    
+
     MPMediaLibrary.default().beginGeneratingLibraryChangeNotifications()
-    
-    
+
     container.viewContext.mergePolicy = NSMergePolicy.overwrite
-    
+
     return container
   }()
-  
+
   func reloadPodcastLibrary() {
     viewContext.reset()
-    
+
     loadPodcastLibrary()
-    
+
     NotificationCenter.default.post(name: InMemoryContainer.PodcastLibraryDidReload, object: self)
   }
-  
+
   private func loadPodcastLibrary() {
     let allQuery = MPMediaQuery.podcasts()
     allQuery.groupingType = .podcastTitle
-    
+
     guard let collections = allQuery.collections else {
       return
     }
-    
+
     viewContext.performAndWait {
       for collection in collections {
         guard let representativeItem = collection.representativeItem else {
           continue
         }
-        
+
         let episodes = collection.items.filter({ mediaItem in
           if let _ = mediaItem.assetURL {
             return true
           } else {
             return false
           }
-        }).map{ LibraryEpisode(mediaItem: $0, context: self.viewContext) }
-        
+        }).map { LibraryEpisode(mediaItem: $0, context: self.viewContext) }
+
         if episodes.count == 0 {
           continue
         }
-        
+
         let podcast = LibraryPodcast.existing(title: representativeItem.podcastTitle ?? "",
                                               context: self.viewContext) ?? LibraryPodcast(mediaItem: representativeItem, context: self.viewContext)
-        
+
         podcast.addToEpisodes(NSOrderedSet(array: episodes))
       }
     }
   }
-  
+
   class func saveContext () {
     let context = shared.viewContext
     if context.hasChanges {
@@ -112,7 +111,7 @@ public final class InMemoryContainer: NSPersistentContainer {
   }
 }
 
-//MARK: - Notifications
+// MARK: - Notifications
 
 extension InMemoryContainer {
   static let PodcastLibraryDidReload = Notification.Name(rawValue: "PodcastLibraryDidReload")

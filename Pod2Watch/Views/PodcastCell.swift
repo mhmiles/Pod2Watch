@@ -10,7 +10,7 @@ import UIKit
 
 class PodcastCell: UICollectionViewCell {
   @IBOutlet weak var imageView: UIImageView!
-  
+
   override func prepareForReuse() {
     super.prepareForReuse()
 

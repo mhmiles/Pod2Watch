@@ -1,9 +1,11 @@
 {
-  "xcodeVersion" : "Xcode 8.3.1\nBuild version 8E1000a",
-  "commitish" : "7dbc51afc4145021b57f232936764f388117cacd",
+  "watchOS" : [
+
+  ],
+  "commitish" : "2e9245d4efdb24bd78f4fd47714951554d73c322",
   "iOS" : [
     {
-      "hash" : "11c0f3ac89015e2426c55dddc02ab7b2e368c2471ee4782af1e99f8c6c0a81e5",
+      "hash" : "d1f53b7f4e9a429edb39a4d78ac66f1add9331d7efbfd09d882194795cba5135",
       "name" : "racAdditions"
     }
   ]

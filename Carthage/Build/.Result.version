@@ -1,9 +1,14 @@
 {
-  "xcodeVersion" : "Xcode 8.3.1\nBuild version 8E1000a",
-  "commitish" : "3.2.1",
+  "watchOS" : [
+    {
+      "hash" : "ce0ebd98883f6ebaf25ada94a851092e5a586d677edeaf83062b5e5584cf850e",
+      "name" : "Result"
+    }
+  ],
+  "commitish" : "3.2.3",
   "iOS" : [
     {
-      "hash" : "2b6dbaed68fb0be9d02ef2bdb647bb27525a3268bd9bfadaf4757a85f5d2c2e2",
+      "hash" : "47dfda943c0c12babdcc981bab75ee4bab5ddfba0e4068d887e69b17c28f82a0",
       "name" : "Result"
     }
   ]

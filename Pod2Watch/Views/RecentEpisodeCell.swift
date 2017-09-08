@@ -15,9 +15,9 @@ class RecentEpisodeCell: UITableViewCell {
   @IBOutlet weak var releaseDateLabel: UILabel!
   @IBOutlet weak var timeRemainingLabel: UILabel!
   @IBOutlet weak var syncButton: SyncButton!
-  
+
   var syncHandler: (() -> Void)?
-  
+
   @IBAction func handleSyncPress(button: UIButton) {
     if let syncHandler = syncHandler {
       syncHandler()

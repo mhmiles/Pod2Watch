@@ -1,9 +1,11 @@
 {
-  "xcodeVersion" : "Xcode 8.3.1\nBuild version 8E1000a",
+  "watchOS" : [
+
+  ],
   "commitish" : "2.1.0",
   "iOS" : [
     {
-      "hash" : "8984d22d94c83fff6f838a0cc9a0718be4f742edcbf6bf3619ba63cf2e950268",
+      "hash" : "bd4e11757e2631cac0880cbceac3f56f4ac35a0463b936253ca745dcbb577daa",
       "name" : "IGListKit"
     }
   ]
