@@ -18,8 +18,12 @@ private let openPodcastsToken = "396c19ce-e6dc-463c-9088-4cbf10fc5381" as NSStri
 class MyPodcastsViewController: UICollectionViewController, ListAdapterDataSource {
   lazy var adapter: ListAdapter = ListAdapter(updater: ListAdapterUpdater(), viewController: self, workingRangeSize: 0)
   
-  var podcasts: [LibraryPodcast]? {
+  private var podcasts: [LibraryPodcast]? {
     return libraryResultsController.fetchedObjects
+  }
+  
+  private var viewModels: [PodcastCellViewModel]? {
+    return podcasts?.map({ $0.podcastCellViewModel })
   }
   
   var podcastsViewController: MyPodcastsViewController!
@@ -129,11 +133,11 @@ class MyPodcastsViewController: UICollectionViewController, ListAdapterDataSourc
   // MARK: - ListAdapterDataSource
   
   func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-    guard let podcasts = podcasts, podcasts.count > 0 else {
+    guard let viewModels = viewModels, viewModels.count > 0 else {
         return []
     }
     
-    return podcasts.map({ $0.podcastCellViewModel }) + [openPodcastsToken]
+    return viewModels + [openPodcastsToken]
   }
   
   func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {

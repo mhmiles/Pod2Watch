@@ -32,6 +32,10 @@ class RecentPodcastsViewController: UITableViewController {
   private func episode(at indexPath: IndexPath) -> LibraryEpisode {
     return libraryResultsController.object(at: indexPath)
   }
+  
+  private func viewModel(at indexPath: IndexPath) -> RecentEpisodeCellViewModel {
+    return libraryResultsController.object(at: indexPath).recentEpisodeCellViewModel
+  }
 
   fileprivate lazy var syncResultsController: NSFetchedResultsController<TransferredEpisode> = {
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
@@ -89,8 +93,7 @@ class RecentPodcastsViewController: UITableViewController {
       abort()
     }
 
-    let episode = self.episode(at: indexPath)
-    cell.viewModel = episode.recentEpisodeCellViewModel
+    cell.viewModel = viewModel(at: indexPath)
 
 
     return cell

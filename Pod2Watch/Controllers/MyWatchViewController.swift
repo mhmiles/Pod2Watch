@@ -17,6 +17,10 @@ class MyWatchViewController: UITableViewController {
     return fetchedResultsController.fetchedObjects
   }
   
+  private func viewModel(at indexPath: IndexPath) -> WatchEpisodeCellViewModel {
+    return fetchedResultsController.object(at: indexPath).watchEpisodeCellViewModel
+  }
+  
   lazy var fetchedResultsController: NSFetchedResultsController<TransferredEpisode> = {
     let request = NSFetchRequest<TransferredEpisode>(entityName: "TransferredEpisode")
     request.sortDescriptors = [NSSortDescriptor(key: #keyPath(TransferredEpisode.sortIndex),
@@ -65,8 +69,7 @@ class MyWatchViewController: UITableViewController {
       abort()
     }
     
-    let episode = fetchedResultsController.object(at: indexPath)
-    cell.viewModel = episode.watchEpisodeCellViewModel
+    cell.viewModel = viewModel(at: indexPath)
     
     return cell
   }

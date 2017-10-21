@@ -39,6 +39,10 @@ class MyPodcastsEpisodesViewController: UITableViewController {
   private func podcast(at indexPath: IndexPath) -> LibraryEpisode {
     return libraryResultsController.object(at: indexPath)
   }
+  
+  private func viewModel(at indexPath: IndexPath) -> PodcastEpisodeCellViewModel {
+    return libraryResultsController.object(at: indexPath).podcastEpisodeCellViewModel
+  }
 
   fileprivate lazy var syncResultsController: NSFetchedResultsController<TransferredEpisode> = {
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
@@ -95,8 +99,7 @@ class MyPodcastsEpisodesViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "EpisodeCell", for: indexPath) as! MyPodcastsEpisodeCell
 
-    let rowEpisode = podcast(at: indexPath)
-    cell.viewModel = rowEpisode.podcastEpisodeCellViewModel
+    cell.viewModel = viewModel(at: indexPath)
 
     return cell
   }
