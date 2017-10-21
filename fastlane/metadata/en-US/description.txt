@@ -1,0 +1,7 @@
+Pod2Watch is the easiest way to send podcasts to your Apple Watch. It uses the built-in podcast library so there's no subscriptions to set up.
+
+--IMPORTANT--
+
+Connect your bluetooth headphones before starting the Pod2Watch on your Apple Watch to avoid hiccups. Audio playback on the Apple Watch is very buggy. I have done my best to get this working. Please don't expect perfection.
+
+Sending podcasts to your Apple Watch is VERY slow. I hope this will improve in the future. Attaching your watch to a power source may speed up the transfer. Plan ahead and use the auto-sync feature to avoid having to wait for transfers to complete.

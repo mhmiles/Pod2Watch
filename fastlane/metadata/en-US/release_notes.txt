@@ -1,0 +1,5 @@
+- Updated UI for iOS 11
+- Fixed a lot of bugs
+- In-progress transfers will now be shown on the watch
+- Fixed background playback in WatchOS 4
+- Had to remove volume control. Use the control in the Now Playing watch app
