@@ -254,7 +254,7 @@ public class LibraryEpisode: NSManagedObject {
         
         return RecentEpisodeCellViewModel(identifier: persistentID,
                                           title: title,
-                                          secondaryLabelText: secondaryLabelText,
+                                          secondaryLabelText: recentSecondaryLabelText,
                                           syncHandler: syncHandler,
                                           syncState: syncState,
                                           artworkProducer: podcastArtworkProducer)

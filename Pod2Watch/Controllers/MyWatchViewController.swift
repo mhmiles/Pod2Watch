@@ -17,8 +17,8 @@ class MyWatchViewController: UITableViewController {
     return fetchedResultsController.fetchedObjects
   }
   
-  private func viewModel(at indexPath: IndexPath) -> WatchEpisodeCellViewModel {
-    return fetchedResultsController.object(at: indexPath).watchEpisodeCellViewModel
+  private func viewModel(at index: IndexPath) -> WatchEpisodeCellViewModel {
+    return fetchedResultsController.object(at: index).watchEpisodeCellViewModel
   }
   
   lazy var fetchedResultsController: NSFetchedResultsController<TransferredEpisode> = {
