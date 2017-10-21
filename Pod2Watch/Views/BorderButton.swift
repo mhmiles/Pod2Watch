@@ -8,6 +8,10 @@
 
 import UIKit
 
+extension String {
+  static let borderColor = "borderColor"
+}
+
 class BorderButton: UIButton {
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -31,7 +35,7 @@ class BorderButton: UIButton {
       
       if isHighlighted {
         layer.borderColor = tintColor.withAlphaComponent(0.21).cgColor
-        layer.removeAnimation(forKey: "borderColor")
+        layer.removeAnimation(forKey: .borderColor)
       } else {
         let animation = CABasicAnimation(keyPath: #keyPath(CALayer.borderColor))
         animation.fromValue = layer.presentation()?.borderColor
@@ -40,7 +44,7 @@ class BorderButton: UIButton {
         animation.fillMode = kCAFillModeForwards
         animation.isRemovedOnCompletion = false
         
-        layer.add(animation, forKey: "borderColor")
+        layer.add(animation, forKey: .borderColor)
       }
     }
   }

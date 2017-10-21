@@ -53,7 +53,7 @@ class NowPlayingController: WKInterfaceController {
       }
     }
 
-    compositeDisposable += AudioPlayer.shared.isPlayingProperty.producer.startWithValues { [unowned self] isPlaying in
+    compositeDisposable += AudioPlayer.shared.isPlaying.producer.startWithValues { [unowned self] isPlaying in
       if isPlaying {
         self.playPauseButton.setBackgroundImage(#imageLiteral(resourceName: "Pause"))
       } else {
@@ -114,9 +114,9 @@ class NowPlayingController: WKInterfaceController {
   }
   
   fileprivate func updateRateLabel() {
-    let rate = AudioPlayer.shared.rate
+    let rate = player.rate ?? 1
     
-    if rate == 1.0 {
+    if rate == 1 || rate == 0 {
       rateLabel.setText(nil)
     } else {
       if rate == rate.rounded() {
@@ -148,14 +148,14 @@ class NowPlayingController: WKInterfaceController {
   @IBAction func handleSpeedDown() {
     WKInterfaceDevice.current().play(.directionDown)
     
-    player.rate -= 0.1
+    player.setRate(player.rate - 0.1)
     updateRateLabel()
   }
   
   @IBAction func handleSpeedUp() {
     WKInterfaceDevice.current().play(.directionUp)
     
-    player.rate += 0.1
+    player.setRate(player.rate + 0.1)
     updateRateLabel()
   }
   
@@ -181,7 +181,7 @@ class NowPlayingController: WKInterfaceController {
 
 extension NowPlayingController: WKCrownDelegate {
   func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
-    if player.isPlaying {
+    if player.isPlaying.value {
       wasPlaying = true
       player.pause()
     }

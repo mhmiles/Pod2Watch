@@ -40,12 +40,8 @@ class AudioPlayer: NSObject {
   
   private var deallocDisposable: ScopedDisposable<AnyDisposable>?
   
-  let isPlayingProperty: Property<Bool>
-  private let _isPlaying = MutableProperty(false)
-  
-  var isPlaying: Bool {
-    return (self.player?.rate ?? 0) > 0
-  }
+  let isPlaying: Property<Bool>
+  private let _isPlaying = MutableProperty(true)
   
   let currentItem: Property<WKAudioFilePlayerItem?>
   private let _currentItem: MutableProperty<WKAudioFilePlayerItem?> = MutableProperty(nil)
@@ -70,18 +66,14 @@ class AudioPlayer: NSObject {
   
   private let rateTickDisposable = SerialDisposable()
   
-  var rate: Float {
-    get {
-      return player?.rate ?? 0
-    } set {
-      player?.rate = newValue
-      
-      configureRateTimer()
+  var rate: Float = 0 {
+    didSet {
+      player?.rate = rate
     }
   }
   
   override init() {
-    isPlayingProperty = Property(_isPlaying)
+    isPlaying = Property(_isPlaying)
     offset = Property(_offset.map({ $0.isNaN ? 0 : $0 }))
     duration = Property(_duration)
     
@@ -103,6 +95,10 @@ class AudioPlayer: NSObject {
     configureRateTimer()
   }
   
+  func setRate(_ rate: Float) {
+    self.rate = max(0.5, min(2.5, rate))
+  }
+  
   private func configureUpdateTimer() {
     let compositeDisposable = CompositeDisposable()
     
@@ -111,16 +107,7 @@ class AudioPlayer: NSObject {
                                                   self.updateCurrentItem()
     }
     
-    compositeDisposable += SignalProducer.timer(interval: .seconds(1),
-                                                on: QueueScheduler.main).startWithValues({ [unowned self] _ in
-                                                  self.updateIsPlaying()
-                                                })
-    
     tickDisposable.inner = compositeDisposable
-  }
-  
-  private func updateIsPlaying() {
-    _isPlaying.value = isPlaying
   }
   
   private func configureRateTimer(){
@@ -137,38 +124,34 @@ class AudioPlayer: NSObject {
   }
   
   private func updateCurrentItem() {
-    _currentItem.value = player?.currentItem
+    let currentItem = player?.currentItem
+    _currentItem.value = currentItem
+    
+    if currentItem == nil, isPlaying.value {
+      _isPlaying.value = false
+    }
   }
   
   func play() {
-//    let audioSession = AVAudioSession.sharedInstance()
-//
-//    do {
-//      try audioSession.setCategory(AVAudioSessionCategoryPlayback,
-//                                   with: [.allowBluetoothA2DP, .duckOthers])
-//      print(try audioSession.setActive(true))
-//    } catch let error {
-//      print(error)
-//    }
-    
-    guard let player = player, isPlaying == false else {
+    guard let player = player, player.currentItem != nil else {
       return
     }
     
     player.play()
-    updateIsPlaying()
+    player.rate = rate
+    _isPlaying.value = true
   }
   
   func pause() {
     player?.pause()
-    updateIsPlaying()
+    _isPlaying.value = false
     updatePlayheadPosition()
     
     updateStartTime()
   }
   
   func playPause() {
-    if isPlaying {
+    if isPlaying.value {
       pause()
     } else {
       play()

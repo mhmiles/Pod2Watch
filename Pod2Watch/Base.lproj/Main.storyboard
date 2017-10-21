@@ -27,7 +27,7 @@
             </objects>
             <point key="canvasLocation" x="-207" y="27"/>
         </scene>
-        <!--Recent-->
+        <!--Recents-->
         <scene sceneID="RiV-Ml-Uy6">
             <objects>
                 <tableViewController storyboardIdentifier="RecentViewController" id="dXi-G8-PGN" customClass="RecentPodcastsViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
@@ -102,7 +102,7 @@
                             <outlet property="delegate" destination="dXi-G8-PGN" id="sv5-So-Gpj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Recent" id="bLI-8x-zvq">
+                    <navigationItem key="navigationItem" title="Recents" id="bLI-8x-zvq">
                         <barButtonItem key="rightBarButtonItem" id="EHH-EY-HcO">
                             <view key="customView" opaque="NO" contentMode="scaleToFill" id="t80-KU-E7X">
                                 <rect key="frame" x="319" y="2" width="40" height="40"/>
@@ -442,7 +442,7 @@
         <scene sceneID="83G-qW-47L">
             <objects>
                 <navigationController id="RgU-kU-Rva" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Watch" image="Watch" selectedImage="Watch Selected" id="rea-LI-Wo6"/>
+                    <tabBarItem key="tabBarItem" title="My Watch" image="Watch" selectedImage="Watch" id="rea-LI-Wo6"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Ane-qQ-Z0v">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -480,7 +480,6 @@
         <image name="Podcasts" width="25" height="25"/>
         <image name="Podcasts App" width="40" height="40"/>
         <image name="Watch" width="25" height="25"/>
-        <image name="Watch Selected" width="25" height="25"/>
     </resources>
     <color key="tintColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
