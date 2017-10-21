@@ -19,7 +19,7 @@ class OpenPodcastsSectionController: ListSectionController {
   override func sizeForItem(at index: Int) -> CGSize {
     guard let width = collectionContext?.containerSize.width else { fatalError() }
 
-    return CGSize(width: width, height: 120)
+    return CGSize(width: width, height: 130)
   }
   
   override func cellForItem(at index: Int) -> UICollectionViewCell {
