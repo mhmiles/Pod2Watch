@@ -22,4 +22,26 @@ class BorderButton: UIButton {
 
     layer.borderColor = tintColor.cgColor
   }
+  
+  override var isHighlighted: Bool {
+    didSet {
+      if oldValue == isHighlighted {
+        return
+      }
+      
+      if isHighlighted {
+        layer.borderColor = tintColor.withAlphaComponent(0.21).cgColor
+        layer.removeAnimation(forKey: "borderColor")
+      } else {
+        let animation = CABasicAnimation(keyPath: #keyPath(CALayer.borderColor))
+        animation.fromValue = layer.presentation()?.borderColor
+        animation.toValue = tintColor.cgColor
+        animation.duration = 0.6
+        animation.fillMode = kCAFillModeForwards
+        animation.isRemovedOnCompletion = false
+        
+        layer.add(animation, forKey: "borderColor")
+      }
+    }
+  }
 }

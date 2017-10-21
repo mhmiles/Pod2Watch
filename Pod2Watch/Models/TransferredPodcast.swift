@@ -33,7 +33,8 @@ public class TransferredPodcast: NSManagedObject {
     transferredRequest.predicate = NSPredicate(format: "title MATCHES[cd] %@", title)
     transferredRequest.fetchLimit = 1
 
-    return (try? PersistentContainer.shared.viewContext.fetch(transferredRequest))?.first
+    let existing = try? PersistentContainer.shared.viewContext.fetch(transferredRequest)
+    return existing?.first
   }
 
   class func all() -> [TransferredPodcast] {

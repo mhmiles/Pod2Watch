@@ -13,23 +13,33 @@ import racAdditions
 import WatchConnectivity
 
 class MyWatchViewController: UITableViewController {
+  var episodes: [TransferredEpisode]? {
+    return fetchedResultsController.fetchedObjects
+  }
+  
   lazy var fetchedResultsController: NSFetchedResultsController<TransferredEpisode> = {
     let request = NSFetchRequest<TransferredEpisode>(entityName: "TransferredEpisode")
     request.sortDescriptors = [NSSortDescriptor(key: #keyPath(TransferredEpisode.sortIndex),
                                                 ascending: true)]
     request.predicate = NSPredicate(format: "shouldDelete == NO")
-
+    
     let controller = NSFetchedResultsController<TransferredEpisode>(fetchRequest: request,
-                                                         managedObjectContext: PersistentContainer.shared.viewContext,
-                                                         sectionNameKeyPath: nil,
-                                                         cacheName: nil)
-
+                                                                    managedObjectContext: PersistentContainer.shared.viewContext,
+                                                                    sectionNameKeyPath: nil,
+                                                                    cacheName: nil)
+    
     try! controller.performFetch()
     controller.delegate = self
-
+    
     return controller
   }()
-
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    navigationController?.navigationBar.prefersLargeTitles = true
+  }
+  
   @objc @IBAction func handleEditPress() {
     if tableView.isEditing {
       tableView.setEditing(false, animated: true)
@@ -39,63 +49,60 @@ class MyWatchViewController: UITableViewController {
       navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleEditPress))
     }
   }
-
+  
   // MARK: - Table view data source
-
+  
   override func numberOfSections(in tableView: UITableView) -> Int {
     return fetchedResultsController.sections?.count ?? 0
   }
-
+  
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return fetchedResultsController.sections![section].numberOfObjects
   }
-
+  
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "MyWatchCell", for: indexPath) as? MyWatchEpisodeCell else {
       abort()
     }
-
+    
     let episode = fetchedResultsController.object(at: indexPath)
-    cell.titleLabel.text = episode.title
-    cell.durationLabel.text = episode.secondaryLabelText
-
-    if episode.isTransferred {
-      cell.syncButton.syncState = nil
-    } else if episode.hasBegunTransfer {
-      cell.syncButton.syncState = .syncing
-    } else {
-      cell.syncButton.syncState = .pending
-    }
-
-    cell.artworkView.image = episode.podcast?.artworkImage
-
+    cell.viewModel = episode.watchEpisodeCellViewModel
+    
     return cell
   }
-
-   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+  
+  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     if editingStyle == .delete {
       PodcastTransferManager.shared.delete(fetchedResultsController.object(at: indexPath))
     }
-   }
-
-   override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-    guard var objects = fetchedResultsController.fetchedObjects else {
+  }
+  
+  override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+    let episode = fetchedResultsController.object(at: indexPath)
+    
+    return episode.isTransferred ? "Delete" : "Cancel"
+  }
+  
+  override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+    guard var episodes = episodes else {
       return
     }
-
-    let object = objects.remove(at: fromIndexPath.row)
-    objects.insert(object, at: to.row)
-
-    for (index, object) in objects.enumerated() {
-      object.sortIndex = Int16(index)
+    
+    let episode = episodes.remove(at: fromIndexPath.row)
+    episodes.insert(episode, at: to.row)
+    
+    for (index, episode) in episodes.enumerated() {
+      episode.sortIndex = Int16(index)
     }
-
+    
     PersistentContainer.saveContext()
-   }
-
-   override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+    
+    PodcastTransferManager.shared.sendSortOrder()
+  }
+  
+  override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
     return true
-   }
+  }
 }
 
 // MARK: - NSFetchedResultsControllerDelegate
@@ -104,7 +111,7 @@ extension MyWatchViewController: NSFetchedResultsControllerDelegate {
   func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     tableView.beginUpdates()
   }
-
+  
   func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                   didChange anObject: Any,
                   at indexPath: IndexPath?,
@@ -114,20 +121,20 @@ extension MyWatchViewController: NSFetchedResultsControllerDelegate {
     case .insert:
       tableView.insertRows(at: [newIndexPath!],
                            with: .fade)
-
+      
     case .delete:
       tableView.deleteRows(at: [indexPath!],
                            with: .fade)
-
+      
     case .update:
       tableView.reloadRows(at: [indexPath!],
                            with: .fade)
-
+      
     default:
       break
     }
   }
-
+  
   func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
     tableView.endUpdates()
   }

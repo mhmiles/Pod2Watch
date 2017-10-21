@@ -10,7 +10,6 @@ import UIKit
 
 enum SyncState: Int {
   case noSync = 0
-  case preparing
   case pending
   case syncing
   case synced
@@ -33,10 +32,6 @@ class SyncButton: BorderButton {
       case .noSync?:
         layer.borderWidth = 1.0
         setTitle("SYNC", for: .normal)
-
-      case .preparing?:
-        layer.borderWidth = 0.0
-        setTitle("PREPARING", for: .normal)
 
       case .pending?:
         layer.borderWidth = 0.0

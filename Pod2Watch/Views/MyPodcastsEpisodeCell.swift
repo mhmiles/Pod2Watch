@@ -13,27 +13,19 @@ class MyPodcastsEpisodeCell: UITableViewCell {
   @IBOutlet weak var durationLabel: UILabel!
   @IBOutlet weak var syncButton: SyncButton!
 
-  var syncHandler: (() -> Void)?
-
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    // Initialization code
-  }
-
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-
-    // Configure the view for the selected state
-  }
-
-  @IBAction func handleSyncPress(button: UIButton) {
-    if let syncHandler = syncHandler {
-      syncHandler()
+  var viewModel: PodcastEpisodeCellViewModel? {
+    didSet {
+      titleLabel.text = viewModel?.title
+      durationLabel.text = viewModel?.secondaryLabelText
+      syncButton.syncState = viewModel?.syncState
     }
   }
 
+  @IBAction func handleSyncPress(button: UIButton) {
+    viewModel?.syncHandler()
+  }
+
   override func prepareForReuse() {
-    syncButton.isEnabled = true
-    syncHandler = nil
+    viewModel = nil
   }
 }

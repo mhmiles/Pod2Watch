@@ -7,13 +7,15 @@
 //
 
 import UIKit
+import IGListKit
+import ReactiveSwift
 
 class PodcastCell: UICollectionViewCell {
   @IBOutlet weak var imageView: UIImageView!
-
+  
   override func prepareForReuse() {
     super.prepareForReuse()
-
+    
     imageView.image = nil
   }
 }

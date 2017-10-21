@@ -37,7 +37,6 @@ class SignalLifetimeSpec: QuickSpec {
 				expect(disposable.isDisposed) == true
 			}
 
-
 			it("should automatically interrupt if the input observer is not retained, even if there are still one or more active observer") {
 				let disposable = AnyDisposable()
 				var isInterrupted = false
@@ -482,7 +481,7 @@ class SignalLifetimeSpec: QuickSpec {
 private extension Signal {
 	func testTransform() -> Signal<Value, Error> {
 		return Signal { observer in
-			return self.observe(observer.action)
+			return self.observe(observer.send)
 		}
 	}
 }

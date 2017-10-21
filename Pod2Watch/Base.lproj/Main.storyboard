@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TpU-7P-fnh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TpU-7P-fnh">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--My Podcasts-->
+        <!--Podcasts-->
         <scene sceneID="XfL-uF-zpg">
             <objects>
                 <navigationController id="gSG-DD-HUY" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Podcasts" image="Podcasts" id="7jJ-qL-5iG"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="S2D-bV-hjW">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <tabBarItem key="tabBarItem" title="Podcasts" image="Podcasts" id="7jJ-qL-5iG"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="S2D-bV-hjW">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -28,20 +27,20 @@
             </objects>
             <point key="canvasLocation" x="-207" y="27"/>
         </scene>
-        <!--Recent Podcasts View Controller-->
+        <!--Recent-->
         <scene sceneID="RiV-Ml-Uy6">
             <objects>
                 <tableViewController storyboardIdentifier="RecentViewController" id="dXi-G8-PGN" customClass="RecentPodcastsViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="ual-MU-5Nh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="80" sectionHeaderHeight="18" sectionFooterHeight="18" id="ual-MU-5Nh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="RecentEpisodeCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="RecentEpisodeCell" id="5up-F7-Tc6" customClass="RecentEpisodeCell" customModule="Pod2Watch" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="80"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5up-F7-Tc6" id="BH5-xt-7Dn">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yJm-Ps-MbM" customClass="BorderImageView" customModule="Pod2Watch" customModuleProvider="target">
@@ -103,24 +102,24 @@
                             <outlet property="delegate" destination="dXi-G8-PGN" id="sv5-So-Gpj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="bLI-8x-zvq">
-                        <nil key="title"/>
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="1" id="0UQ-Kb-Q9D">
-                            <rect key="frame" x="112.5" y="7" width="150" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="Podcasts"/>
-                                <segment title="Recent"/>
-                            </segments>
-                            <connections>
-                                <action selector="handleSegmentPress:" destination="eW5-3v-kwb" eventType="valueChanged" id="bc7-ui-T72"/>
-                                <action selector="handleSegmentPress:" destination="dXi-G8-PGN" eventType="valueChanged" id="slN-Vp-lH5"/>
-                            </connections>
-                        </segmentedControl>
+                    <navigationItem key="navigationItem" title="Recent" id="bLI-8x-zvq">
+                        <barButtonItem key="rightBarButtonItem" id="EHH-EY-HcO">
+                            <view key="customView" opaque="NO" contentMode="scaleToFill" id="t80-KU-E7X">
+                                <rect key="frame" x="319" y="2" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WKn-IK-HIX">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="Podcasts App"/>
+                                        <connections>
+                                            <action selector="openPodcasts" destination="dXi-G8-PGN" eventType="touchUpInside" id="AYl-8u-PIu"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </view>
+                        </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="segmentedTitle" destination="0UQ-Kb-Q9D" id="Y77-tf-fry"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fNM-5b-ybX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -130,8 +129,9 @@
         <scene sceneID="WVc-5g-FMt">
             <objects>
                 <navigationController id="XUk-2x-ety" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1qN-ql-URN">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <tabBarItem key="tabBarItem" systemItem="recents" id="Kcq-bP-a8V"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="1qN-ql-URN">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -146,48 +146,15 @@
         <scene sceneID="vCf-dB-IpJ">
             <objects>
                 <collectionViewController storyboardIdentifier="PodcastsViewController" id="eW5-3v-kwb" customClass="MyPodcastsViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Nwo-BR-Bji" customClass="IGListCollectionView">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="Nwo-BR-Bji">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <collectionViewLayout key="collectionViewLayout" id="dfo-sS-cDR" customClass="IGListGridCollectionViewLayout">
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="minimumLineSpacing">
-                                    <real key="value" value="2"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="minimumInteritemSpacing">
-                                    <real key="value" value="2"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </collectionViewLayout>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.40392156862745099" green="0.18823529411764706" blue="0.83137254901960778" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <collectionViewLayout key="collectionViewLayout" id="bxv-Od-mh2" customClass="IGListCollectionViewLayout"/>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchBar" id="52Y-qH-fkB" customClass="SearchBarCell" customModule="Pod2Watch" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <searchBar opaque="NO" contentMode="redraw" placeholder="Search My Podcasts" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybe-Tt-gZb">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
-                                            <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </searchBar>
-                                    </subviews>
-                                </view>
-                                <constraints>
-                                    <constraint firstItem="Ybe-Tt-gZb" firstAttribute="top" secondItem="52Y-qH-fkB" secondAttribute="top" id="St9-qH-f5g"/>
-                                    <constraint firstItem="Ybe-Tt-gZb" firstAttribute="leading" secondItem="52Y-qH-fkB" secondAttribute="leading" id="Txb-ef-jef"/>
-                                    <constraint firstAttribute="bottom" secondItem="Ybe-Tt-gZb" secondAttribute="bottom" id="ksn-PX-ckU"/>
-                                    <constraint firstAttribute="trailing" secondItem="Ybe-Tt-gZb" secondAttribute="trailing" id="o7o-ts-0J6"/>
-                                </constraints>
-                                <size key="customSize" width="375" height="40"/>
-                                <connections>
-                                    <outlet property="searchBar" destination="Ybe-Tt-gZb" id="eoJ-nB-qLG"/>
-                                </connections>
-                            </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PodcastCell" id="yMj-DU-ikC" customClass="PodcastCell" customModule="Pod2Watch">
-                                <rect key="frame" x="162.5" y="50" width="50" height="50"/>
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -207,28 +174,79 @@
                                 </constraints>
                                 <connections>
                                     <outlet property="imageView" destination="GY0-2y-uBL" id="gW7-fi-h4M"/>
-                                    <segue destination="ave-un-BsK" kind="show" id="NxX-aH-dFC"/>
+                                </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OpenPodcastsCell" id="2kR-ii-H9h" customClass="OpenPodcastsCell" customModule="Pod2Watch" customModuleProvider="target">
+                                <rect key="frame" x="65" y="0.0" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HLl-S7-zuS">
+                                            <rect key="frame" x="-105.5" y="-11" width="260" height="71"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UxS-Vd-b2n" customClass="BorderButton" customModule="Pod2Watch" customModuleProvider="target">
+                                                    <rect key="frame" x="67.5" y="41" width="125" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                    <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
+                                                    <state key="normal" title="Open Podcasts">
+                                                        <color key="titleColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't see what you're looking for?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x9C-kW-z3Q">
+                                                    <rect key="frame" x="0.0" y="0.0" width="260" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="x9C-kW-z3Q" secondAttribute="trailing" id="57g-wg-jnO"/>
+                                                <constraint firstItem="UxS-Vd-b2n" firstAttribute="centerX" secondItem="HLl-S7-zuS" secondAttribute="centerX" id="9bA-cy-F09"/>
+                                                <constraint firstItem="x9C-kW-z3Q" firstAttribute="top" secondItem="HLl-S7-zuS" secondAttribute="top" id="KBo-Nh-tDc"/>
+                                                <constraint firstItem="UxS-Vd-b2n" firstAttribute="top" secondItem="x9C-kW-z3Q" secondAttribute="bottom" constant="20" id="ghR-L2-4y7"/>
+                                                <constraint firstAttribute="bottom" secondItem="UxS-Vd-b2n" secondAttribute="bottom" id="kXM-xj-ZvK"/>
+                                                <constraint firstItem="x9C-kW-z3Q" firstAttribute="leading" secondItem="HLl-S7-zuS" secondAttribute="leading" id="tJ4-9D-gfd"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="HLl-S7-zuS" firstAttribute="centerY" secondItem="2kR-ii-H9h" secondAttribute="centerY" id="l67-ZN-geM"/>
+                                    <constraint firstItem="HLl-S7-zuS" firstAttribute="centerX" secondItem="2kR-ii-H9h" secondAttribute="centerX" id="lPF-Sr-9hi"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="button" destination="UxS-Vd-b2n" id="JP4-Le-pof"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
+                        <connections>
+                            <outlet property="delegate" destination="eW5-3v-kwb" id="Tno-58-2nK"/>
+                        </connections>
                     </collectionView>
                     <tabBarItem key="tabBarItem" title="My Podcasts" image="Podcasts" id="hPC-PN-JGG"/>
                     <navigationItem key="navigationItem" title="Podcasts" id="s6G-nv-2Cl">
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="AdD-J1-Yc9">
-                            <rect key="frame" x="112.5" y="7" width="150" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="Podcasts"/>
-                                <segment title="Recent"/>
-                            </segments>
-                            <connections>
-                                <action selector="handleSegmentPress:" destination="eW5-3v-kwb" eventType="valueChanged" id="Zps-PS-O6T"/>
-                            </connections>
-                        </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" id="HUB-Ii-MJh">
+                            <view key="customView" contentMode="scaleToFill" id="AkW-4O-DaF">
+                                <rect key="frame" x="319" y="2" width="40" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CCI-if-BdZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="Podcasts App"/>
+                                        <connections>
+                                            <action selector="openPodcasts" destination="eW5-3v-kwb" eventType="touchUpInside" id="RGB-xw-aYV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="Nwo-BR-Bji" id="bjs-Wt-DxT"/>
-                        <outlet property="segmentedTitle" destination="AdD-J1-Yc9" id="DH8-5e-W2v"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="091-te-fUT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -238,7 +256,7 @@
         <!--Episodes-->
         <scene sceneID="SR1-R2-0i6">
             <objects>
-                <tableViewController id="ave-un-BsK" customClass="MyPodcastsEpisodesViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MyPodcastsEpisodesViewController" id="ave-un-BsK" customClass="MyPodcastsEpisodesViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="WJI-Lm-G0Q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -248,7 +266,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gke-mC-Fn4" id="Obc-di-8TJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C7m-D8-np8">
@@ -296,26 +314,25 @@
                             <outlet property="delegate" destination="ave-un-BsK" id="nCZ-q6-veB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Episodes" id="fL9-Pf-XUg">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="1Di-FZ-m9T">
+                    <navigationItem key="navigationItem" title="Episodes" largeTitleDisplayMode="never" id="fL9-Pf-XUg">
+                        <barButtonItem key="rightBarButtonItem" width="70" id="1Di-FZ-m9T">
                             <view key="customView" opaque="NO" contentMode="scaleToFill" id="bdM-42-wbj">
-                                <rect key="frame" x="276" y="5" width="83" height="33"/>
+                                <rect key="frame" x="289" y="5.5" width="70" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CRd-om-f4T">
-                                        <rect key="frame" x="34" y="1" width="51" height="31"/>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="CRd-om-f4T">
+                                        <rect key="frame" x="16" y="0.0" width="51" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <color key="tintColor" red="0.82745098039999998" green="0.82745098039999998" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="handleAutoTransferSwitchChange:" destination="ave-un-BsK" eventType="valueChanged" id="KTe-FZ-eZv"/>
                                         </connections>
                                     </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCe-35-isZ">
-                                        <rect key="frame" x="23" y="2" width="8" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="8" id="wcE-C7-hYr"/>
-                                        </constraints>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCe-35-isZ">
+                                        <rect key="frame" x="6" y="0.0" width="6.5" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <attributedString key="attributedText">
-                                            <fragment content="AUTO">
+                                            <fragment content="A U T O">
                                                 <attributes>
                                                     <font key="NSFont" size="8" name="SFCompactText-SemiboldItalic"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="0.80000000000000004" tighteningFactorForTruncation="0.0"/>
@@ -325,12 +342,6 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="CRd-om-f4T" secondAttribute="trailing" id="On4-Gq-l8W"/>
-                                    <constraint firstItem="CRd-om-f4T" firstAttribute="leading" secondItem="mCe-35-isZ" secondAttribute="trailing" constant="3" id="RTA-7M-ywk"/>
-                                    <constraint firstItem="CRd-om-f4T" firstAttribute="centerY" secondItem="bdM-42-wbj" secondAttribute="centerY" id="i4A-GV-L7N"/>
-                                    <constraint firstItem="mCe-35-isZ" firstAttribute="centerY" secondItem="bdM-42-wbj" secondAttribute="centerY" id="x4N-nn-CMu"/>
-                                </constraints>
                             </view>
                         </barButtonItem>
                     </navigationItem>
@@ -342,20 +353,21 @@
             </objects>
             <point key="canvasLocation" x="1236" y="26.53673163418291"/>
         </scene>
-        <!--Podcasts-->
+        <!--My Watch-->
         <scene sceneID="hPf-Gp-No6">
             <objects>
                 <tableViewController id="XqH-YI-jw8" customClass="MyWatchViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="xQu-ds-FHa">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="80" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="MyWatchCell" id="G6w-Th-Caz" customClass="MyWatchEpisodeCell" customModule="Pod2Watch" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G6w-Th-Caz" id="QQF-zj-LHZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="79.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdJ-Nw-CiU">
@@ -393,6 +405,7 @@
                                         <constraint firstAttribute="bottom" secondItem="Cpw-19-Qf3" secondAttribute="bottom" constant="3" id="Hz4-80-zPj"/>
                                         <constraint firstItem="OdJ-Nw-CiU" firstAttribute="leading" secondItem="Cpw-19-Qf3" secondAttribute="trailing" constant="3" id="Jia-Wg-9kw"/>
                                         <constraint firstAttribute="trailing" secondItem="O4L-Ub-zze" secondAttribute="trailing" constant="8" id="KJS-j8-rDY"/>
+                                        <constraint firstItem="O4L-Ub-zze" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ls9-mF-vNp" secondAttribute="trailing" constant="5" id="Qqp-lj-2HS"/>
                                         <constraint firstItem="Cpw-19-Qf3" firstAttribute="top" secondItem="QQF-zj-LHZ" secondAttribute="top" constant="3" id="SIf-oO-z5t"/>
                                         <constraint firstItem="Cpw-19-Qf3" firstAttribute="leading" secondItem="QQF-zj-LHZ" secondAttribute="leading" constant="3" id="XK8-pj-CNp"/>
                                         <constraint firstItem="OdJ-Nw-CiU" firstAttribute="leading" secondItem="ls9-mF-vNp" secondAttribute="leading" id="eqV-lj-vmB"/>
@@ -413,7 +426,7 @@
                             <outlet property="delegate" destination="XqH-YI-jw8" id="F0J-Y4-lLc"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Podcasts" id="tiA-js-c2r">
+                    <navigationItem key="navigationItem" title="My Watch" id="tiA-js-c2r">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="2M0-Ln-JE6">
                             <connections>
                                 <action selector="handleEditPress" destination="XqH-YI-jw8" id="Hr8-lB-2a3"/>
@@ -423,15 +436,15 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eZd-e9-x5n" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="621.60000000000002" y="780.35982008995506"/>
+            <point key="canvasLocation" x="479" y="893"/>
         </scene>
         <!--My Watch-->
         <scene sceneID="83G-qW-47L">
             <objects>
                 <navigationController id="RgU-kU-Rva" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Watch" image="Watch" selectedImage="Watch Selected" id="rea-LI-Wo6"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ane-qQ-Z0v">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Ane-qQ-Z0v">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -440,7 +453,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gHf-QX-lO0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-223" y="782"/>
+            <point key="canvasLocation" x="-208" y="893"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Dau-el-Vdm">
@@ -454,27 +467,18 @@
                     </tabBar>
                     <connections>
                         <segue destination="gSG-DD-HUY" kind="relationship" relationship="viewControllers" id="dkB-w0-RCY"/>
+                        <segue destination="XUk-2x-ety" kind="relationship" relationship="viewControllers" id="Ucd-eF-wHy"/>
                         <segue destination="RgU-kU-Rva" kind="relationship" relationship="viewControllers" id="RFc-jh-phw"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q6Z-da-aa3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="rba-8B-8sx">
-                    <rect key="frame" x="0.0" y="-1" width="150" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <segments>
-                        <segment title="Podcasts"/>
-                        <segment title="Recent"/>
-                    </segments>
-                    <connections>
-                        <action selector="handleSegmentPress:" destination="eW5-3v-kwb" eventType="valueChanged" id="H82-vV-KtJ"/>
-                    </connections>
-                </segmentedControl>
             </objects>
             <point key="canvasLocation" x="-956" y="439"/>
         </scene>
     </scenes>
     <resources>
         <image name="Podcasts" width="25" height="25"/>
+        <image name="Podcasts App" width="40" height="40"/>
         <image name="Watch" width="25" height="25"/>
         <image name="Watch Selected" width="25" height="25"/>
     </resources>

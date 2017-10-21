@@ -1,12 +1,9 @@
 {
-  "watchOS" : [
-
-  ],
-  "commitish" : "2e9245d4efdb24bd78f4fd47714951554d73c322",
+  "commitish" : "3e4f0bb9654f53057bb3c94396e21fd684fb92e8",
   "iOS" : [
     {
-      "hash" : "d1f53b7f4e9a429edb39a4d78ac66f1add9331d7efbfd09d882194795cba5135",
-      "name" : "racAdditions"
+      "name" : "racAdditions",
+      "hash" : "64677f61e56e7e16a6729020a7568887b97ded2cbbbd3e70335aa116ecfef9a8"
     }
   ]
 }

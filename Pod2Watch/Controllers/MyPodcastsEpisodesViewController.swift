@@ -35,6 +35,10 @@ class MyPodcastsEpisodesViewController: UITableViewController {
 
     return controller
   }()
+  
+  private func podcast(at indexPath: IndexPath) -> LibraryEpisode {
+    return libraryResultsController.object(at: indexPath)
+  }
 
   fileprivate lazy var syncResultsController: NSFetchedResultsController<TransferredEpisode> = {
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
@@ -64,7 +68,7 @@ class MyPodcastsEpisodesViewController: UITableViewController {
       autoTransferSwitch.isOn = transferredPodcast.isAutoTransferred
     }
 
-    NotificationCenter.default.addObserver(forName: InMemoryContainer.PodcastLibraryDidReload,
+    NotificationCenter.default.addObserver(forName: .podcastLibraryDidReload,
                                            object: InMemoryContainer.shared,
                                            queue: OperationQueue.main) { [weak self] _ in
                                             try! self?.libraryResultsController.performFetch()
@@ -91,32 +95,42 @@ class MyPodcastsEpisodesViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "EpisodeCell", for: indexPath) as! MyPodcastsEpisodeCell
 
-    let rowEpisode = libraryResultsController.object(at: indexPath)
-    cell.titleLabel.text = rowEpisode.title
-    cell.durationLabel.text = rowEpisode.secondaryLabelText
-
-    if let synced = TransferredEpisode.existing(persistentID: rowEpisode.persistentID) {
-      if synced.shouldDelete {
-        cell.syncButton.syncState = .pending
-      } else if synced.isTransferred {
-        cell.syncButton.syncState = .synced
-      } else if synced.hasBegunTransfer {
-        cell.syncButton.syncState = .syncing
-      } else {
-        cell.syncButton.syncState = .pending
-      }
-    } else {
-      cell.syncButton.syncState = .noSync
-
-      cell.syncHandler = { [weak cell] in
-        cell?.syncHandler = nil
-        PodcastTransferManager.shared.transfer(rowEpisode)
-      }
-    }
+    let rowEpisode = podcast(at: indexPath)
+    cell.viewModel = rowEpisode.podcastEpisodeCellViewModel
 
     return cell
   }
 
+  override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    guard let cell = tableView.cellForRow(at: indexPath) as? MyPodcastsEpisodeCell,
+      let syncState = cell.syncButton.syncState else {
+      return false
+    }
+
+    return syncState != .noSync
+  }
+  
+  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == .delete {
+      let libraryEpisode = podcast(at: indexPath)
+      
+      guard let episode = TransferredEpisode.existing(persistentID: libraryEpisode.persistentID) else {
+        return
+      }
+      
+      PodcastTransferManager.shared.delete(episode)
+    }
+  }
+  
+  override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+    guard let cell = tableView.cellForRow(at: indexPath) as? MyPodcastsEpisodeCell,
+      let syncState = cell.syncButton.syncState else {
+        return "Delete"
+    }
+    
+    return syncState == .synced ? "Delete" : "Cancel"
+  }
+  
   @IBAction func handleAutoTransferSwitchChange(_ sender: UISwitch) {
     guard let libraryPodcast = LibraryPodcast.existing(title: podcastTitle) else {
       return

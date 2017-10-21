@@ -7,196 +7,213 @@
 //
 
 import Foundation
-import AVFoundation
 import ReactiveSwift
 import enum Result.NoError
+import WatchKit
+import AVFoundation
+import ReactiveCocoa
 
 class AudioPlayer: NSObject {
   static let shared = AudioPlayer()
-
-  fileprivate let _currentEpisode = MutableProperty<Episode?>(nil)
-
-  lazy var currentEpisode: Property<Episode?> = {
-    return Property(self._currentEpisode)
-  }()
-
-  fileprivate var episodeQueue: [Episode]!
-
-  fileprivate var player: AVAudioPlayer? {
+  
+  var episodeQueue: [Episode]? {
     didSet {
-      player?.enableRate = true
-      player?.delegate = self
-      player?.volume = volume
-    }
-  }
-//  
-//  var isPlaying: Bool {
-//    return player?.isPlaying ?? false
-//  }
-
-  lazy var isPlaying: Property<Bool> = Property(self._isPlaying)
-  private let _isPlaying = MutableProperty(false)
-
-  var volume: Float = 0.5 {
-    didSet {
-      player?.setVolume(exp(6.908*volume)/1000, fadeDuration: 0.1)
-    }
-  }
-
-  var currentTime: TimeInterval {
-    get {
-      return player?.currentTime ?? 0
-    }
-    set {
-      if newValue >= duration {
-        pause()
-        player?.currentTime = duration
-        _currentEpisode.value?.startTime = duration
-        handleNextInQueue()
-      } else {
-        player?.currentTime = newValue
+      player?.removeAllItems()
+      _currentItem.value = nil
+      
+      let playerItems = episodeQueue?.map { episode -> WKAudioFilePlayerItem in
+        let asset = WKAudioFileAsset(url: episode.fileURL!)
+        let item = WKAudioFilePlayerItem(asset: asset)
+        item.setCurrentTime(episode.startTime)
+        
+        return item
       }
+      
+      player = playerItems.map { WKAudioFileQueuePlayer(items: $0) }
+      
+      updateCurrentItem()
+      updatePlayheadPosition()
     }
   }
-
-  var duration: TimeInterval {
-    return _currentEpisode.value?.playbackDuration ?? 0
+  
+  @objc fileprivate var player: WKAudioFileQueuePlayer?
+  
+  private var deallocDisposable: ScopedDisposable<AnyDisposable>?
+  
+  let isPlayingProperty: Property<Bool>
+  private let _isPlaying = MutableProperty(false)
+  
+  var isPlaying: Bool {
+    return (self.player?.rate ?? 0) > 0
   }
-
+  
+  let currentItem: Property<WKAudioFilePlayerItem?>
+  private let _currentItem: MutableProperty<WKAudioFilePlayerItem?> = MutableProperty(nil)
+  
+  var currentEpisode: Episode? {
+    guard let currentItemURL = player?.currentItem?.asset.url else {
+      return nil
+    }
+    
+    return episodeQueue?.first(where: { (episode) -> Bool in
+      return episode.fileURL == currentItemURL
+    })
+  }
+  
+  private let tickDisposable = SerialDisposable()
+  
+  let offset: Property<TimeInterval>
+  private let _offset: MutableProperty<TimeInterval> = MutableProperty(0)
+  
+  let duration: Property<TimeInterval>
+  private let _duration: MutableProperty<TimeInterval> = MutableProperty(0)
+  
+  private let rateTickDisposable = SerialDisposable()
+  
   var rate: Float {
     get {
-      return player?.rate ?? 1
+      return player?.rate ?? 0
     } set {
       player?.rate = newValue
+      
+      configureRateTimer()
     }
   }
-
+  
   override init() {
-    super.init()
-
-    _currentEpisode.producer.startWithValues { [unowned self] episode in
-      if let episode = episode {
-        self.player = self.playerForFile(url: episode.fileURL)
-      } else {
-        self.player = nil
+    isPlayingProperty = Property(_isPlaying)
+    offset = Property(_offset.map({ $0.isNaN ? 0 : $0 }))
+    duration = Property(_duration)
+    
+    currentItem = Property(initial: nil, then: _currentItem.producer.skipRepeats({ (previous, current) in
+      if previous == current {
+        return true
       }
-
-      self.player?.currentTime = episode?.startTime ?? 0
+      
+      guard let previous = previous, let current = current else {
+        return false
+      }
+      
+      return previous.asset.url == current.asset.url
+    }))
+    
+    super.init()
+    
+    configureUpdateTimer()
+    configureRateTimer()
+  }
+  
+  private func configureUpdateTimer() {
+    let compositeDisposable = CompositeDisposable()
+    
+    compositeDisposable += SignalProducer.timer(interval: .seconds(2),
+                                                on: QueueScheduler.main).startWithValues { [unowned self ] _ in
+                                                  self.updateCurrentItem()
     }
-
-    NotificationCenter.default.addObserver(forName: NSNotification.Name.AVAudioSessionRouteChange,
-                                           object: nil,
-                                           queue: OperationQueue.main) { [unowned self] notification in
-                                            guard let reasonValue = notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? UInt,
-                                              let reason = AVAudioSessionRouteChangeReason(rawValue: reasonValue) else {
-                                                return
-                                            }
-
-                                            switch reason {
-                                            case .newDeviceAvailable:
-                                              self.play()
-
-                                            case .oldDeviceUnavailable:
-                                              self.pause()
-
-                                            default:
-                                              break
-                                            }
+    
+    compositeDisposable += SignalProducer.timer(interval: .seconds(1),
+                                                on: QueueScheduler.main).startWithValues({ [unowned self] _ in
+                                                  self.updateIsPlaying()
+                                                })
+    
+    tickDisposable.inner = compositeDisposable
+  }
+  
+  private func updateIsPlaying() {
+    _isPlaying.value = isPlaying
+  }
+  
+  private func configureRateTimer(){
+    let adjustedInterval = DispatchTimeInterval.milliseconds(1000000/Int((rate == 0 ? 1 : rate)*1000))
+    
+     rateTickDisposable.inner = SignalProducer.timer(interval: adjustedInterval, on: QueueScheduler.main).startWithValues { [unowned self ] _ in
+      self.updatePlayheadPosition()
     }
   }
-
-  private func playerForFile(url: URL) -> AVAudioPlayer? {
-    if let player = try? AVAudioPlayer(contentsOf: url) {
-      return player
-    }
-
-    let mp3URL = url.deletingPathExtension().appendingPathExtension("mp3")
-    try? FileManager.default.createSymbolicLink(at: mp3URL, withDestinationURL: url)
-
-    if let player = try? AVAudioPlayer(contentsOf: mp3URL) {
-      return player
-    }
-
-    let m4aURL = url.deletingPathExtension().appendingPathExtension("m4a")
-    try? FileManager.default.createSymbolicLink(at: m4aURL, withDestinationURL: url)
-    return try? AVAudioPlayer(contentsOf: m4aURL)
+  
+  private func updatePlayheadPosition() {
+    _offset.value = currentItem.value?.currentTime ?? 0
+    _duration.value = currentItem.value?.asset.duration ?? 0
   }
-
-  func queueEpisodes(_ episodes: [Episode]) {
-    if let currentEpisode = _currentEpisode.value {
-      currentEpisode.startTime = currentTime
-    }
-
-    episodeQueue = episodes
-
-    if let episode = episodeQueue.first,
-      episode == _currentEpisode.value {
-      episodeQueue.removeFirst()
-    } else {
-      handleNextInQueue()
-    }
+  
+  private func updateCurrentItem() {
+    _currentItem.value = player?.currentItem
   }
-
+  
   func play() {
-    let audioSession = AVAudioSession.sharedInstance()
-
-    do {
-      try audioSession.setCategory(AVAudioSessionCategoryPlayback,
-                               with: [.allowBluetoothA2DP, .duckOthers])
-      try audioSession.setActive(true)
-    } catch let error {
-      print(error)
-    }
-
-    player?.play()
-    _isPlaying.value = player?.isPlaying ?? false
-  }
-
-  func pause() {
-    player?.pause()
-    _isPlaying.value = false
-  }
-
-  func handleNextInQueue() {
-    guard let nextEpisode = episodeQueue.first else {
-      _currentEpisode.value = nil
-      _isPlaying.value = false
-
+//    let audioSession = AVAudioSession.sharedInstance()
+//
+//    do {
+//      try audioSession.setCategory(AVAudioSessionCategoryPlayback,
+//                                   with: [.allowBluetoothA2DP, .duckOthers])
+//      print(try audioSession.setActive(true))
+//    } catch let error {
+//      print(error)
+//    }
+    
+    guard let player = player, isPlaying == false else {
       return
     }
-
-    episodeQueue.removeFirst()
-    _currentEpisode.value = nextEpisode
-    play()
+    
+    player.play()
+    updateIsPlaying()
   }
-
+  
+  func pause() {
+    player?.pause()
+    updateIsPlaying()
+    updatePlayheadPosition()
+    
+    updateStartTime()
+  }
+  
+  func playPause() {
+    if isPlaying {
+      pause()
+    } else {
+      play()
+    }
+  }
+  
+  func setCurrentTime(_ currentTime: TimeInterval) {
+    guard let currentItem = player?.currentItem else {
+      return
+    }
+    
+    currentItem.setCurrentTime(currentTime < 0 ? 0 : currentTime)
+    updatePlayheadPosition()
+    
+    updateStartTime()
+  }
+  
+  func advance(_ distance: TimeInterval) {
+    guard let currentItem = player?.currentItem else {
+      return
+    }
+    
+    setCurrentTime(currentItem.currentTime+distance)
+  }
+  
+  func advanceToNextItem() {
+    player?.advanceToNextItem()
+    
+    updateStartTime()
+  }
+  
+  func updateStartTime() {
+    if let episode = currentEpisode {
+      episode.startTime = offset.value
+      
+      PersistentContainer.saveContext()
+    }
+  }
+  
   func removeFromQueue(episodes: [Episode]) {
     guard let episodeQueue = episodeQueue, episodeQueue.count > 0 else {
       return
     }
-
+  
     self.episodeQueue = episodeQueue.filter { episodes.contains($0) == false }
-
-    if let currentEpisode = _currentEpisode.value, episodes.contains(currentEpisode) {
-      let wasPaused = !isPlaying.value
-
-      handleNextInQueue()
-
-      if wasPaused {
-        pause()
-      }
-    }
   }
-}
 
-// MARK: - AVAudioPlayerDelegate
-
-extension AudioPlayer: AVAudioPlayerDelegate {
-  func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-    if flag, let episode = _currentEpisode.value {
-      episode.startTime = episode.playbackDuration
-    }
-
-    handleNextInQueue()
-  }
 }

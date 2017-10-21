@@ -8,7 +8,7 @@
 
 import enum Result.NoError
 
-/// Describes how multiple producers should be joined together.
+/// Describes how a stream of inner streams should be flattened into a stream of values.
 public struct FlattenStrategy {
 	fileprivate enum Kind {
 		case concurrent(limit: UInt)
@@ -22,51 +22,81 @@ public struct FlattenStrategy {
 		self.kind = kind
 	}
 
-	/// The producers should be merged, so that any value received on any of the
-	/// input producers will be forwarded immediately to the output producer.
+	/// The stream of streams is merged, so that any value sent by any of the inner
+	/// streams is forwarded immediately to the flattened stream of values.
 	///
-	/// The resulting producer will complete only when all inputs have
-	/// completed.
+	/// The flattened stream of values completes only when the stream of streams, and all
+	/// the inner streams it sent, have completed.
+	///
+	/// Any interruption of inner streams is treated as completion, and does not interrupt
+	/// the flattened stream of values.
+	///
+	/// Any failure from the inner streams is propagated immediately to the flattened
+	/// stream of values.
 	public static let merge = FlattenStrategy(kind: .concurrent(limit: .max))
 
-	/// The producers should be concatenated, so that their values are sent in
-	/// the order of the producers themselves.
+	/// The stream of streams is concatenated, so that only values from one inner stream
+	/// are forwarded at a time, in the order the inner streams are received.
 	///
-	/// The resulting producer will complete only when all inputs have
-	/// completed.
+	/// In other words, if an inner stream is received when a previous inner stream has
+	/// yet terminated, the received stream would be enqueued.
+	///
+	/// The flattened stream of values completes only when the stream of streams, and all
+	/// the inner streams it sent, have completed.
+	///
+	/// Any interruption of inner streams is treated as completion, and does not interrupt
+	/// the flattened stream of values.
+	///
+	/// Any failure from the inner streams is propagated immediately to the flattened
+	/// stream of values.
 	public static let concat = FlattenStrategy(kind: .concurrent(limit: 1))
 
-	/// The producers should be merged, but only up to the given limit at any
-	/// point of time, so that any value received on any of the input producers
-	/// will be forwarded immediately to the output producer.
+	/// The stream of streams is merged with the given concurrency cap, so that any value
+	/// sent by any of the inner streams on the fly is forwarded immediately to the
+	/// flattened stream of values.
 	///
-	/// When the number of active producers reaches the limit, subsequent
-	/// producers are queued.
+	/// In other words, if an inner stream is received when a previous inner stream has
+	/// yet terminated, the received stream would be enqueued.
 	///
-	/// The resulting producer will complete only when all inputs have
-	/// completed.
+	/// The flattened stream of values completes only when the stream of streams, and all
+	/// the inner streams it sent, have completed.
+	///
+	/// Any interruption of inner streams is treated as completion, and does not interrupt
+	/// the flattened stream of values.
+	///
+	/// Any failure from the inner streams is propagated immediately to the flattened
+	/// stream of values.
 	///
 	/// - precondition: `limit > 0`.
 	public static func concurrent(limit: UInt) -> FlattenStrategy {
 		return FlattenStrategy(kind: .concurrent(limit: limit))
 	}
 
-	/// Only the events from the latest input producer should be considered for
-	/// the output. Any producers received before that point will be disposed
-	/// of.
+	/// Forward only values from the latest inner stream sent by the stream of streams.
+	/// The active inner stream is disposed of as a new inner stream is received.
 	///
-	/// The resulting producer will complete only when the producer-of-producers
-	/// and the latest producer has completed.
+	/// The flattened stream of values completes only when the stream of streams, and all
+	/// the inner streams it sent, have completed.
+	///
+	/// Any interruption of inner streams is treated as completion, and does not interrupt
+	/// the flattened stream of values.
+	///
+	/// Any failure from the inner streams is propagated immediately to the flattened
+	/// stream of values.
 	public static let latest = FlattenStrategy(kind: .latest)
 
-	/// Only the events from the "first input producer to send an event" (winning producer)
-	/// should be considered for the output.
-	/// Any other producers that already started (but not sending an event yet)
-	/// will be disposed.
+	/// Forward only events from the first inner stream that sends an event. Any other
+	/// in-flight inner streams is disposed of when the winning inner stream is
+	/// determined.
 	///
-	/// The resulting producer will complete when:
-	/// 1. The producer-of-producers and the first "alive" producer has completed.
-	/// 2. The producer-of-producers has completed without inner producer being "alive".
+	/// The flattened stream of values completes only when the stream of streams, and the
+	/// winning inner stream, have completed.
+	///
+	/// Any interruption of inner streams is propagated immediately to the flattened
+	/// stream of values.
+	///
+	/// Any failure from the inner streams is propagated immediately to the flattened
+	/// stream of values.
 	public static let race = FlattenStrategy(kind: .race)
 }
 
@@ -299,7 +329,7 @@ extension Signal where Value: SignalProducerConvertible, Error == Value.Error {
 							}
 
 						case .value, .failed:
-							observer.action(event)
+							observer.send(event)
 						}
 					}
 				}
@@ -363,7 +393,7 @@ extension SignalProducer {
 	public func concat(_ next: SignalProducer<Value, Error>) -> SignalProducer<Value, Error> {
 		return SignalProducer<SignalProducer<Value, Error>, Error>([ self.producer, next ]).flatten(.concat)
 	}
-	
+
 	/// `concat`s `value` onto `self`.
 	///
 	/// - parameters:
@@ -374,7 +404,7 @@ extension SignalProducer {
 	public func concat(value: Value) -> SignalProducer<Value, Error> {
 		return self.concat(SignalProducer(value: value))
 	}
-	
+
 	/// `concat`s `self` onto initial `previous`.
 	///
 	/// - parameters:
@@ -385,7 +415,7 @@ extension SignalProducer {
 	public func prefix(_ previous: SignalProducer<Value, Error>) -> SignalProducer<Value, Error> {
 		return previous.concat(self)
 	}
-	
+
 	/// `concat`s `self` onto initial `value`.
 	///
 	/// - parameters:
@@ -403,10 +433,10 @@ private final class ConcurrentFlattenState<Value, Error: Swift.Error> {
 
 	/// The limit of active producers.
 	let limit: UInt
-	
+
 	/// The number of active producers.
 	var activeCount: UInt = 0
-	
+
 	/// The producers waiting to be started.
 	var queue: [Producer] = []
 
@@ -421,7 +451,7 @@ private final class ConcurrentFlattenState<Value, Error: Swift.Error> {
 	init(limit: UInt) {
 		self.limit = limit
 	}
-	
+
 	/// Dequeue the next producer if one should be started.
 	///
 	/// - returns: The `Producer` to start or `nil` if no producer should be
@@ -459,7 +489,7 @@ extension Signal {
 			.flatten(.merge)
 			.startAndRetrieveSignal()
 	}
-	
+
 	/// Merges the given signals into a single `Signal` that will emit all
 	/// values from each of them, and complete when all of them have completed.
 	///
@@ -481,7 +511,7 @@ extension SignalProducer {
 	{
 		return SignalProducer<Seq.Iterator.Element, NoError>(producers).flatten(.merge)
 	}
-	
+
 	/// Merges the given producers into a single `SignalProducer` that will emit
 	/// all values from each of them, and complete when all of them have
 	/// completed.
@@ -562,7 +592,7 @@ extension Signal where Value: SignalProducerConvertible, Error == Value.Error {
 							}
 
 						case .value, .failed:
-							observer.action(event)
+							observer.send(event)
 						}
 					}
 				}
@@ -615,7 +645,7 @@ extension SignalProducer where Value: SignalProducerConvertible, Error == Value.
 private struct LatestState<Value, Error: Swift.Error> {
 	var outerSignalComplete: Bool = false
 	var innerSignalComplete: Bool = true
-	
+
 	var replacingInnerSignal: Bool = false
 }
 
@@ -690,7 +720,7 @@ extension Signal where Value: SignalProducerConvertible, Error == Value.Error {
 							}
 
 						case .value, .failed, .interrupted:
-							observer.action(event)
+							observer.send(event)
 						}
 					}
 				}
@@ -760,7 +790,7 @@ extension Signal {
 	public func flatMap<Inner: SignalProducerConvertible>(_ strategy: FlattenStrategy, _ transform: @escaping (Value) -> Inner) -> Signal<Inner.Value, Error> where Inner.Error == Error {
 		return map(transform).flatten(strategy)
 	}
-	
+
 	/// Maps each event from `signal` to a new signal, then flattens the
 	/// resulting producers (into a signal of values), according to the
 	/// semantics of the given strategy.
@@ -792,7 +822,7 @@ extension Signal where Error == NoError {
 	public func flatMap<Inner: SignalProducerConvertible>(_ strategy: FlattenStrategy, _ transform: @escaping (Value) -> Inner) -> Signal<Inner.Value, Inner.Error> {
 		return map(transform).flatten(strategy)
 	}
-	
+
 	/// Maps each event from `signal` to a new signal, then flattens the
 	/// resulting signals (into a signal of values), according to the
 	/// semantics of the given strategy.
@@ -821,7 +851,7 @@ extension SignalProducer {
 	public func flatMap<Inner: SignalProducerConvertible>(_ strategy: FlattenStrategy, _ transform: @escaping (Value) -> Inner) -> SignalProducer<Inner.Value, Error> where Inner.Error == Error {
 		return map(transform).flatten(strategy)
 	}
-	
+
 	/// Maps each event from `self` to a new producer, then flattens the
 	/// resulting producers (into a producer of values), according to the
 	/// semantics of the given strategy.
@@ -850,7 +880,7 @@ extension SignalProducer where Error == NoError {
 	public func flatMap<Inner: SignalProducerConvertible>(_ strategy: FlattenStrategy, _ transform: @escaping (Value) -> Inner) -> SignalProducer<Inner.Value, Error> where Inner.Error == Error {
 		return map(transform).flatten(strategy)
 	}
-	
+
 	/// Maps each event from `self` to a new producer, then flattens the
 	/// resulting producers (into a producer of values), according to the
 	/// semantics of the given strategy.
@@ -866,7 +896,6 @@ extension SignalProducer where Error == NoError {
 		return map(transform).flatten(strategy)
 	}
 }
-
 
 extension Signal {
 	/// Catches any failure that may occur on the input signal, mapping to a new

@@ -97,7 +97,8 @@ extension LibraryPodcast {
     request.predicate = NSPredicate(format: "title MATCHES[cd] %@", title)
     request.fetchLimit = 1
 
-    return (try? context.fetch(request))?.first
+    let existing = try? context.fetch(request)
+    return existing?.first
   }
 
   convenience init(mediaItem: MPMediaItem, context: NSManagedObjectContext) {
@@ -105,20 +106,9 @@ extension LibraryPodcast {
 
     title = mediaItem.podcastTitle
   }
-}
-
-// MARK: - IGListDiffable
-
-extension LibraryPodcast: IGListDiffable {
-  public func diffIdentifier() -> NSObjectProtocol {
-    return (title ?? "") as NSObjectProtocol
-  }
-
-  public func isEqual(toDiffableObject object: IGListDiffable?) -> Bool {
-    guard let podcast = object as? LibraryPodcast else {
-      return false
-    }
-
-    return podcast.title == title
+  
+  var podcastCellViewModel: PodcastCellViewModel {
+    return PodcastCellViewModel(title: title ?? "",
+                                artworkProducer: podcastArtworkProducer)
   }
 }

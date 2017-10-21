@@ -18,6 +18,16 @@ class MyWatchEpisodeCell: UITableViewCell {
     super.awakeFromNib()
     // Initialization code
   }
+  
+  var viewModel: WatchEpisodeCellViewModel? {
+    didSet {
+      titleLabel.text = viewModel?.title
+      durationLabel.text = viewModel?.secondaryLabelText
+      syncButton.syncState = viewModel?.syncState
+      
+      artworkView.image = viewModel?.artworkImage
+    }
+  }
 
   override func setSelected(_ selected: Bool, animated: Bool) {
     super.setSelected(selected, animated: animated)

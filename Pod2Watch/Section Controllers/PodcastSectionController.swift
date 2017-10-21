@@ -1,5 +1,5 @@
 //
-//  PodcastSectionController.swift
+//  PodcastSectionController
 //  Pod2Watch
 //
 //  Created by Miles Hollingsworth on 2/14/17.
@@ -8,40 +8,47 @@
 
 import UIKit
 import IGListKit
-import MediaPlayer.MPMediaItemCollection
 import Alamofire
 import AlamofireImage
 import racAdditions
 import ReactiveSwift
 
-class PodcastSectionController: IGListSectionController, IGListSectionType {
-  var podcast: LibraryPodcast?
-
-  func numberOfItems() -> Int {
-    return 1
+class PodcastSectionController: ListSectionController {
+  var viewModel: PodcastCellViewModel!
+  let imageDisposable = SerialDisposable()
+  
+  override init() {
+    super.init()
+    
+    minimumInteritemSpacing = 3
+    inset = UIEdgeInsets(top: 0, left: 0, bottom: 3, right: 0)
   }
-
-  func sizeForItem(at index: Int) -> CGSize {
-
+  
+  override func sizeForItem(at index: Int) -> CGSize {
+    guard let totalWidth = collectionContext?.containerSize.width else { fatalError() }
+    
+    let width = (totalWidth-minimumInteritemSpacing)/2
+    return CGSize(width: width, height: width)
   }
-
-  func cellForItem(at index: Int) -> UICollectionViewCell {
-    let cell = collectionContext!.dequeueReusableCellFromStoryboard(withIdentifier: "PodcastCell",
-                                                                            for: self, at: index) as! PodcastCell
-    guard let podcast = podcast else {
-      return cell
+  
+  override func cellForItem(at index: Int) -> UICollectionViewCell {
+    guard let cell = collectionContext?.dequeueReusableCellFromStoryboard(withIdentifier: "PodcastCell",
+                                                                          for: self,
+                                                                          at: index) as? PodcastCell else {
+                                                                            fatalError()
     }
-
-    cell.imageView.rac_image <~ podcast.podcastArtworkProducer
-
+    
+    imageDisposable.inner = cell.imageView.rac_image <~ viewModel.artworkProducer
+    
     return cell
   }
-
-  func didUpdate(to object: Any) {
-    podcast = object as? LibraryPodcastEpisode
-  }
-
-  func didSelectItem(at index: Int) {
-
+  
+  override func didUpdate(to object: Any) {
+    guard let viewModel = object as? PodcastCellViewModel else {
+      fatalError()
+    }
+    
+    self.viewModel = viewModel
   }
 }
+

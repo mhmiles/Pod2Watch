@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zn0-cR-RQU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zn0-cR-RQU">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,7 +19,8 @@
                         <color key="selectedImageTintColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="Qhr-L3-sXz" kind="relationship" relationship="viewControllers" id="N9Z-Y0-x6h"/>
+                        <segue destination="l4c-FT-hhV" kind="relationship" relationship="viewControllers" id="Skb-ap-bui"/>
+                        <segue destination="Hrs-l6-QnA" kind="relationship" relationship="viewControllers" id="Adt-WX-Cb3"/>
                         <segue destination="DVu-Vw-aNJ" kind="relationship" relationship="viewControllers" id="Nd6-OO-y8L"/>
                     </connections>
                 </tabBarController>
@@ -29,47 +28,41 @@
             </objects>
             <point key="canvasLocation" x="-71" y="161"/>
         </scene>
-        <!--My Podcasts-->
-        <scene sceneID="agV-2V-aIN">
+        <!--Podcasts-->
+        <scene sceneID="8hx-et-9Az">
             <objects>
-                <viewController id="Qhr-L3-sXz" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="DpS-aS-XtV"/>
-                        <viewControllerLayoutGuide type="bottom" id="dPi-K5-0ed"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" contentMode="scaleToFill" id="JPD-II-9cf">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="17V-MW-HM0">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="dDm-ga-Ibt"/>
-                                </constraints>
-                                <items/>
-                            </toolbar>
-                            <imageView opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Nav Title" translatesAutoresizingMaskIntoConstraints="NO" id="b48-NE-ipn">
-                                <rect key="frame" x="106" y="27" width="163" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="JpH-UU-0sW"/>
-                                    <constraint firstAttribute="width" constant="163" id="v0v-Se-pOs"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="b48-NE-ipn" firstAttribute="centerX" secondItem="17V-MW-HM0" secondAttribute="centerX" id="3qN-Bj-Wpz"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="17V-MW-HM0" secondAttribute="trailing" constant="-16" id="Wh5-L8-3l7"/>
-                            <constraint firstItem="17V-MW-HM0" firstAttribute="bottom" secondItem="b48-NE-ipn" secondAttribute="bottom" constant="7" id="bsx-n3-0A6"/>
-                            <constraint firstItem="17V-MW-HM0" firstAttribute="leading" secondItem="JPD-II-9cf" secondAttribute="leadingMargin" constant="-16" id="eik-R3-Msu"/>
-                            <constraint firstItem="17V-MW-HM0" firstAttribute="top" secondItem="DpS-aS-XtV" secondAttribute="bottom" constant="-20" id="hfr-OP-Uby"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="My Podcasts" image="Podcasts" id="vjN-BF-PQ0"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Iyn-4Z-Z2S" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController id="l4c-FT-hhV" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Podcasts" image="Podcasts" id="bzq-Ym-fZE"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="9LJ-rE-OXr">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="qUP-Ky-LZa" kind="relationship" relationship="rootViewController" id="8xn-Pi-Gug"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RXQ-q3-YVb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="799" y="-57"/>
+            <point key="canvasLocation" x="758" y="-859"/>
+        </scene>
+        <!--Podcasts-->
+        <scene sceneID="90s-IE-FH5">
+            <objects>
+                <viewController id="qUP-Ky-LZa" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7vF-bD-h8e"/>
+                        <viewControllerLayoutGuide type="bottom" id="F4D-LI-DJO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4bg-iC-ybR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Podcasts" id="4kl-Cq-h0C"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZGB-rk-KQV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1646" y="-860"/>
         </scene>
         <!--My Watch-->
         <scene sceneID="CLu-3q-SaR">
@@ -88,11 +81,46 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a95-KK-etW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="758" y="645"/>
+            <point key="canvasLocation" x="1646" y="681"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="38F-od-Nah">
+            <objects>
+                <navigationController id="Hrs-l6-QnA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="recents" id="ldr-q9-ZDQ"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" largeTitles="YES" id="PT8-uh-DPr">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="dIc-UE-j2p" kind="relationship" relationship="rootViewController" id="KxN-xT-0Vi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="quv-rK-Lvz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="758" y="-27"/>
+        </scene>
+        <!--Recent-->
+        <scene sceneID="AAV-B7-BhX">
+            <objects>
+                <viewController id="dIc-UE-j2p" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uaA-Nn-bdS"/>
+                        <viewControllerLayoutGuide type="bottom" id="JMB-e1-8xx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4Iu-55-wiD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="551"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Recent" id="Ded-MO-rVH"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vnm-6C-Nxj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1647" y="-27"/>
         </scene>
     </scenes>
     <resources>
-        <image name="Nav Title" width="163" height="30"/>
         <image name="Podcasts" width="25" height="25"/>
         <image name="Watch" width="25" height="25"/>
     </resources>

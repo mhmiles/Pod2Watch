@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import ReactiveSwift
+import enum Result.NoError
 
 class RecentEpisodeCell: UITableViewCell {
   @IBOutlet weak var titleLabel: UILabel!
@@ -16,11 +18,22 @@ class RecentEpisodeCell: UITableViewCell {
   @IBOutlet weak var timeRemainingLabel: UILabel!
   @IBOutlet weak var syncButton: SyncButton!
 
-  var syncHandler: (() -> Void)?
+  var viewModel: RecentEpisodeCellViewModel? {
+    didSet {
+      titleLabel.text = viewModel?.title
+      durationLabel.text = viewModel?.secondaryLabelText
+      syncButton.syncState = viewModel?.syncState
+    
+        let artworkProducer = viewModel?.artworkProducer ?? SignalProducer<UIImage?, NoError>(value: nil)
+        artworkView.rac_image <~ artworkProducer
+    }
+  }
 
   @IBAction func handleSyncPress(button: UIButton) {
-    if let syncHandler = syncHandler {
-      syncHandler()
-    }
+    viewModel?.syncHandler()
+  }
+  
+  override func prepareForReuse() {
+    viewModel = nil
   }
 }

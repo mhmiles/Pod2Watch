@@ -23,7 +23,8 @@ public class Podcast: NSManagedObject {
     request.predicate = NSPredicate(format: "title MATCHES[cd] %@", title)
     request.fetchLimit = 1
 
-    return (try? PersistentContainer.shared.viewContext.fetch(request))?.first
+    let existing = try? PersistentContainer.shared.viewContext.fetch(request)
+    return existing?.first
   }
 
   convenience init(title: String, context: NSManagedObjectContext) {
@@ -34,12 +35,16 @@ public class Podcast: NSManagedObject {
   }
 
   public override func awakeFromFetch() {
+    super.awakeFromFetch()
+    
     if artworkImage == nil {
       PodcastTransferManager.shared.requestArtwork(podcast: self)
     }
   }
 
   public override func awakeFromInsert() {
+    super.awakeFromInsert()
+    
     PodcastTransferManager.shared.requestArtwork(podcast: self)
   }
 }

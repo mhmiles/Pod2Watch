@@ -1,15 +1,9 @@
 {
-  "watchOS" : [
-    {
-      "hash" : "cc50364d1c454fed4b483636b993d4e5295045b2d7ec606404ebe00cc5c567db",
-      "name" : "ReactiveSwift"
-    }
-  ],
-  "commitish" : "2.0.0",
+  "commitish" : "2.1.0-alpha.2",
   "iOS" : [
     {
-      "hash" : "8ca09571d1456dfda666dae6b5e1d20a60c33d1300233578783bfb902ff8dc4c",
-      "name" : "ReactiveSwift"
+      "name" : "ReactiveSwift",
+      "hash" : "a0d5be54b55c335b201fa5d5334d195b43bdbdc30931b9ea7a0e8dad6b8024b8"
     }
   ]
 }

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,41 +15,41 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AnQ-IL-oAN">
-                    <rect key="frame" x="10" y="54.5" width="355" height="91"/>
+                    <rect key="frame" x="67.5" y="34.5" width="240" height="91"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="II5-mc-DyE" customClass="BorderButton" customModule="Pod2Watch" customModuleProvider="target">
-                            <rect key="frame" x="111.5" y="61" width="131" height="30"/>
+                            <rect key="frame" x="51" y="61" width="137" height="30"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                            <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
-                            <state key="normal" title="Request Access">
-                                <color key="titleColor" red="0.43729358909999999" green="0.1427015364" blue="0.86277139189999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
+                            <inset key="contentEdgeInsets" minX="8" minY="5" maxX="8" maxY="5"/>
+                            <state key="normal" title="Request Access"/>
                             <connections>
                                 <action selector="requestLibraryAccess" destination="-1" eventType="touchUpInside" id="tY6-aZ-9Q2"/>
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pod2Watch requires access to your music library" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEj-fC-DbH">
-                            <rect key="frame" x="0.0" y="0.0" width="355" height="41"/>
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="41"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="240" id="WW9-Cr-YG2"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <constraints>
                         <constraint firstItem="II5-mc-DyE" firstAttribute="top" secondItem="bEj-fC-DbH" secondAttribute="bottom" constant="20" id="FP0-h2-C89"/>
                         <constraint firstItem="bEj-fC-DbH" firstAttribute="top" secondItem="AnQ-IL-oAN" secondAttribute="top" id="Pev-OJ-AYX"/>
-                        <constraint firstItem="bEj-fC-DbH" firstAttribute="leading" secondItem="AnQ-IL-oAN" secondAttribute="leading" id="fgg-6b-fPE"/>
                         <constraint firstAttribute="bottom" secondItem="II5-mc-DyE" secondAttribute="bottom" id="lYn-IC-CHC"/>
+                        <constraint firstItem="bEj-fC-DbH" firstAttribute="leading" secondItem="AnQ-IL-oAN" secondAttribute="leading" id="nhs-Fb-2za"/>
+                        <constraint firstAttribute="trailing" secondItem="bEj-fC-DbH" secondAttribute="trailing" id="rVb-e7-Uxf"/>
                         <constraint firstItem="II5-mc-DyE" firstAttribute="centerX" secondItem="AnQ-IL-oAN" secondAttribute="centerX" id="sZc-6S-zJ1"/>
-                        <constraint firstAttribute="trailing" secondItem="bEj-fC-DbH" secondAttribute="trailing" id="zQd-40-JI9"/>
                     </constraints>
                 </view>
             </subviews>
+            <color key="tintColor" red="0.40784313729999999" green="0.0" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="AnQ-IL-oAN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="DMq-bB-K4F"/>
-                <constraint firstAttribute="trailing" secondItem="AnQ-IL-oAN" secondAttribute="trailing" constant="10" id="Ztw-es-uHx"/>
-                <constraint firstItem="AnQ-IL-oAN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="10" id="eL0-ho-Ggd"/>
                 <constraint firstItem="AnQ-IL-oAN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="oE2-RB-gYk"/>
+                <constraint firstItem="AnQ-IL-oAN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-20" id="q6n-JF-x3k"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

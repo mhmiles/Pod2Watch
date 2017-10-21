@@ -11,6 +11,7 @@ import ReactiveSwift
 
 class PodcastsTableRowController: NSObject {
   @IBOutlet var backgroundGroup: WKInterfaceGroup!
+  @IBOutlet var backgroundImageGroup: WKInterfaceGroup!
   @IBOutlet var artworkImage: WKInterfaceImage!
   @IBOutlet var podcastTitleLabel: WKInterfaceLabel!
   @IBOutlet var epiosodeTitleLabel: WKInterfaceLabel!
@@ -23,13 +24,35 @@ class PodcastsTableRowController: NSObject {
   var isSelected = false {
     didSet {
       if isSelected {
-        backgroundGroup.setBackgroundImage(#imageLiteral(resourceName: "Now Playing Border"))
-        backgroundGroup.setCornerRadius(6)
+        backgroundImageGroup.setBackgroundImage(#imageLiteral(resourceName: "Active Border"))
       } else {
-        backgroundGroup.setBackgroundImage(nil)
-        backgroundGroup.setCornerRadius(6)
+        backgroundImageGroup.setBackgroundImage(nil)
       }
     }
+  }
+  
+  var isSelectable = true {
+    didSet {
+      if isSelectable {
+        backgroundGroup.setBackgroundImage(nil)
+        backgroundGroup.setBackgroundColor(UIColor(red:0.13, green:0.13, blue:0.13, alpha:1.0))
+      } else {
+        backgroundGroup.setBackgroundImage(#imageLiteral(resourceName: "Dashed Border"))
+        backgroundGroup.setBackgroundColor(UIColor.clear)
+      }
+    }
+  }
+  
+  func configure(withEpisode episode: Episode, barWidth: CGFloat) {
+    podcastTitleLabel.setText(episode.podcast.title)
+    epiosodeTitleLabel.setText(episode.title)
+    
+    artworkImageDisposable = episode.artworkImage.producer.startWithValues(artworkImage.setImage)
+    
+    progressBarWidth = barWidth
+    setProgressBarCompletion(episode.startTime/max(1, episode.playbackDuration))
+    
+    isSelectable = episode.fileURL != nil
   }
 
   func setProgressBarCompletion(_ fraction: TimeInterval) {

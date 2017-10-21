@@ -1,6 +1,32 @@
 # master
 *Please add new entries at the top.*
 
+# 2.1.0-alpha.2
+1. Disabled code coverage data to allow app submissions with Xcode 9.0 (see https://github.com/Carthage/Carthage/issues/2056, kudos to @NachoSoto)
+
+# 2.1.0-alpha.1
+1. `Signal.Observer.action` has been deprecated. Use `Signal.Observer.send` instead. (#515)
+
+1. Workaround an unexpected EGAGIN error being returned by pthread in 32-bit ARM debug builds. (#508)
+
+1. The `SignalProducer` internals have undergone a significant refactoring, which bootstraps the effort to reduce the overhead of constant producers and producer compositions. (#487, kudos to @andersio)
+
+# 2.0.1
+1. Addressed the exceptionally high build time. (#495)
+
+1. New method ``retry(upTo:interval:on:)``. This delays retrying on failure by `interval` until hitting the `upTo` limitation.
+
+# 2.0.0
+# 2.0.0-rc.3
+1. `Lifetime.+=` which ties a `Disposable` to a `Lifetime`, is now part of the public API and is no longer deprecated.
+
+1. Feedbacks from `isEnabled` to the state of the same `Action` no longer deadlocks if it does not constitute an infinite feedback loop. (#481, kudos to @andersio)
+
+   Note that `isExecuting` already supports `Action` state feedback, and legitimate feedback loops would still deadlock.
+
+# 2.0.0-rc.2
+1. Fixed a deadlock upon disposal when combining operators, i.e. `zip` and `combineLatest`, are used. (#471, kudos to @stevebrambilla for catching the bug)
+
 # 2.0.0-rc.1
 1. If the input observer of a `Signal` deinitializes while the `Signal` has not yet terminated, an `interrupted` event would now be automatically sent. (#463, kudos to @andersio)
 

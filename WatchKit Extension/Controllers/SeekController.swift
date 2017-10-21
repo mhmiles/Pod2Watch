@@ -16,65 +16,73 @@ class SeekController: WKInterfaceController {
   @IBOutlet var minutePicker: WKInterfacePicker!
   @IBOutlet var secondPicker: WKInterfacePicker!
 
-  var selectedHours = 0
-  var selectedMinutes = 0
-  var selectedSeconds = 0
+  private var selectedHours = 0
+  private var selectedMinutes = 0
+  private var selectedSeconds = 0
 
-  var selectedStartTime: Double {
+  private var selectedDuration: Double {
     return Double(selectedHours*3600 + selectedMinutes*60 + selectedSeconds)
   }
+  
+  private var didChangeSelection = false
 
-  var currentEpisodeDisposable: Disposable?
+  private var deallocDisposable: ScopedDisposable<AnyDisposable>?
 
   override func awake(withContext context: Any?) {
     super.awake(withContext: context)
 
-    currentEpisodeDisposable = AudioPlayer.shared.currentEpisode.producer.startWithValues { [weak self] episode in
-      guard let episode = episode else {
-        return
-      }
-
-      let playbackDuration = episode.playbackDuration
-      let hoursMax = Int(playbackDuration/3600)
-      let minutesMax = playbackDuration >= 3600 ? 59 : Int(playbackDuration/60)%60
-      let secondsMax = playbackDuration >= 60 ? 59 : Int(playbackDuration)%60
-
-      self?.hourPicker.setItems((0...hoursMax).map({ number -> WKPickerItem in
-        let item = WKPickerItem()
-        item.title = String(number)
-        item.caption = "h"
-
-        return item
-      }))
-
-      self?.minutePicker.setItems((0...minutesMax).map({ number -> WKPickerItem in
-        let item = WKPickerItem()
-        item.title = String(number)
-        item.caption = "m"
-
-        return item
-      }))
-
-      self?.secondPicker.setItems((0...secondsMax).map({ number -> WKPickerItem in
-        let item = WKPickerItem()
-        item.title = String(number)
-        item.caption = "s"
-
-        return item
-      }))
-
-      self?.setSelectedDurations(episode)
-      self?.setPickerRows()
+    let disposable = AudioPlayer.shared.currentItem.producer.skip(first: 1).startWithValues { [unowned self] _ in
+      self.pop()
     }
+    
+    deallocDisposable = ScopedDisposable(disposable)
+    
+    setRowContents()
+    setSelectedDurations()
+    setSelectedPickerRows()
+
   }
 
-  private func setSelectedDurations(_ episode: Episode) {
-    selectedHours = Int(episode.startTime/3600)
-    selectedMinutes = Int(episode.startTime/60)%60
-    selectedSeconds = Int(episode.startTime)%60
+  private func setRowContents() {
+    let playbackDuration = AudioPlayer.shared.duration.value
+    let hoursMax = Int(playbackDuration/3600)
+    let minutesMax = playbackDuration >= 3600 ? 59 : Int(playbackDuration/60)%60
+    let secondsMax = playbackDuration >= 60 ? 59 : Int(playbackDuration)%60
+    
+    self.hourPicker.setItems((0...hoursMax).map({ number -> WKPickerItem in
+      let item = WKPickerItem()
+      item.title = String(number)
+      item.caption = "h"
+      
+      return item
+    }))
+    
+    self.minutePicker.setItems((0...minutesMax).map({ number -> WKPickerItem in
+      let item = WKPickerItem()
+      item.title = String(number)
+      item.caption = "m"
+      
+      return item
+    }))
+    
+    self.secondPicker.setItems((0...secondsMax).map({ number -> WKPickerItem in
+      let item = WKPickerItem()
+      item.title = String(number)
+      item.caption = "s"
+      
+      return item
+    }))
+  }
+  
+  private func setSelectedDurations() {
+    let currentTime = AudioPlayer.shared.offset.value
+  
+    selectedHours = Int(currentTime/3600)
+    selectedMinutes = Int(currentTime/60)%60
+    selectedSeconds = Int(currentTime)%60
   }
 
-  private func setPickerRows() {
+  private func setSelectedPickerRows() {
     hourPicker.setSelectedItemIndex(selectedHours)
     minutePicker.setSelectedItemIndex(selectedMinutes)
     secondPicker.setSelectedItemIndex(selectedSeconds)
@@ -82,27 +90,29 @@ class SeekController: WKInterfaceController {
 
   @IBAction func handleHoursSelection(_ value: Int) {
     WKInterfaceDevice.current().play(.click)
+    didChangeSelection = true
     selectedHours = value
   }
 
   @IBAction func handleMinutesSelection(_ value: Int) {
     WKInterfaceDevice.current().play(.click)
+    didChangeSelection = true
     selectedMinutes = value
   }
 
   @IBAction func handleSecondsSelection(_ value: Int) {
     WKInterfaceDevice.current().play(.click)
+    didChangeSelection = true
     selectedSeconds = value
   }
 
   @IBAction func handleOK() {
     WKInterfaceDevice.current().play(.success)
 
-    AudioPlayer.shared.currentTime = selectedStartTime
+    if didChangeSelection {
+      AudioPlayer.shared.setCurrentTime(selectedDuration)
+    }
+    
     pop()
-  }
-
-  override func willDisappear() {
-    currentEpisodeDisposable?.dispose()
   }
 }

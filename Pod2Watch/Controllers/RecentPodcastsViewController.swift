@@ -13,9 +13,6 @@ import ReactiveSwift
 import racAdditions
 
 class RecentPodcastsViewController: UITableViewController {
-
-  @IBOutlet weak var segmentedTitle: UISegmentedControl!
-
   fileprivate lazy var libraryResultsController: NSFetchedResultsController<LibraryEpisode> = {
     let request: NSFetchRequest<LibraryEpisode> = LibraryEpisode.fetchRequest()
     request.sortDescriptors = [NSSortDescriptor(key: #keyPath(LibraryEpisode.releaseDate),
@@ -31,6 +28,10 @@ class RecentPodcastsViewController: UITableViewController {
 
     return controller
   }()
+  
+  private func episode(at indexPath: IndexPath) -> LibraryEpisode {
+    return libraryResultsController.object(at: indexPath)
+  }
 
   fileprivate lazy var syncResultsController: NSFetchedResultsController<TransferredEpisode> = {
     let request: NSFetchRequest<TransferredEpisode> = TransferredEpisode.fetchRequest()
@@ -51,17 +52,22 @@ class RecentPodcastsViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    segmentedTitle.setTitleTextAttributes([NSFontAttributeName: UIFont.systemFont(ofSize: 16)],
-                                          for: .normal)
-
     _ = syncResultsController
 
-    NotificationCenter.default.addObserver(forName: InMemoryContainer.PodcastLibraryDidReload,
+    NotificationCenter.default.addObserver(forName: .podcastLibraryDidReload,
                                            object: InMemoryContainer.shared,
                                            queue: OperationQueue.main) { [weak self] _ in
                                             try! self?.libraryResultsController.performFetch()
                                             self?.tableView.reloadData()
     }
+    
+    navigationController?.navigationBar.prefersLargeTitles = true
+    
+    tableView.sectionFooterHeight = 0
+  }
+  
+  @IBAction func openPodcasts() {
+    UIApplication.shared.openPodcasts()
   }
 
   deinit {
@@ -83,30 +89,9 @@ class RecentPodcastsViewController: UITableViewController {
       abort()
     }
 
-    let episode = libraryResultsController.object(at: indexPath)
+    let episode = self.episode(at: indexPath)
+    cell.viewModel = episode.recentEpisodeCellViewModel
 
-    cell.artworkView.rac_image <~ episode.podcastArtworkProducer
-
-    cell.titleLabel.text = episode.title
-    cell.durationLabel.text = episode.recentSecondaryLabelText
-
-    if let synced = TransferredEpisode.existing(persistentID: episode.persistentID) {
-      if synced.shouldDelete {
-        cell.syncButton.syncState = .pending
-      } else if synced.isTransferred {
-        cell.syncButton.syncState = .synced
-      } else {
-        cell.syncButton.syncState = .syncing
-      }
-    } else {
-      cell.syncButton.syncState = .noSync
-
-      cell.syncHandler = { [weak cell] in
-        cell?.syncHandler = nil
-
-        PodcastTransferManager.shared.transfer(episode)
-      }
-    }
 
     return cell
   }
@@ -122,14 +107,37 @@ class RecentPodcastsViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 28.0
+    return 40.0
   }
-
-  @IBAction func handleSegmentPress(_ sender: UISegmentedControl) {
-    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    let viewController = storyboard.instantiateViewController(withIdentifier: "PodcastsViewController")
-
-    navigationController?.viewControllers = [viewController]
+  
+  override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    guard let cell = tableView.cellForRow(at: indexPath) as? RecentEpisodeCell,
+      let syncState = cell.syncButton.syncState else {
+        return false
+    }
+    
+    return syncState != .noSync
+  }
+  
+  override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    if editingStyle == .delete {
+      let libraryEpisode = episode(at: indexPath)
+      
+      guard let episode = TransferredEpisode.existing(persistentID: libraryEpisode.persistentID) else {
+        return
+      }
+      
+      PodcastTransferManager.shared.delete(episode)
+    }
+  }
+  
+  override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+    guard let cell = tableView.cellForRow(at: indexPath) as? RecentEpisodeCell,
+      let syncState = cell.syncButton.syncState else {
+        return "Delete"
+    }
+    
+    return syncState == .synced ? "Delete" : "Cancel"
   }
 }
 

@@ -18,7 +18,7 @@ public class Episode: NSManagedObject {
 
   @NSManaged public var podcast: Podcast
   @NSManaged public var title: String?
-  @NSManaged public var fileURL: URL
+  @NSManaged public var fileURL: URL?
   @NSManaged public var playbackDuration: Double
   @NSManaged public var persistentID: Int64
   @NSManaged public var podcastTitle: String?

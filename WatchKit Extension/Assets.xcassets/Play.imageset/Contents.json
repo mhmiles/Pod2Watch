@@ -7,17 +7,6 @@
       "scale" : "2x"
     },
     {
-      "resizing" : {
-        "mode" : "3-part-horizontal",
-        "center" : {
-          "mode" : "tile",
-          "width" : 23
-        },
-        "cap-insets" : {
-          "right" : 39,
-          "left" : 35
-        }
-      },
       "idiom" : "watch",
       "filename" : "Play.png",
       "screen-width" : ">145",

@@ -11,7 +11,7 @@ import Foundation
 extension String {
   var withoutThe: String {
     if lowercased().hasPrefix("the ") {
-      return substring(from: index(startIndex, offsetBy: 4)).trimmingCharacters(in: CharacterSet.whitespaces)
+      return self["the ".endIndex...].trimmingCharacters(in: CharacterSet.whitespaces)
     } else {
       return self
     }
