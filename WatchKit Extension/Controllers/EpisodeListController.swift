@@ -11,7 +11,6 @@ import Foundation
 import WatchConnectivity
 import CoreData
 import ReactiveSwift
-import UserNotifications
 import AVFoundation
 
 class EpisodeListController: WKInterfaceController, URLSessionDelegate {
@@ -48,12 +47,6 @@ class EpisodeListController: WKInterfaceController, URLSessionDelegate {
   private let nowPlayingDisposable = SerialDisposable()
   
   override func willActivate() {
-    UNUserNotificationCenter.current().requestAuthorization(options: [.alert]) { (granted, error) in
-        if granted {
-            
-        }
-    }
-    
     nowPlayingDisposable.inner = player.currentItem.producer.startWithValues { [weak self] currentItem in
       guard let episodes = self?.resultsController.fetchedObjects else {
         return
@@ -111,9 +104,9 @@ class EpisodeListController: WKInterfaceController, URLSessionDelegate {
       WKInterfaceDevice.current().play(.click)
     } else {
       player.episodeQueue = Array(episodes[rowIndex...]).filter({ $0.fileURL != nil })
-//      playDisposable.inner = player.currentItem.producer.skipNil().take(first: 1).startWithCompleted { [unowned self] in
-//        self.player.play()
-//      }
+      playDisposable.inner = player.currentItem.producer.skipNil().take(first: 1).startWithCompleted {
+        try? AudioPlayer.shared.play()
+      }
       
       WKInterfaceDevice.current().play(.success)
     }

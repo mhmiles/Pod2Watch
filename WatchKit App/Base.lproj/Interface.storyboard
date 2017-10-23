@@ -75,7 +75,7 @@
                                 <tableRow identifier="NoPodcasts" selectable="NO" id="q5E-uq-20p">
                                     <group key="rootItem" width="1" height="174" alignment="left" layout="vertical" id="mph-aa-e8R">
                                         <items>
-                                            <label alignment="center" verticalAlignment="center" text="Force Touch to download or sync from your phone" textAlignment="center" numberOfLines="4" id="epJ-vw-bUT"/>
+                                            <label alignment="center" verticalAlignment="center" text="Sync podcasts from your phone" textAlignment="center" numberOfLines="4" id="epJ-vw-bUT"/>
                                         </items>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
@@ -87,11 +87,6 @@
                     </items>
                     <menu key="menu" id="TbR-kY-0vr">
                         <items>
-                            <menuItem title="Download" icon="add" id="88q-9Z-oTb">
-                                <connections>
-                                    <action selector="handleDownload" destination="AgC-eL-Hgc" id="ull-AU-pIx"/>
-                                </connections>
-                            </menuItem>
                             <menuItem title="Delete All" icon="trash" id="UnC-yJ-6BF">
                                 <connections>
                                     <action selector="handleDeleteAll" destination="AgC-eL-Hgc" id="5BB-mt-GOI"/>
@@ -104,7 +99,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-938" y="420"/>
+            <point key="canvasLocation" x="-1159" y="168"/>
         </scene>
         <!--DeleteAll-->
         <scene sceneID="2v3-Yl-UhF">
@@ -126,7 +121,7 @@
                     </items>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-489" y="409"/>
+            <point key="canvasLocation" x="-1279" y="523"/>
         </scene>
         <!--NoBluetooth-->
         <scene sceneID="dUn-IK-BJL">
@@ -135,13 +130,13 @@
                     <items>
                         <group width="1" height="1" alignment="left" id="wPo-Bb-g6e">
                             <items>
-                                <label alignment="center" verticalAlignment="center" text="No Output Connected" textAlignment="center" numberOfLines="2" id="jN9-19-PCI"/>
+                                <label alignment="center" verticalAlignment="center" text="No Headphones Connected" textAlignment="center" numberOfLines="2" id="jN9-19-PCI"/>
                             </items>
                         </group>
                     </items>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-492" y="730"/>
+            <point key="canvasLocation" x="-543" y="292"/>
         </scene>
         <!--Now Playing-->
         <scene sceneID="AaR-LZ-vBv">
@@ -259,7 +254,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="137" y="2"/>
+            <point key="canvasLocation" x="-836" y="168"/>
         </scene>
         <!--Top Podcasts-->
         <scene sceneID="6m8-7d-d9w">
@@ -322,7 +317,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-641" y="-54"/>
+            <point key="canvasLocation" x="-1159" y="-452"/>
         </scene>
         <!--NotSynced-->
         <scene sceneID="77i-El-yqG">
@@ -346,7 +341,7 @@
                     </items>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="137" y="312"/>
+            <point key="canvasLocation" x="-986" y="468"/>
         </scene>
         <!--Seek-->
         <scene sceneID="1Kb-OA-2Rf">
@@ -390,7 +385,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="470" y="22"/>
+            <point key="canvasLocation" x="-543" y="0.0"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="0US-gK-6Ak">
@@ -450,7 +445,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-324" y="-54"/>
+            <point key="canvasLocation" x="-876" y="-452"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.40784313725490196" green="0.0" blue="0.84313725490196079" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -28,17 +28,16 @@ class NowPlayingController: WKInterfaceController {
   
   private var deinitDisposable: ScopedDisposable<AnyDisposable>!
   
-  private let player = AudioPlayer.shared
-  
   override func awake(withContext context: Any?) {
     super.awake(withContext: context)
 
     crownSequencer.delegate = self
 
+    let player = AudioPlayer.shared
     let compositeDisposable = CompositeDisposable()
 
     compositeDisposable += player.currentItem.producer.startWithValues { [unowned self] _ in
-      let episode = self.player.currentEpisode
+      let episode = player.currentEpisode
 
       self.updateBackground(image: episode?.artworkImage.value)
 
@@ -49,7 +48,7 @@ class NowPlayingController: WKInterfaceController {
     compositeDisposable += player.offset.producer.debounce(0.25, on: QueueScheduler.main).startWithValues { [unowned self] _ in
       if self.wasPlaying {
         self.wasPlaying = false
-        try? self.player.play()
+        try? player.play()
       }
     }
 
@@ -61,14 +60,14 @@ class NowPlayingController: WKInterfaceController {
       }
     }
 
-    compositeDisposable += player.offset.producer.combineLatest(with:
-      player.duration.producer).startWithValues({ [unowned self] (currentTime, duration) in
+    let timeProducer = player.offset.producer.combineLatest(with: player.duration.producer)
+    compositeDisposable += timeProducer.startWithValues { [unowned self] (currentTime, duration) in
         let sanitizedCurrentTime = currentTime.isNaN || currentTime.isInfinite ? 0 : currentTime
         let sanitizedDuration = duration.isNaN || duration.isInfinite ? 0 : duration
 
         self.updateTimeLabels(currentTime: sanitizedCurrentTime,
                               duration: sanitizedDuration)
-      })
+      }
 
     deinitDisposable = ScopedDisposable(compositeDisposable)
   }
@@ -78,7 +77,7 @@ class NowPlayingController: WKInterfaceController {
   }
   
   override func willDisappear() {
-    player.updateStartTime()
+    AudioPlayer.shared.updateStartTime()
   }
   
   private func updateBackground(image: UIImage?) {
@@ -107,14 +106,15 @@ class NowPlayingController: WKInterfaceController {
       formatter.allowedUnits = [ .minute, .second ]
     }
     
-    remainingLabel.setText(formatter.string(from: remainingTime).map({ "-\($0)" }))
+    let remainingLabelText = formatter.string(from: remainingTime).map { "-\($0)" }
+    remainingLabel.setText(remainingLabelText)
     
     let progressRatio = duration == 0 ? 0 : max(0, currentTime/duration)
     progressBar.setWidth(contentFrame.width*CGFloat(progressRatio))
   }
   
   fileprivate func updateRateLabel() {
-    let rate = player.rate ?? 1
+    let rate = AudioPlayer.shared.rate
     
     if rate == 1 || rate == 0 {
       rateLabel.setText(nil)
@@ -129,7 +129,7 @@ class NowPlayingController: WKInterfaceController {
   
   @IBAction func handlePlayPause() {
     do {
-      try player.playPause()
+      try AudioPlayer.shared.playPause()
     } catch {
       presentController(withName: "NoBluetooth", context: nil)
     }
@@ -140,18 +140,19 @@ class NowPlayingController: WKInterfaceController {
   @IBAction func handleBack() {
     WKInterfaceDevice.current().play(.click)
     
-    player.advance(-15)
+    AudioPlayer.shared.advance(-15)
   }
   
   @IBAction func handleForward() {
     WKInterfaceDevice.current().play(.click)
     
-    player.advance(15)
+    AudioPlayer.shared.advance(15)
   }
   
   @IBAction func handleSpeedDown() {
     WKInterfaceDevice.current().play(.directionDown)
     
+    let player = AudioPlayer.shared
     player.setRate(player.rate - 0.1)
     updateRateLabel()
   }
@@ -159,6 +160,7 @@ class NowPlayingController: WKInterfaceController {
   @IBAction func handleSpeedUp() {
     WKInterfaceDevice.current().play(.directionUp)
     
+    let player = AudioPlayer.shared
     player.setRate(player.rate + 0.1)
     updateRateLabel()
   }
@@ -172,11 +174,12 @@ class NowPlayingController: WKInterfaceController {
   @IBAction func handleDelete() {
     WKInterfaceDevice.current().play(.success)
     
+    let player = AudioPlayer.shared
     guard let episode = player.currentEpisode else {
       return
     }
     
-    player.advanceToNextItem()
+    AudioPlayer.shared.advanceToNextItem()
     PodcastTransferManager.shared.delete(episode)
   }
 }
@@ -185,6 +188,8 @@ class NowPlayingController: WKInterfaceController {
 
 extension NowPlayingController: WKCrownDelegate {
   func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
+    let player = AudioPlayer.shared
+    
     if player.isPlaying.value {
       wasPlaying = true
       player.pause()

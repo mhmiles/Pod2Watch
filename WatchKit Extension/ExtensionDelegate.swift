@@ -25,7 +25,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
         connectivityTask.setTaskCompletedWithSnapshot(false)
       case let urlSessionTask as WKURLSessionRefreshBackgroundTask:
        
-        print(urlSessionTask.userInfo)
+        print(urlSessionTask.userInfo as Any)
         urlSessionTask.setTaskCompletedWithSnapshot(false)
       default:
         // make sure to complete unhandled task types

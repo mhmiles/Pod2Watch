@@ -22,11 +22,15 @@ class AudioPlayer: NSObject {
   
   var episodeQueue: [Episode]? {
     didSet {
-      player?.removeAllItems()
-      _currentItem.value = nil
+      if let episode = currentEpisode {
+        episode.startTime = player.currentItem?.currentTime ?? 0
+        PersistentContainer.saveContext()
+      }
+      
+       _currentItem.value = nil
+      player.removeAllItems()
       
       guard let episodeQueue = episodeQueue, episodeQueue.count > 0 else {
-        player = nil
         return
       }
       
@@ -45,7 +49,7 @@ class AudioPlayer: NSObject {
     }
   }
   
-  @objc fileprivate var player: WKAudioFileQueuePlayer?
+  fileprivate var player = WKAudioFileQueuePlayer(items: [])
   
   private var deallocDisposable: ScopedDisposable<AnyDisposable>?
   
@@ -56,13 +60,11 @@ class AudioPlayer: NSObject {
   private let _currentItem: MutableProperty<WKAudioFilePlayerItem?> = MutableProperty(nil)
   
   var currentEpisode: Episode? {
-    guard let currentItemURL = player?.currentItem?.asset.url else {
+    guard let currentItemURL = player.currentItem?.asset.url else {
       return nil
     }
     
-    return episodeQueue?.first(where: { (episode) -> Bool in
-      return episode.fileURL == currentItemURL
-    })
+    return episodeQueue?.first { $0.fileURL == currentItemURL }
   }
   
   private let tickDisposable = SerialDisposable()
@@ -78,7 +80,7 @@ class AudioPlayer: NSObject {
   var rate: Float = 1 {
     didSet {
       if isPlaying.value {
-        player?.rate = rate
+        player.rate = rate
       }
     }
   }
@@ -139,7 +141,7 @@ class AudioPlayer: NSObject {
   }
   
   private func updateCurrentItem() {
-    let currentItem = player?.currentItem
+    let currentItem = player.currentItem
     _currentItem.value = currentItem
     
     if currentItem == nil, isPlaying.value {
@@ -148,7 +150,7 @@ class AudioPlayer: NSObject {
   }
   
   func play() throws {
-    guard let player = player, player.currentItem != nil else {
+    guard let _ = player.currentItem else {
       return
     }
     
@@ -163,7 +165,7 @@ class AudioPlayer: NSObject {
   }
   
   func pause() {
-    player?.pause()
+    player.pause()
     _isPlaying.value = false
     
     updatePlayheadPosition()
@@ -179,7 +181,7 @@ class AudioPlayer: NSObject {
   }
   
   func setCurrentTime(_ currentTime: TimeInterval) {
-    guard let currentItem = player?.currentItem else {
+    guard let currentItem = player.currentItem else {
       return
     }
     
@@ -190,7 +192,7 @@ class AudioPlayer: NSObject {
   }
   
   func advance(_ distance: TimeInterval) {
-    guard let currentItem = player?.currentItem else {
+    guard let currentItem = player.currentItem else {
       return
     }
     
@@ -198,7 +200,7 @@ class AudioPlayer: NSObject {
   }
   
   func advanceToNextItem() {
-    player?.advanceToNextItem()
+    player.advanceToNextItem()
     
     updateStartTime()
   }
