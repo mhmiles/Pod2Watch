@@ -31,8 +31,9 @@ class SeekController: WKInterfaceController {
   override func awake(withContext context: Any?) {
     super.awake(withContext: context)
 
+    // Dismiss if track changes
     let disposable = AudioPlayer.shared.currentItem.producer.skip(first: 1).startWithValues { [unowned self] _ in
-      self.pop()
+      self.dismiss()
     }
     
     deallocDisposable = ScopedDisposable(disposable)
@@ -106,13 +107,13 @@ class SeekController: WKInterfaceController {
     selectedSeconds = value
   }
 
-  @IBAction func handleOK() {
+  @IBAction func handleSeek() {
     WKInterfaceDevice.current().play(.success)
 
     if didChangeSelection {
       AudioPlayer.shared.setCurrentTime(selectedDuration)
     }
     
-    pop()
+    dismiss()
   }
 }

@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16E195" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="1.1">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13241" systemVersion="" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="1.1">
     <entity name="TransferredEpisode" representedClassName=".TransferredEpisode" syncable="YES" codeGenerationType="category">
-        <attribute name="fileURL" attributeType="Transformable" valueTransformerName="URLTransformer" customClassName=".URL" syncable="YES"/>
+        <attribute name="fileURL" optional="YES" attributeType="Transformable" valueTransformerName="URLTransformer" customClassName=".URL" syncable="YES"/>
         <attribute name="hasBegunTransfer" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isAutoTransfer" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isTransferred" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="persistentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="playbackDuration" attributeType="Double" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="releaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO" indexed="YES" syncable="YES"/>
+        <attribute name="releaseDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="shouldDelete" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sortIndex" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="podcast" maxCount="1" deletionRule="Nullify" destinationEntity="TransferredPodcast" inverseName="episodes" inverseEntity="TransferredPodcast" syncable="YES"/>
-        <compoundIndexes>
-            <compoundIndex>
-                <index value="sortIndex"/>
-            </compoundIndex>
-        </compoundIndexes>
+        <relationship name="podcast" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TransferredPodcast" inverseName="episodes" inverseEntity="TransferredPodcast" syncable="YES"/>
+        <fetchIndex name="byReleaseDateIndex">
+            <fetchIndexElement property="releaseDate" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="compoundIndex">
+            <fetchIndexElement property="sortIndex" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="TransferredPodcast" representedClassName=".TransferredPodcast" syncable="YES">
         <attribute name="artworkImage" optional="YES" attributeType="Transformable" valueTransformerName="UIImageTransformer" customClassName=".UIImage" syncable="YES"/>
         <attribute name="isAutoTransferred" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="lastAutoSyncDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="title" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
         <relationship name="episodes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TransferredEpisode" inverseName="podcast" inverseEntity="TransferredEpisode" syncable="YES"/>
+        <fetchIndex name="byTitleIndex">
+            <fetchIndexElement property="title" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <elements>
         <element name="TransferredEpisode" positionX="-36" positionY="9" width="128" height="210"/>

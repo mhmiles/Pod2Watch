@@ -22,4 +22,5 @@ struct MessageType {
   static let sendUsedStorage = "sendUsedStorage"
   static let sendTransferBegin = "sendTransferBegin"
   static let sendSortOrder = "sendSortOrder"
+    static let sendWatchDownload = "sendWatchDownload"
 }

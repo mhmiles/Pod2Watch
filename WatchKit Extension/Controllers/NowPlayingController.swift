@@ -49,7 +49,7 @@ class NowPlayingController: WKInterfaceController {
     compositeDisposable += player.offset.producer.debounce(0.25, on: QueueScheduler.main).startWithValues { [unowned self] _ in
       if self.wasPlaying {
         self.wasPlaying = false
-        self.player.play()
+        try? self.player.play()
       }
     }
 
@@ -128,7 +128,11 @@ class NowPlayingController: WKInterfaceController {
   }
   
   @IBAction func handlePlayPause() {
-    player.playPause()
+    do {
+      try player.playPause()
+    } catch {
+      presentController(withName: "NoBluetooth", context: nil)
+    }
     
     WKInterfaceDevice.current().play(.click)
   }
@@ -162,18 +166,18 @@ class NowPlayingController: WKInterfaceController {
   @IBAction func handleSeekTo() {
     WKInterfaceDevice.current().play(.click)
     
-    pushController(withName: "Seek", context: nil)
+    presentController(withName: "Seek", context: nil)
   }
   
   @IBAction func handleDelete() {
     WKInterfaceDevice.current().play(.success)
     
-    guard let episodeToDelete = player.currentEpisode else {
+    guard let episode = player.currentEpisode else {
       return
     }
     
     player.advanceToNextItem()
-    PodcastTransferManager.shared.deletePodcast(episodeToDelete)
+    PodcastTransferManager.shared.delete(episode)
   }
 }
 

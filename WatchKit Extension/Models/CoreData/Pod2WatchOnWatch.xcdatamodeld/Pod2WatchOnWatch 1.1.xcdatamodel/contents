@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13241" systemVersion="" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="1.1w">
     <entity name="Episode" representedClassName=".Episode" syncable="YES">
+        <attribute name="downloadProgress" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="fileURL" optional="YES" attributeType="Transformable" valueTransformerName="URLTransformer" customClassName=".URL" syncable="YES"/>
+        <attribute name="isDownload" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="persistentID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="playbackDuration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="sortIndex" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
@@ -34,7 +36,7 @@
         </uniquenessConstraints>
     </entity>
     <elements>
-        <element name="Episode" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="Episode" positionX="-63" positionY="-18" width="128" height="180"/>
         <element name="Podcast" positionX="-63" positionY="45" width="128" height="90"/>
     </elements>
 </model>

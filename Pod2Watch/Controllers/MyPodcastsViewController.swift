@@ -84,7 +84,7 @@ class MyPodcastsViewController: UICollectionViewController, ListAdapterDataSourc
     
     let searchBar = searchController.searchBar
     searchBar.delegate = self
-    searchBar.tintColor = UIColor(red:0.40, green:0.19, blue:0.83, alpha:1.0)
+    searchBar.tintColor = .podcastsColor
     
     navigationController?.navigationBar.prefersLargeTitles = true
   }

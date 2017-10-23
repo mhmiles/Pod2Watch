@@ -1,6 +1,7 @@
 github "Alamofire/Alamofire" ~> 4.5
 github "Alamofire/AlamofireImage" ~> 3.3
-github "Instagram/ListKit" ~> 3.1
+github "Instagram/IGListKit" ~> 3.1
 github "ReactiveCocoa/ReactiveSwift" "2.1.0-alpha.2"
 github "ReactiveCocoa/ReactiveCocoa" "6.1.0-alpha.2"
 github "mhmiles/racAdditions" "master"
+github "drmohundro/SWXMLHash" ~> 4.0

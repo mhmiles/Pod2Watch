@@ -45,7 +45,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yJm-Ps-MbM" customClass="BorderImageView" customModule="Pod2Watch" customModuleProvider="target">
-                                            <rect key="frame" x="3" y="3" width="73.5" height="73.5"/>
+                                            <rect key="frame" x="8" y="8" width="63.5" height="63.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="yJm-Ps-MbM" secondAttribute="height" multiplier="1:1" id="gZk-s5-r0S"/>
                                             </constraints>
@@ -56,7 +56,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tjj-j7-dAY">
-                                            <rect key="frame" x="82.5" y="8" width="44" height="21"/>
+                                            <rect key="frame" x="79.5" y="8" width="44" height="21"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -71,21 +71,21 @@
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zEE-2Z-U7q">
-                                            <rect key="frame" x="82.5" y="33" width="37" height="17"/>
+                                            <rect key="frame" x="79.5" y="33" width="37" height="17"/>
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Tjj-j7-dAY" firstAttribute="leading" secondItem="yJm-Ps-MbM" secondAttribute="trailing" constant="6" id="3hX-je-oAs"/>
-                                        <constraint firstItem="yJm-Ps-MbM" firstAttribute="top" secondItem="BH5-xt-7Dn" secondAttribute="top" constant="3" id="4T8-Qn-Ygt"/>
+                                        <constraint firstItem="Tjj-j7-dAY" firstAttribute="leading" secondItem="yJm-Ps-MbM" secondAttribute="trailing" constant="8" id="3hX-je-oAs"/>
+                                        <constraint firstItem="yJm-Ps-MbM" firstAttribute="top" secondItem="BH5-xt-7Dn" secondAttribute="top" constant="8" id="4T8-Qn-Ygt"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="mSy-2D-0Ol" secondAttribute="trailing" id="64j-21-gDa"/>
-                                        <constraint firstItem="yJm-Ps-MbM" firstAttribute="leading" secondItem="BH5-xt-7Dn" secondAttribute="leading" constant="3" id="8An-IW-DZw"/>
+                                        <constraint firstItem="yJm-Ps-MbM" firstAttribute="leading" secondItem="BH5-xt-7Dn" secondAttribute="leading" constant="8" id="8An-IW-DZw"/>
                                         <constraint firstAttribute="topMargin" secondItem="Tjj-j7-dAY" secondAttribute="top" id="IPg-ao-NXX"/>
                                         <constraint firstItem="zEE-2Z-U7q" firstAttribute="leading" secondItem="Tjj-j7-dAY" secondAttribute="leading" id="JPR-AP-Crt"/>
                                         <constraint firstItem="mSy-2D-0Ol" firstAttribute="centerY" secondItem="BH5-xt-7Dn" secondAttribute="centerY" id="PQq-rc-CxI"/>
-                                        <constraint firstAttribute="bottom" secondItem="yJm-Ps-MbM" secondAttribute="bottom" constant="3" id="WeG-tK-Ktq"/>
+                                        <constraint firstAttribute="bottom" secondItem="yJm-Ps-MbM" secondAttribute="bottom" constant="8" id="WeG-tK-Ktq"/>
                                         <constraint firstItem="zEE-2Z-U7q" firstAttribute="top" secondItem="Tjj-j7-dAY" secondAttribute="bottom" constant="4" id="aff-YU-lWy"/>
                                         <constraint firstItem="mSy-2D-0Ol" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tjj-j7-dAY" secondAttribute="trailing" constant="10" id="uyu-BO-ZOF"/>
                                     </constraints>
@@ -384,7 +384,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Cpw-19-Qf3" customClass="BorderImageView" customModule="Pod2Watch" customModuleProvider="target">
-                                            <rect key="frame" x="3" y="3" width="73.5" height="73.5"/>
+                                            <rect key="frame" x="8" y="8" width="63.5" height="63.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="Cpw-19-Qf3" secondAttribute="height" multiplier="1:1" id="AJl-6K-XAV"/>
                                             </constraints>
@@ -403,12 +403,12 @@
                                     <constraints>
                                         <constraint firstItem="O4L-Ub-zze" firstAttribute="centerY" secondItem="QQF-zj-LHZ" secondAttribute="centerY" id="7n2-LT-6ch"/>
                                         <constraint firstItem="ls9-mF-vNp" firstAttribute="top" secondItem="OdJ-Nw-CiU" secondAttribute="bottom" constant="4" id="EPb-DJ-HOs"/>
-                                        <constraint firstAttribute="bottom" secondItem="Cpw-19-Qf3" secondAttribute="bottom" constant="3" id="Hz4-80-zPj"/>
-                                        <constraint firstItem="OdJ-Nw-CiU" firstAttribute="leading" secondItem="Cpw-19-Qf3" secondAttribute="trailing" constant="3" id="Jia-Wg-9kw"/>
+                                        <constraint firstAttribute="bottom" secondItem="Cpw-19-Qf3" secondAttribute="bottom" constant="8" id="Hz4-80-zPj"/>
+                                        <constraint firstItem="OdJ-Nw-CiU" firstAttribute="leading" secondItem="Cpw-19-Qf3" secondAttribute="trailing" constant="8" id="Jia-Wg-9kw"/>
                                         <constraint firstAttribute="trailing" secondItem="O4L-Ub-zze" secondAttribute="trailing" constant="8" id="KJS-j8-rDY"/>
                                         <constraint firstItem="O4L-Ub-zze" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ls9-mF-vNp" secondAttribute="trailing" constant="5" id="Qqp-lj-2HS"/>
-                                        <constraint firstItem="Cpw-19-Qf3" firstAttribute="top" secondItem="QQF-zj-LHZ" secondAttribute="top" constant="3" id="SIf-oO-z5t"/>
-                                        <constraint firstItem="Cpw-19-Qf3" firstAttribute="leading" secondItem="QQF-zj-LHZ" secondAttribute="leading" constant="3" id="XK8-pj-CNp"/>
+                                        <constraint firstItem="Cpw-19-Qf3" firstAttribute="top" secondItem="QQF-zj-LHZ" secondAttribute="top" constant="8" id="SIf-oO-z5t"/>
+                                        <constraint firstItem="Cpw-19-Qf3" firstAttribute="leading" secondItem="QQF-zj-LHZ" secondAttribute="leading" constant="8" id="XK8-pj-CNp"/>
                                         <constraint firstItem="OdJ-Nw-CiU" firstAttribute="leading" secondItem="ls9-mF-vNp" secondAttribute="leading" id="eqV-lj-vmB"/>
                                         <constraint firstAttribute="topMargin" secondItem="OdJ-Nw-CiU" secondAttribute="top" id="jvv-Zq-V7s"/>
                                         <constraint firstItem="O4L-Ub-zze" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="OdJ-Nw-CiU" secondAttribute="trailing" constant="8" id="xOj-II-ixz"/>

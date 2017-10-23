@@ -22,6 +22,6 @@ class PodcastAlertController: UIAlertController {
   }
   
   private func setTintColor() {
-    view.tintColor = UIColor(red:0.40, green:0.19, blue:0.83, alpha:1.0)
+    view.tintColor = .podcastsColor
   }
 }

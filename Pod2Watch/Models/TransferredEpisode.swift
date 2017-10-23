@@ -93,8 +93,12 @@ public class TransferredEpisode: NSManagedObject {
         return try! PersistentContainer.shared.viewContext.fetch(request)
     }
     
-    convenience init(_ episode: LibraryEpisode) {
-        let context = PersistentContainer.shared.viewContext
+    convenience init(context: NSManagedObjectContext) {
+        let entity = NSEntityDescription.entity(forEntityName: "TransferredEpisode", in: context)!
+        self.init(entity: entity, insertInto: context)
+    }
+    
+    convenience init(_ episode: LibraryEpisode, context: NSManagedObjectContext) {
         let entity = NSEntityDescription.entity(forEntityName: "TransferredEpisode", in: context)!
         self.init(entity: entity, insertInto: context)
         

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="13196" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
-    <device id="watch38" orientation="portrait">
+    <device id="watch42" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -12,11 +12,11 @@
         <!--Pod2Watch-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller title="Pod2Watch" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Pod2Watch_WatchKit_App" customModuleProvider="target">
+                <controller title="Pod2Watch" id="AgC-eL-Hgc" customClass="EpisodeListController" customModule="Pod2Watch_WatchKit_Extension">
                     <items>
                         <table alignment="left" id="NDu-g2-b5M">
                             <items>
-                                <tableRow identifier="Podcast" id="b3S-EZ-8YY" customClass="PodcastsTableRowController" customModule="Pod2Watch_WatchKit_Extension">
+                                <tableRow identifier="Podcast" id="b3S-EZ-8YY" customClass="EpisodesTableRowController" customModule="Pod2Watch_WatchKit_Extension">
                                     <group key="rootItem" width="1" height="44" alignment="left" layout="overlap" radius="4" spacing="0.0" id="tz6-0k-y54">
                                         <items>
                                             <group width="1" height="1" alignment="left" radius="0.0" id="QI6-b8-Bn8"/>
@@ -51,7 +51,7 @@
                                                     </group>
                                                     <group width="1" height="4" alignment="left" verticalAlignment="bottom" semanticContentAttribute="forceLeftToRight" radius="2" id="8FB-Bx-Rik">
                                                         <items>
-                                                            <group width="2" height="1" alignment="left" verticalAlignment="bottom" radius="2" id="xUd-5M-MpC">
+                                                            <group width="2" height="1" alignment="left" verticalAlignment="center" radius="2" id="xUd-5M-MpC">
                                                                 <color key="backgroundColor" red="0.40784313725490196" green="0.0" blue="0.84313725490196079" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </group>
                                                         </items>
@@ -73,13 +73,13 @@
                                     </connections>
                                 </tableRow>
                                 <tableRow identifier="NoPodcasts" selectable="NO" id="q5E-uq-20p">
-                                    <group key="rootItem" width="1" height="150" alignment="left" layout="vertical" id="mph-aa-e8R">
+                                    <group key="rootItem" width="1" height="174" alignment="left" layout="vertical" id="mph-aa-e8R">
                                         <items>
-                                            <label alignment="center" verticalAlignment="center" text="Sync podcasts in the iPhone app" textAlignment="center" numberOfLines="4" id="epJ-vw-bUT"/>
+                                            <label alignment="center" verticalAlignment="center" text="Force Touch to download or sync from your phone" textAlignment="center" numberOfLines="4" id="epJ-vw-bUT"/>
                                         </items>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
-                                        <variation key="device=watch38mm" height="145"/>
+                                        <variation key="device=watch38mm" height="152"/>
                                     </group>
                                 </tableRow>
                             </items>
@@ -87,6 +87,11 @@
                     </items>
                     <menu key="menu" id="TbR-kY-0vr">
                         <items>
+                            <menuItem title="Download" icon="add" id="88q-9Z-oTb">
+                                <connections>
+                                    <action selector="handleDownload" destination="AgC-eL-Hgc" id="ull-AU-pIx"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Delete All" icon="trash" id="UnC-yJ-6BF">
                                 <connections>
                                     <action selector="handleDeleteAll" destination="AgC-eL-Hgc" id="5BB-mt-GOI"/>
@@ -99,7 +104,44 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-151" y="36"/>
+            <point key="canvasLocation" x="-938" y="420"/>
+        </scene>
+        <!--DeleteAll-->
+        <scene sceneID="2v3-Yl-UhF">
+            <objects>
+                <controller identifier="DeleteAll" id="mic-WT-zhc" customClass="DeleteAllController" customModule="Pod2Watch_WatchKit_Extension">
+                    <items>
+                        <group width="1" alignment="center" verticalAlignment="center" id="pPh-Xv-7Wb">
+                            <items>
+                                <label alignment="center" verticalAlignment="center" text="Are you sure?" id="lFS-3H-TM4"/>
+                            </items>
+                            <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="30"/>
+                        </group>
+                        <button width="1" alignment="left" verticalAlignment="bottom" title="Delete All" id="GHE-Av-zVr">
+                            <color key="backgroundColor" red="1" green="0.053995004940000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            <connections>
+                                <action selector="handleConfirmDeleteAll" destination="mic-WT-zhc" id="dxd-5O-1ED"/>
+                            </connections>
+                        </button>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="-489" y="409"/>
+        </scene>
+        <!--NoBluetooth-->
+        <scene sceneID="dUn-IK-BJL">
+            <objects>
+                <controller identifier="NoBluetooth" id="M7v-5o-EQx">
+                    <items>
+                        <group width="1" height="1" alignment="left" id="wPo-Bb-g6e">
+                            <items>
+                                <label alignment="center" verticalAlignment="center" text="No Output Connected" textAlignment="center" numberOfLines="2" id="jN9-19-PCI"/>
+                            </items>
+                        </group>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="-492" y="730"/>
         </scene>
         <!--Now Playing-->
         <scene sceneID="AaR-LZ-vBv">
@@ -141,10 +183,11 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="font" type="boldSystem" pointSize="12"/>
                                                 </label>
-                                                <label alignment="left" text="Episode Title _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ " numberOfLines="3" id="YaP-Zp-IgQ">
+                                                <label alignment="center" text="This is the title of this episode it goes on and on and on and on" textAlignment="center" numberOfLines="3" id="YaP-Zp-IgQ">
                                                     <fontDescription key="font" type="system" pointSize="14"/>
                                                 </label>
                                             </items>
+                                            <edgeInsets key="margins" left="6" right="6" top="0.0" bottom="0.0"/>
                                         </group>
                                         <group width="1" alignment="left" verticalAlignment="bottom" semanticContentAttribute="playback" radius="0.0" id="LB6-69-aFD" userLabel="Buttons">
                                             <items>
@@ -218,6 +261,69 @@
             </objects>
             <point key="canvasLocation" x="137" y="2"/>
         </scene>
+        <!--Top Podcasts-->
+        <scene sceneID="6m8-7d-d9w">
+            <objects>
+                <controller identifier="DownloadPodcast" title="Top Podcasts" id="JjU-vU-lVY" customClass="DownloadPodcastController" customModule="Pod2Watch_WatchKit_Extension">
+                    <items>
+                        <group width="1" alignment="left" layout="overlap" id="3fy-Hb-Znb">
+                            <items>
+                                <table alignment="left" id="uab-0o-ZIA">
+                                    <items>
+                                        <tableRow identifier="Podcast" id="Aaj-7Y-OFx" customClass="DownloadPodcastRowController" customModule="Pod2Watch_WatchKit_Extension">
+                                            <group key="rootItem" width="1" alignment="left" id="5If-mr-wnI">
+                                                <items>
+                                                    <group alignment="center" verticalAlignment="center" spacing="4" id="875-T9-o7Y">
+                                                        <items>
+                                                            <imageView width="16" height="16" alignment="center" verticalAlignment="center" hidden="YES" image="Search" id="gPZ-Qv-k1R">
+                                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </imageView>
+                                                            <label alignment="center" verticalAlignment="center" text="Podcast title" textAlignment="center" numberOfLines="2" id="dKw-i3-UD8">
+                                                                <fontDescription key="font" type="system" pointSize="14"/>
+                                                            </label>
+                                                            <group width="10" height="5" alignment="center" verticalAlignment="center" hidden="YES" id="Cu5-5p-GGp"/>
+                                                        </items>
+                                                    </group>
+                                                </items>
+                                            </group>
+                                            <connections>
+                                                <outlet property="backgroundGroup" destination="5If-mr-wnI" id="siG-M3-GGy"/>
+                                                <outlet property="image" destination="gPZ-Qv-k1R" id="7I4-0O-1YR"/>
+                                                <outlet property="rightPadding" destination="Cu5-5p-GGp" id="fNL-Ad-fhi"/>
+                                                <outlet property="titleLabel" destination="dKw-i3-UD8" id="7rX-aH-o1s"/>
+                                            </connections>
+                                        </tableRow>
+                                    </items>
+                                </table>
+                                <group width="1" height="174" alignment="left" verticalAlignment="bottom" layout="vertical" spacing="8" id="ART-fB-qOk">
+                                    <items>
+                                        <group width="1" alignment="center" verticalAlignment="center" layout="vertical" id="ws5-l1-aIH">
+                                            <items>
+                                                <imageView width="30" height="30" alignment="center" verticalAlignment="center" image="Spinner" animationDuration="3" id="FW5-vi-GZG"/>
+                                                <label alignment="center" verticalAlignment="center" text="Loading Podcasts" id="3N8-9c-WlL">
+                                                    <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                                </label>
+                                            </items>
+                                            <edgeInsets key="margins" left="0.0" right="0.0" top="20" bottom="0.0"/>
+                                            <variation key="device=watch38mm">
+                                                <edgeInsets key="margins" left="0.0" right="0.0" top="16" bottom="0.0"/>
+                                            </variation>
+                                        </group>
+                                    </items>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <variation key="device=watch38mm" height="152"/>
+                                </group>
+                            </items>
+                        </group>
+                    </items>
+                    <connections>
+                        <outlet property="podcastsTable" destination="uab-0o-ZIA" id="7IR-MT-nzh"/>
+                        <outlet property="spinner" destination="ART-fB-qOk" id="wCJ-JG-Xc2"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="-641" y="-54"/>
+        </scene>
         <!--NotSynced-->
         <scene sceneID="77i-El-yqG">
             <objects>
@@ -273,7 +379,7 @@
                         <button width="1" alignment="left" verticalAlignment="bottom" title="Seek" id="ZOW-cD-JS5">
                             <color key="backgroundColor" red="0.40784313725490196" green="0.0" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="handleOK" destination="7GR-Hd-RR1" id="BMd-8I-Exe"/>
+                                <action selector="handleSeek" destination="7GR-Hd-RR1" id="hJ3-rb-SLJ"/>
                             </connections>
                         </button>
                     </items>
@@ -289,9 +395,9 @@
         <!--Static Notification Interface Controller-->
         <scene sceneID="0US-gK-6Ak">
             <objects>
-                <notificationController id="JO2-Kq-egb">
+                <notificationController id="JO2-Kq-egb" customClass="DownloadNotificationController">
                     <items>
-                        <label alignment="left" text="Alert Label" id="BDC-Av-qYW"/>
+                        <label width="1" height="100" alignment="left" text="An episode of a podcast has finished transferring." textAlignment="center" numberOfLines="4" id="BDC-Av-qYW"/>
                     </items>
                     <notificationCategory key="notificationCategory" identifier="myCategory" id="STL-kp-aRZ"/>
                     <edgeInsets key="margins" left="1" right="1" top="0.0" bottom="0.0"/>
@@ -300,7 +406,51 @@
                     </connections>
                 </notificationController>
             </objects>
-            <point key="canvasLocation" x="80" y="872"/>
+            <point key="canvasLocation" x="37.487179487179489" y="675.20512820512829"/>
+        </scene>
+        <!--DownloadEpisode-->
+        <scene sceneID="gdh-Uc-Gsa">
+            <objects>
+                <controller identifier="DownloadEpisode" id="O6j-GY-Bw6" customClass="DownloadEpisodeController" customModule="Pod2Watch_WatchKit_Extension">
+                    <items>
+                        <group width="1" alignment="left" layout="overlap" id="1X2-vK-RmJ">
+                            <items>
+                                <table alignment="left" id="d4i-de-yAQ">
+                                    <items>
+                                        <tableRow identifier="Episode" id="Y5V-aB-6jF" customClass="DownloadEpisodeRowController" customModule="Pod2Watch_WatchKit_Extension">
+                                            <group key="rootItem" width="1" alignment="left" id="hxX-XX-puG">
+                                                <items>
+                                                    <label alignment="left" verticalAlignment="center" text="Episode title" numberOfLines="2" id="cxo-qb-Cbk">
+                                                        <fontDescription key="font" type="system" pointSize="14"/>
+                                                    </label>
+                                                </items>
+                                            </group>
+                                            <connections>
+                                                <outlet property="titleLabel" destination="cxo-qb-Cbk" id="wsL-La-Sxj"/>
+                                            </connections>
+                                        </tableRow>
+                                    </items>
+                                </table>
+                                <group width="1" height="174" alignment="left" layout="vertical" spacing="8" id="jFl-OF-ltL">
+                                    <items>
+                                        <imageView width="30" height="30" alignment="center" verticalAlignment="center" image="Spinner" animationDuration="3" id="whl-uX-14X"/>
+                                        <label alignment="center" verticalAlignment="center" text="Loading Episodes" id="fR1-sM-3Mn">
+                                            <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                        </label>
+                                    </items>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <variation key="device=watch38mm" height="152"/>
+                                </group>
+                            </items>
+                        </group>
+                    </items>
+                    <connections>
+                        <outlet property="episodesTable" destination="d4i-de-yAQ" id="sc8-fJ-IBR"/>
+                        <outlet property="spinner" destination="jFl-OF-ltL" id="NrB-Bu-SCa"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="-324" y="-54"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.40784313725490196" green="0.0" blue="0.84313725490196079" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

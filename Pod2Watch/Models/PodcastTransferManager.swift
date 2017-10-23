@@ -10,6 +10,8 @@ import UIKit
 import WatchConnectivity
 import CoreData
 import AVFoundation
+import Alamofire
+import AlamofireImage
 
 class PodcastTransferManager: NSObject {
   static let shared = PodcastTransferManager()
@@ -56,11 +58,12 @@ class PodcastTransferManager: NSObject {
   }
   
   func transfer(_ episode: LibraryEpisode, isAutoTransfer: Bool = false) {
-    if let session = session, session.isWatchAppInstalled == false {
-      if isAutoTransfer == false {
-        showInstallAlert()
-      }
-      
+    guard let session = session else {
+      return
+    }
+    
+    if session.isWatchAppInstalled == false, isAutoTransfer == false {
+      showInstallAlert()
       return
     }
     
@@ -104,7 +107,7 @@ class PodcastTransferManager: NSObject {
     
     context.performAndWait {
       let transferredPodcast = TransferredPodcast.existing(title: episode.podcast!.title!) ?? TransferredPodcast(episode.podcast!)
-      let transferredEpisode = TransferredEpisode(episode)
+      let transferredEpisode = TransferredEpisode(episode, context: context)
       transferredPodcast.addToEpisodes(transferredEpisode)
       transferredEpisode.fileURL = outputURL
       transferredEpisode.isAutoTransfer = isAutoTransfer
@@ -269,6 +272,53 @@ class PodcastTransferManager: NSObject {
     }
   }
   
+  func handleReceiveWatchDownload(message: [String: Any]) {
+    guard let persistentID = message["persistentID"] as? Int64,
+      let title = message["title"] as? String,
+      let podcastTitle = message["podcastTitle"] as? String,
+      let releaseDate = message["releaseDate"] as? Date,
+      let playbackDuration = message["playbackDuration"] as? TimeInterval,
+      let artworkURL = (message["artworkURL"] as? String).flatMap({ URL(string: $0)} ),
+      let sortIndex = message["sortIndex"] as? Int16 else {
+        print("BAD WATCH DOWNLOAD MESSAGE")
+        return
+    }
+    
+    let transferredEpisode = TransferredEpisode(context: PersistentContainer.shared.viewContext)
+    transferredEpisode.title = title
+    transferredEpisode.releaseDate = releaseDate
+    transferredEpisode.playbackDuration = playbackDuration
+    transferredEpisode.isTransferred = true
+    transferredEpisode.sortIndex = sortIndex
+    
+    if let podcast = LibraryPodcast.existing(title: podcastTitle),
+      let libraryEpisode = podcast.episodes?.map({ $0 as! LibraryEpisode }).first(where: { $0.title == title }) {
+      transferredEpisode.persistentID = libraryEpisode.persistentID
+    } else {
+      transferredEpisode.persistentID = persistentID
+    }
+    
+    if let transferredPodcast = TransferredPodcast.existing(title: podcastTitle) {
+      transferredPodcast.addToEpisodes(transferredEpisode)
+    } else {
+      let transferredPodcast = TransferredPodcast()
+      transferredPodcast.title = podcastTitle
+      transferredPodcast.addToEpisodes(transferredEpisode)
+      
+      Alamofire.request(artworkURL).responseImage { [weak transferredPodcast] response in
+        switch response.result {
+        case .success(let image):
+          transferredPodcast?.artworkImage = image
+          
+        case .failure(let error):
+          print(error)
+        }
+      }
+    }
+    
+    PersistentContainer.saveContext()
+  }
+  
   func handleAutoTransfers() -> Bool {
     var wasNewTransfer = false
     
@@ -378,6 +428,11 @@ extension PodcastTransferManager: WCSessionDelegate {
       
     case MessageType.confirmDeleteAll:
       handleConfirmDeleteAll()
+      
+    case MessageType.sendWatchDownload:
+      PersistentContainer.shared.viewContext.perform {
+        self.handleReceiveWatchDownload(message: message)
+      }
       
     default:
       break

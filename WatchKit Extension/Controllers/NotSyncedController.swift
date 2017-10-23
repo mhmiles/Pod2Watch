@@ -11,6 +11,6 @@ import Foundation
 
 class NotSyncedController: WKInterfaceController {
   @IBAction func handleDismiss() {
-    pop()
+    dismiss()
   }
 }

@@ -13,6 +13,10 @@ import WatchKit
 import AVFoundation
 import ReactiveCocoa
 
+enum AudioPlayerError: Error {
+  case noOutput
+}
+
 class AudioPlayer: NSObject {
   static let shared = AudioPlayer()
   
@@ -21,7 +25,12 @@ class AudioPlayer: NSObject {
       player?.removeAllItems()
       _currentItem.value = nil
       
-      let playerItems = episodeQueue?.map { episode -> WKAudioFilePlayerItem in
+      guard let episodeQueue = episodeQueue, episodeQueue.count > 0 else {
+        player = nil
+        return
+      }
+      
+      let playerItems = episodeQueue.map { episode -> WKAudioFilePlayerItem in
         let asset = WKAudioFileAsset(url: episode.fileURL!)
         let item = WKAudioFilePlayerItem(asset: asset)
         item.setCurrentTime(episode.startTime)
@@ -29,7 +38,7 @@ class AudioPlayer: NSObject {
         return item
       }
       
-      player = playerItems.map { WKAudioFileQueuePlayer(items: $0) }
+      player = WKAudioFileQueuePlayer(items: playerItems)
       
       updateCurrentItem()
       updatePlayheadPosition()
@@ -66,13 +75,19 @@ class AudioPlayer: NSObject {
   
   private let rateTickDisposable = SerialDisposable()
   
-  var rate: Float = 0 {
+  var rate: Float = 1 {
     didSet {
-      player?.rate = rate
+      if isPlaying.value {
+        player?.rate = rate
+      }
     }
   }
   
   override init() {
+    let audioSession = AVAudioSession.sharedInstance()
+    try? audioSession.setCategory(AVAudioSessionCategoryPlayback, with: [.allowBluetoothA2DP, .duckOthers])
+    try? audioSession.setActive(true, with: .notifyOthersOnDeactivation)
+    
     isPlaying = Property(_isPlaying)
     offset = Property(_offset.map({ $0.isNaN ? 0 : $0 }))
     duration = Property(_duration)
@@ -113,7 +128,7 @@ class AudioPlayer: NSObject {
   private func configureRateTimer(){
     let adjustedInterval = DispatchTimeInterval.milliseconds(1000000/Int((rate == 0 ? 1 : rate)*1000))
     
-     rateTickDisposable.inner = SignalProducer.timer(interval: adjustedInterval, on: QueueScheduler.main).startWithValues { [unowned self ] _ in
+    rateTickDisposable.inner = SignalProducer.timer(interval: adjustedInterval, on: QueueScheduler.main).startWithValues { [unowned self ] _ in
       self.updatePlayheadPosition()
     }
   }
@@ -132,9 +147,14 @@ class AudioPlayer: NSObject {
     }
   }
   
-  func play() {
+  func play() throws {
     guard let player = player, player.currentItem != nil else {
       return
+    }
+    
+    let outputs = AVAudioSession.sharedInstance().currentRoute.outputs.map { $0.portType }
+    if outputs.contains("BluetoothA2DPOutput") == false {
+      throw AudioPlayerError.noOutput
     }
     
     player.play()
@@ -145,16 +165,16 @@ class AudioPlayer: NSObject {
   func pause() {
     player?.pause()
     _isPlaying.value = false
-    updatePlayheadPosition()
     
+    updatePlayheadPosition()
     updateStartTime()
   }
   
-  func playPause() {
+  func playPause() throws {
     if isPlaying.value {
       pause()
     } else {
-      play()
+      try play()
     }
   }
   
@@ -195,8 +215,7 @@ class AudioPlayer: NSObject {
     guard let episodeQueue = episodeQueue, episodeQueue.count > 0 else {
       return
     }
-  
+    
     self.episodeQueue = episodeQueue.filter { episodes.contains($0) == false }
   }
-
 }
