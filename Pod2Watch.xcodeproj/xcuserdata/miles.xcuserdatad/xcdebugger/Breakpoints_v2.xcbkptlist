@@ -193,38 +193,6 @@
             endingLineNumber = "257"
             landmarkName = "session(_:didReceiveMessage:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pod2Watch_WatchKit_Extension.PodcastTransferManager.session(__ObjC.WCSession, didReceiveMessage: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
-                  moduleName = "Pod2Watch WatchKit Extension"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/miles/Projects/Pod2Watch/WatchKit%20Extension/Models/PodcastTransferManager.swift"
-                  timestampString = "530488453.503414"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "258"
-                  endingLineNumber = "258"
-                  offsetFromSymbolStart = "2373">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Pod2Watch_WatchKit_Extension.PodcastTransferManager.session(__ObjC.WCSession, didReceiveMessage: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
-                  moduleName = "Pod2Watch WatchKit Extension"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/miles/Projects/Pod2Watch/WatchKit%20Extension/Models/PodcastTransferManager.swift"
-                  timestampString = "530488453.504864"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "258"
-                  endingLineNumber = "258"
-                  offsetFromSymbolStart = "2417">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -241,6 +209,38 @@
             endingLineNumber = "433"
             landmarkName = "session(_:didReceiveMessage:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Pod2Watch.PodcastTransferManager.session(__ObjC.WCSession, didReceiveMessage: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "Pod2Watch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/PodcastTransferManager.swift"
+                  timestampString = "530580942.213571"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "433"
+                  endingLineNumber = "433"
+                  offsetFromSymbolStart = "7406">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 () -&gt; () in Pod2Watch.PodcastTransferManager.session(__ObjC.WCSession, didReceiveMessage: Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; ()"
+                  moduleName = "Pod2Watch"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/miles/Projects/Pod2Watch/Pod2Watch/Models/PodcastTransferManager.swift"
+                  timestampString = "530580942.215154"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "434"
+                  endingLineNumber = "434"
+                  offsetFromSymbolStart = "18">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
