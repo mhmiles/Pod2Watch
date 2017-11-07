@@ -24,6 +24,7 @@
 		021C82701E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 021C826E1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld */; };
 		0220132F1E9304720092DB73 /* NoAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0220132E1E9304720092DB73 /* NoAccessView.xib */; };
 		022013311E9305FD0092DB73 /* RequestAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 022013301E9305FD0092DB73 /* RequestAccessView.xib */; };
+		02218D2D1FB2415D00EE07D8 /* MHReviewRequester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02218D2C1FB2415D00EE07D8 /* MHReviewRequester.framework */; };
 		02256CED1EB901FF00BDFD4B /* NowPlayingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FACB261EB8F32400036B9F /* NowPlayingController.swift */; };
 		02298D0C1E930717001BE8D5 /* OpenPodcastsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02298D0B1E930717001BE8D5 /* OpenPodcastsView.xib */; };
 		0229CF281EBEECF800A2A052 /* UIImage+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0229CF261EBEECCF00A2A052 /* UIImage+Scale.swift */; };
@@ -37,8 +38,8 @@
 		024D9A181EA9ECE900F0485D /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024D9A171EA9ECE900F0485D /* ReactiveCocoa.framework */; };
 		02508F831E85D6C3000AAA43 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02508F811E85D6C3000AAA43 /* ReactiveSwift.framework */; };
 		02508F841E85D6C3000AAA43 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02508F821E85D6C3000AAA43 /* Result.framework */; };
-		0252166F1F9D3937001E808D /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252166E1F9D3937001E808D /* File.swift */; };
-		025216701F9D3937001E808D /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252166E1F9D3937001E808D /* File.swift */; };
+		0252166F1F9D3937001E808D /* UIColor+Podcasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252166E1F9D3937001E808D /* UIColor+Podcasts.swift */; };
+		025216701F9D3937001E808D /* UIColor+Podcasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0252166E1F9D3937001E808D /* UIColor+Podcasts.swift */; };
 		025216761F9D6E15001E808D /* TopPodcastDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025216751F9D6E15001E808D /* TopPodcastDetails.swift */; };
 		025EB9711E871AC800B41025 /* racAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025EB9701E871AC800B41025 /* racAdditions.framework */; };
 		025EB9751E8739E000B41025 /* TransferredEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025EB9741E8739E000B41025 /* TransferredEpisode.swift */; };
@@ -178,6 +179,7 @@
 		021C826F1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pod2WatchPersistent.xcdatamodel; sourceTree = "<group>"; };
 		0220132E1E9304720092DB73 /* NoAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoAccessView.xib; sourceTree = "<group>"; };
 		022013301E9305FD0092DB73 /* RequestAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequestAccessView.xib; sourceTree = "<group>"; };
+		02218D2C1FB2415D00EE07D8 /* MHReviewRequester.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MHReviewRequester.framework; path = Carthage/Build/iOS/MHReviewRequester.framework; sourceTree = "<group>"; };
 		02298D0B1E930717001BE8D5 /* OpenPodcastsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenPodcastsView.xib; sourceTree = "<group>"; };
 		0229CF261EBEECCF00A2A052 /* UIImage+Scale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Scale.swift"; sourceTree = "<group>"; };
 		022CA0321E4FBF4500B49A66 /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
@@ -190,7 +192,7 @@
 		024D9A171EA9ECE900F0485D /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		02508F811E85D6C3000AAA43 /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
 		02508F821E85D6C3000AAA43 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
-		0252166E1F9D3937001E808D /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		0252166E1F9D3937001E808D /* UIColor+Podcasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Podcasts.swift"; sourceTree = "<group>"; };
 		025216751F9D6E15001E808D /* TopPodcastDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopPodcastDetails.swift; sourceTree = "<group>"; };
 		025EB9701E871AC800B41025 /* racAdditions.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = racAdditions.framework; path = Carthage/Build/iOS/racAdditions.framework; sourceTree = "<group>"; };
 		025EB9741E8739E000B41025 /* TransferredEpisode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransferredEpisode.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02218D2D1FB2415D00EE07D8 /* MHReviewRequester.framework in Frameworks */,
 				024D9A181EA9ECE900F0485D /* ReactiveCocoa.framework in Frameworks */,
 				025EB9711E871AC800B41025 /* racAdditions.framework in Frameworks */,
 				02508F831E85D6C3000AAA43 /* ReactiveSwift.framework in Frameworks */,
@@ -317,6 +320,7 @@
 		02310CDD1E4BA75F00D427EE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				02218D2C1FB2415D00EE07D8 /* MHReviewRequester.framework */,
 				02B0134C1F9C596700E8F1CB /* Alamofire.framework */,
 				02B0134D1F9C596800E8F1CB /* AlamofireImage.framework */,
 				026644211F9C2C0200DDD87A /* SWXMLHash.framework */,
@@ -563,7 +567,7 @@
 			isa = PBXGroup;
 			children = (
 				02C0BCC21EBC017000E34329 /* Transformers */,
-				0252166E1F9D3937001E808D /* File.swift */,
+				0252166E1F9D3937001E808D /* UIColor+Podcasts.swift */,
 				020E296B1E920258008013C0 /* MessageType.swift */,
 			);
 			path = Shared;
@@ -764,6 +768,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/racAdditions.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/MHReviewRequester.framework",
 			);
 			outputPaths = (
 			);
@@ -820,7 +825,7 @@
 				02907C0A1E64F61D0044140D /* SyncButton.swift in Sources */,
 				021C826B1E88A2F400E2265E /* String+withoutThe.swift in Sources */,
 				026568CA1F9ACDFF00E3C082 /* PodcastCellViewModel.swift in Sources */,
-				0252166F1F9D3937001E808D /* File.swift in Sources */,
+				0252166F1F9D3937001E808D /* UIColor+Podcasts.swift in Sources */,
 				0229CF281EBEECF800A2A052 /* UIImage+Scale.swift in Sources */,
 				02D75C5F1F97DFB2009FC4B2 /* UIImageTransformer.swift in Sources */,
 				021B615B1E4FCBA2007CD7A2 /* MyWatchViewController.swift in Sources */,
@@ -885,7 +890,7 @@
 				02DD2C4E1F9D9B6D0056E908 /* PodcastDownloadManager.swift in Sources */,
 				0266441E1F9C275800DDD87A /* PodcastDetailsResponse.swift in Sources */,
 				025216761F9D6E15001E808D /* TopPodcastDetails.swift in Sources */,
-				025216701F9D3937001E808D /* File.swift in Sources */,
+				025216701F9D3937001E808D /* UIColor+Podcasts.swift in Sources */,
 				026481AE1EBD0310002A3B2B /* AudioPlayer.swift in Sources */,
 				0266440D1F9C194500DDD87A /* DownloadPodcast.swift in Sources */,
 				0266440B1F9C15D400DDD87A /* DownloadEpisodeRowController.swift in Sources */,

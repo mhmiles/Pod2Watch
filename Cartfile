@@ -5,3 +5,4 @@ github "ReactiveCocoa/ReactiveSwift" "2.1.0-alpha.2"
 github "ReactiveCocoa/ReactiveCocoa" "6.1.0-alpha.2"
 github "mhmiles/racAdditions" "master"
 github "drmohundro/SWXMLHash" ~> 4.0
+github "mhmiles/MHReviewRequester" "master"

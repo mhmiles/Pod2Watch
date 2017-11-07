@@ -9,5 +9,5 @@
 import UIKit
 
 extension UIColor {
-    static let podcastsColor = UIColor(red:0.40, green:0.19, blue:0.83, alpha:1.0)
+    static let podcasts = UIColor(red:0.40, green:0.19, blue:0.83, alpha:1.0)
 }

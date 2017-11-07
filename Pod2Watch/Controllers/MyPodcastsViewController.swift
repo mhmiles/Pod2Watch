@@ -84,7 +84,7 @@ class MyPodcastsViewController: UICollectionViewController, ListAdapterDataSourc
     
     let searchBar = searchController.searchBar
     searchBar.delegate = self
-    searchBar.tintColor = .podcastsColor
+    searchBar.tintColor = .podcasts
     
     navigationController?.navigationBar.prefersLargeTitles = true
   }
@@ -101,6 +101,8 @@ class MyPodcastsViewController: UICollectionViewController, ListAdapterDataSourc
         self.adapter.reloadData()
       }
     }
+    
+    MPMediaLibrary.default().beginGeneratingLibraryChangeNotifications()
   }
   
   @IBAction func openSettings() {

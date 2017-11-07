@@ -47,8 +47,6 @@ public final class InMemoryContainer: NSPersistentContainer {
                                             container.reloadPodcastLibrary()
     }
 
-    MPMediaLibrary.default().beginGeneratingLibraryChangeNotifications()
-
     container.viewContext.mergePolicy = NSMergePolicy.overwrite
 
     return container

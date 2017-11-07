@@ -40,7 +40,7 @@ class DownloadPodcastController: WKInterfaceController {
     podcastsTable.setNumberOfRows(podcastCount+1, withRowType: "Podcast")
     
     let searchController = podcastsTable.rowController(at: 0) as! DownloadPodcastRowController
-    searchController.backgroundGroup.setBackgroundColor(.podcastsColor)
+    searchController.backgroundGroup.setBackgroundColor(.podcasts)
     searchController.titleLabel.setText("Search")
     searchController.image.setHidden(false)
     searchController.rightPadding.setHidden(false)
