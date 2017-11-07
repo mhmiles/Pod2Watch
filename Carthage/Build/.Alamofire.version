@@ -1,9 +1,15 @@
 {
   "commitish" : "4.5.1",
+  "iOS" : [
+    {
+      "name" : "Alamofire",
+      "hash" : "1e326fce0bfe62b517211c7427f18a7c43370cecee90c392640844178fba2002"
+    }
+  ],
   "watchOS" : [
     {
       "name" : "Alamofire",
-      "hash" : "a129925ba29a93f05f98b4bd5e0b4dc1fc82570d6235680b5d08745b0d92a54c"
+      "hash" : "1a00675abe3b1870e236b75c5ec3f04bea815572c754bb892a55538ee3f7ab92"
     }
   ]
 }

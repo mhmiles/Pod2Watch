@@ -3,7 +3,10 @@
   "iOS" : [
     {
       "name" : "racAdditions",
-      "hash" : "64677f61e56e7e16a6729020a7568887b97ded2cbbbd3e70335aa116ecfef9a8"
+      "hash" : "7cfa51c102525a142e266581cc0a597d6b63defd5bdf236dd6e20dcacd1a8816"
     }
+  ],
+  "watchOS" : [
+
   ]
 }

@@ -49,7 +49,7 @@ class MyPodcastsViewController: UICollectionViewController, ListAdapterDataSourc
   
   fileprivate var titleSearchQuery: String? {
     didSet {
-      if let titleSearchQuery = self.titleSearchQuery, titleSearchQuery.characters.count > 0 {
+      if let titleSearchQuery = self.titleSearchQuery, titleSearchQuery.count > 0 {
         libraryResultsController.fetchRequest.predicate = NSPredicate(format: "title CONTAINS[cd] %@", titleSearchQuery)
       } else {
         libraryResultsController.fetchRequest.predicate = nil

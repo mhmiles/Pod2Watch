@@ -3,7 +3,10 @@
   "iOS" : [
     {
       "name" : "IGListKit",
-      "hash" : "9a0f21d6759c9a6aca5747ebb3b85cd9d64f8b51e05e77e6b29b8be2cb50cacb"
+      "hash" : "6a3861eb7e2b8940b7bcf0e720fd4dfb8a0c889db0a6f761752a4e3e7f131de7"
     }
+  ],
+  "watchOS" : [
+
   ]
 }

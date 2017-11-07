@@ -1,9 +1,15 @@
 {
   "commitish" : "3.3.0",
+  "iOS" : [
+    {
+      "name" : "AlamofireImage",
+      "hash" : "65dd1afcbf83949003c7bfc3f4958151906f82204111f357334109949a376ffb"
+    }
+  ],
   "watchOS" : [
     {
       "name" : "AlamofireImage",
-      "hash" : "301fcd0594f8d270caf395edfb97f94f8a4806aa0c634d3ac2929211db405310"
+      "hash" : "bf3712097aa6730877e68eb8a3d07578bf553b78a4cfdac65f2f1394c0bacd84"
     }
   ]
 }

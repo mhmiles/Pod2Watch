@@ -352,15 +352,15 @@
 		025E6E8A1E92CBCE00AB2D98 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				02C1DD051E4B9281000C760D /* EpisodeListController.swift */,
-				02EF91901F9C82A600FAE1D6 /* DownloadNotificationController.swift */,
-				02EFE64F1F9C313600C9D7BD /* DeleteAllController.swift */,
-				026644061F9C151F00DDD87A /* DownloadPodcastController.swift */,
-				0266441B1F9C269000DDD87A /* DownloadEpisodeController.swift */,
 				02B0134B1F9C4D0F00E8F1CB /* Row Controllers */,
+				02EFE64F1F9C313600C9D7BD /* DeleteAllController.swift */,
+				0266441B1F9C269000DDD87A /* DownloadEpisodeController.swift */,
+				02EF91901F9C82A600FAE1D6 /* DownloadNotificationController.swift */,
+				026644061F9C151F00DDD87A /* DownloadPodcastController.swift */,
+				02C1DD051E4B9281000C760D /* EpisodeListController.swift */,
+				0275B0331F998020006F5467 /* NotSyncedController.swift */,
 				02FACB261EB8F32400036B9F /* NowPlayingController.swift */,
 				02CED0AF1EBEC3EC00EE8AB1 /* SeekController.swift */,
-				0275B0331F998020006F5467 /* NotSyncedController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -369,13 +369,13 @@
 			isa = PBXGroup;
 			children = (
 				020E296F1E920E3F008013C0 /* CoreData */,
+				026644141F9C20E100DDD87A /* PodcastFeed */,
 				026481AC1EBD02A3002A3B2B /* AudioPlayer.swift */,
 				02C0ABD01EC663E600D9876E /* ComplicationDataSource.swift */,
 				0209328E1E93321700948002 /* Episode.swift */,
 				026730041EBE95F700922CDC /* Podcast.swift */,
-				02666DCF1EBAC3760091293B /* PodcastTransferManager.swift */,
 				02DD2C4C1F9D99EA0056E908 /* PodcastDownloadManager.swift */,
-				026644141F9C20E100DDD87A /* PodcastFeed */,
+				02666DCF1EBAC3760091293B /* PodcastTransferManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -385,8 +385,8 @@
 			children = (
 				026568C91F9ACDFF00E3C082 /* PodcastCellViewModel.swift */,
 				0200C26B1F9AD22E00309527 /* PodcastEpisodeCellViewModel.swift */,
-				0200C2691F9AD21F00309527 /* WatchEpisodeCellViewModel.swift */,
 				0200C26D1F9AD24000309527 /* RecentEpisodeCellViewModel.swift */,
+				0200C2691F9AD21F00309527 /* WatchEpisodeCellViewModel.swift */,
 			);
 			path = "View Models";
 			sourceTree = "<group>";
@@ -394,13 +394,13 @@
 		026644141F9C20E100DDD87A /* PodcastFeed */ = {
 			isa = PBXGroup;
 			children = (
-				0266440C1F9C194500DDD87A /* DownloadPodcast.swift */,
 				026644231F9C2D2D00DDD87A /* DownloadEpisode.swift */,
+				0266440C1F9C194500DDD87A /* DownloadPodcast.swift */,
+				0266441F1F9C279500DDD87A /* PodcastDetails.swift */,
+				0266441D1F9C275800DDD87A /* PodcastDetailsResponse.swift */,
+				025216751F9D6E15001E808D /* TopPodcastDetails.swift */,
 				026644151F9C210700DDD87A /* TopPodcastsFeed.swift */,
 				026644191F9C216E00DDD87A /* TopPodcastsResponse.swift */,
-				025216751F9D6E15001E808D /* TopPodcastDetails.swift */,
-				0266441D1F9C275800DDD87A /* PodcastDetailsResponse.swift */,
-				0266441F1F9C279500DDD87A /* PodcastDetails.swift */,
 			);
 			path = PodcastFeed;
 			sourceTree = "<group>";
@@ -408,9 +408,9 @@
 		0268B56A1E56532E001E3F74 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				0244CB581F97F29F0058BC9E /* UIApplication+OpenPodcasts.swift */,
 				02CED0B41EBEE10C00EE8AB1 /* String + SanitizeFilePath.swift */,
 				021C826A1E88A2F400E2265E /* String+withoutThe.swift */,
+				0244CB581F97F29F0058BC9E /* UIApplication+OpenPodcasts.swift */,
 				0229CF261EBEECCF00A2A052 /* UIImage+Scale.swift */,
 			);
 			path = Extensions;
@@ -431,8 +431,8 @@
 		02B0134B1F9C4D0F00E8F1CB /* Row Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				026644081F9C15C600DDD87A /* DownloadPodcastRowController.swift */,
 				0266440A1F9C15D400DDD87A /* DownloadEpisodeRowController.swift */,
+				026644081F9C15C600DDD87A /* DownloadPodcastRowController.swift */,
 				02BB4D281E4E914600F08B7F /* EpisodesTableRowController.swift */,
 			);
 			path = "Row Controllers";
@@ -441,8 +441,8 @@
 		02B2DA8A1E53C25700E54A15 /* Section Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				02B2DA8B1E53C42A00E54A15 /* PodcastSectionController.swift */,
 				026CF5AB1F9A670100269E2A /* OpenPodcastsSectionController.swift */,
+				02B2DA8B1E53C42A00E54A15 /* PodcastSectionController.swift */,
 			);
 			path = "Section Controllers";
 			sourceTree = "<group>";
@@ -450,10 +450,10 @@
 		02BB4D221E4E6A0E00F08B7F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				02BB4D1A1E4E5DE800F08B7F /* MyPodcastsViewController.swift */,
 				02BB4D1E1E4E674300F08B7F /* MyPodcastsEpisodesViewController.swift */,
-				026568C61F9AC78E00E3C082 /* PodcastAlertController.swift */,
+				02BB4D1A1E4E5DE800F08B7F /* MyPodcastsViewController.swift */,
 				021B615A1E4FCBA2007CD7A2 /* MyWatchViewController.swift */,
+				026568C61F9AC78E00E3C082 /* PodcastAlertController.swift */,
 				027E7F7C1E5F7DF4005876C9 /* RecentPodcastsViewController.swift */,
 			);
 			path = Controllers;
@@ -464,13 +464,13 @@
 			children = (
 				022CA0341E4FC48600B49A66 /* BorderButton.swift */,
 				029D954E1E8A2783000D87C8 /* BorderImageView.swift */,
+				026CF5AF1F9A73CD00269E2A /* EmptySearchView.xib */,
 				02847FBC1E54DE6400A1DC86 /* EpisodeCell.swift */,
 				02BB4D201E4E693200F08B7F /* MyPodcastsEpisodeCell.swift */,
 				021B615C1E4FCF1F007CD7A2 /* MyWatchEpisodeCell.swift */,
-				026CF5AD1F9A68A300269E2A /* OpenPodcastsCell.swift */,
 				0220132E1E9304720092DB73 /* NoAccessView.xib */,
+				026CF5AD1F9A68A300269E2A /* OpenPodcastsCell.swift */,
 				02298D0B1E930717001BE8D5 /* OpenPodcastsView.xib */,
-				026CF5AF1F9A73CD00269E2A /* EmptySearchView.xib */,
 				02BB4D1C1E4E65A600F08B7F /* PodcastCell.swift */,
 				02847FBE1E54E05700A1DC86 /* RecentEpisodeCell.swift */,
 				0272D2D11E78ED4400205049 /* RecentPodcastsHeaderView.swift */,
@@ -518,11 +518,11 @@
 		02C1DCE11E4B9281000C760D /* Pod2Watch */ = {
 			isa = PBXGroup;
 			children = (
-				026568C81F9ACDD900E3C082 /* View Models */,
 				02BB4D221E4E6A0E00F08B7F /* Controllers */,
 				0268B56A1E56532E001E3F74 /* Extensions */,
 				02508F7E1E858859000AAA43 /* Models */,
 				02B2DA8A1E53C25700E54A15 /* Section Controllers */,
+				026568C81F9ACDD900E3C082 /* View Models */,
 				02BB4D231E4E6A1300F08B7F /* Views */,
 				02C1DCE21E4B9281000C760D /* AppDelegate.swift */,
 				02C1DCE91E4B9281000C760D /* Assets.xcassets */,
@@ -563,8 +563,8 @@
 			isa = PBXGroup;
 			children = (
 				02C0BCC21EBC017000E34329 /* Transformers */,
-				020E296B1E920258008013C0 /* MessageType.swift */,
 				0252166E1F9D3937001E808D /* File.swift */,
+				020E296B1E920258008013C0 /* MessageType.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
