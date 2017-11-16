@@ -81,7 +81,7 @@ class DownloadEpisodeController: WKInterfaceController {
       return
     }
     
-    try? PodcastTransferManager.shared.download(episode: episodes[rowIndex])
+    try? PodcastDownloadManager.shared.download(episode: episodes[rowIndex])
     popToRootController()
   }
 }

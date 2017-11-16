@@ -329,7 +329,7 @@ extension Signal where Value: SignalProducerConvertible, Error == Value.Error {
 							}
 
 						case .value, .failed:
-							observer.send(event)
+							observer.action(event)
 						}
 					}
 				}
@@ -592,7 +592,7 @@ extension Signal where Value: SignalProducerConvertible, Error == Value.Error {
 							}
 
 						case .value, .failed:
-							observer.send(event)
+							observer.action(event)
 						}
 					}
 				}
@@ -720,7 +720,7 @@ extension Signal where Value: SignalProducerConvertible, Error == Value.Error {
 							}
 
 						case .value, .failed, .interrupted:
-							observer.send(event)
+							observer.action(event)
 						}
 					}
 				}

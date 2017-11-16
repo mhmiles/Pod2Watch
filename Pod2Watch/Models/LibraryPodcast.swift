@@ -93,6 +93,10 @@ extension LibraryPodcast {
   }
 
   class func existing(title: String, context: NSManagedObjectContext = InMemoryContainer.shared.viewContext) -> LibraryPodcast? {
+    guard title.count > 0 else {
+      return nil
+    }
+    
     let request: NSFetchRequest<LibraryPodcast> = fetchRequest()
     request.predicate = NSPredicate(format: "title MATCHES[cd] %@", title)
     request.fetchLimit = 1

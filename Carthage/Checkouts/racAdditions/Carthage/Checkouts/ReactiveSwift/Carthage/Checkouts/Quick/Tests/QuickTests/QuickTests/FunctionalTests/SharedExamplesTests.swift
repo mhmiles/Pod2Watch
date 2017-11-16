@@ -15,7 +15,7 @@ class FunctionalTests_SharedExamples_ContextSpec: QuickSpec {
     }
 }
 
-#if (os(macOS) || os(iOS) || os(tvOS) || os(watchOS)) && !SWIFT_PACKAGE
+#if _runtime(_ObjC) && !SWIFT_PACKAGE
 class FunctionalTests_SharedExamples_ErrorSpec: QuickSpec {
     override func spec() {
         describe("error handling when misusing ordering") {
@@ -44,7 +44,7 @@ final class SharedExamplesTests: XCTestCase, XCTestCaseProvider {
     func testAGroupOfThreeSharedExamplesExecutesThreeExamples() {
         let result = qck_runSpec(FunctionalTests_SharedExamples_Spec.self)
         XCTAssert(result!.hasSucceeded)
-        XCTAssertEqual(result!.executionCount, 3)
+        XCTAssertEqual(result!.executionCount, 3 as UInt)
     }
 
     func testSharedExamplesWithContextPassContextToExamples() {

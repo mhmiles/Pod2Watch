@@ -22,6 +22,7 @@
 		021C826B1E88A2F400E2265E /* String+withoutThe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021C826A1E88A2F400E2265E /* String+withoutThe.swift */; };
 		021C826D1E88B60600E2265E /* InMemoryContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021C826C1E88B60600E2265E /* InMemoryContainer.swift */; };
 		021C82701E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 021C826E1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodeld */; };
+		021EF1C21FBD6788006F4305 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021EF1C11FBD6788006F4305 /* RootViewController.swift */; };
 		0220132F1E9304720092DB73 /* NoAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0220132E1E9304720092DB73 /* NoAccessView.xib */; };
 		022013311E9305FD0092DB73 /* RequestAccessView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 022013301E9305FD0092DB73 /* RequestAccessView.xib */; };
 		02218D2D1FB2415D00EE07D8 /* MHReviewRequester.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02218D2C1FB2415D00EE07D8 /* MHReviewRequester.framework */; };
@@ -92,6 +93,9 @@
 		02C1DD081E4B9281000C760D /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DD071E4B9281000C760D /* ExtensionDelegate.swift */; };
 		02C1DD0A1E4B9281000C760D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02C1DD091E4B9281000C760D /* Assets.xcassets */; };
 		02C1DD1D1E4B929D000C760D /* Pod2Watch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02C1DD1B1E4B929D000C760D /* Pod2Watch.xcdatamodeld */; };
+		02C913021FBCC8BA00C68770 /* NotSecureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C913011FBCC8BA00C68770 /* NotSecureController.swift */; };
+		02C913031FBCC8C300C68770 /* PodcastListErrorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022743C11FBCBE1F00D6A60F /* PodcastListErrorController.swift */; };
+		02C913051FBCDD4100C68770 /* RequestNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C913041FBCDD4100C68770 /* RequestNotificationController.swift */; };
 		02CED0B11EBEC42000EE8AB1 /* SeekController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CED0AF1EBEC3EC00EE8AB1 /* SeekController.swift */; };
 		02CED0B31EBEDA9200EE8AB1 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CED0B21EBEDA9200EE8AB1 /* ReactiveCocoa.framework */; };
 		02CED0B51EBEE10C00EE8AB1 /* String + SanitizeFilePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CED0B41EBEE10C00EE8AB1 /* String + SanitizeFilePath.swift */; };
@@ -177,9 +181,11 @@
 		021C826A1E88A2F400E2265E /* String+withoutThe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+withoutThe.swift"; sourceTree = "<group>"; };
 		021C826C1E88B60600E2265E /* InMemoryContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InMemoryContainer.swift; sourceTree = "<group>"; };
 		021C826F1E88B6C400E2265E /* Pod2WatchPersistent.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Pod2WatchPersistent.xcdatamodel; sourceTree = "<group>"; };
+		021EF1C11FBD6788006F4305 /* RootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		0220132E1E9304720092DB73 /* NoAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoAccessView.xib; sourceTree = "<group>"; };
 		022013301E9305FD0092DB73 /* RequestAccessView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RequestAccessView.xib; sourceTree = "<group>"; };
 		02218D2C1FB2415D00EE07D8 /* MHReviewRequester.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MHReviewRequester.framework; path = Carthage/Build/iOS/MHReviewRequester.framework; sourceTree = "<group>"; };
+		022743C11FBCBE1F00D6A60F /* PodcastListErrorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastListErrorController.swift; sourceTree = "<group>"; };
 		02298D0B1E930717001BE8D5 /* OpenPodcastsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenPodcastsView.xib; sourceTree = "<group>"; };
 		0229CF261EBEECCF00A2A052 /* UIImage+Scale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Scale.swift"; sourceTree = "<group>"; };
 		022CA0321E4FBF4500B49A66 /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
@@ -257,6 +263,8 @@
 		02C1DD1F1E4B94B3000C760D /* Pod2Watch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Pod2Watch.entitlements; sourceTree = "<group>"; };
 		02C1DD201E4B94C7000C760D /* PersistentContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentContainer.swift; sourceTree = "<group>"; };
 		02C61FBD1E4D27310022FBB1 /* Pod2Watch WatchKit App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Pod2Watch WatchKit App.entitlements"; path = "Pod2Watch WatchKit App/Pod2Watch WatchKit App.entitlements"; sourceTree = "<group>"; };
+		02C913011FBCC8BA00C68770 /* NotSecureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotSecureController.swift; sourceTree = "<group>"; };
+		02C913041FBCDD4100C68770 /* RequestNotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestNotificationController.swift; sourceTree = "<group>"; };
 		02CED0AF1EBEC3EC00EE8AB1 /* SeekController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeekController.swift; sourceTree = "<group>"; };
 		02CED0B21EBEDA9200EE8AB1 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/watchOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		02CED0B41EBEE10C00EE8AB1 /* String + SanitizeFilePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String + SanitizeFilePath.swift"; sourceTree = "<group>"; };
@@ -363,7 +371,10 @@
 				026644061F9C151F00DDD87A /* DownloadPodcastController.swift */,
 				02C1DD051E4B9281000C760D /* EpisodeListController.swift */,
 				0275B0331F998020006F5467 /* NotSyncedController.swift */,
+				022743C11FBCBE1F00D6A60F /* PodcastListErrorController.swift */,
 				02FACB261EB8F32400036B9F /* NowPlayingController.swift */,
+				02C913011FBCC8BA00C68770 /* NotSecureController.swift */,
+				02C913041FBCDD4100C68770 /* RequestNotificationController.swift */,
 				02CED0AF1EBEC3EC00EE8AB1 /* SeekController.swift */,
 			);
 			path = Controllers;
@@ -459,6 +470,7 @@
 				021B615A1E4FCBA2007CD7A2 /* MyWatchViewController.swift */,
 				026568C61F9AC78E00E3C082 /* PodcastAlertController.swift */,
 				027E7F7C1E5F7DF4005876C9 /* RecentPodcastsViewController.swift */,
+				021EF1C11FBD6788006F4305 /* RootViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -853,6 +865,7 @@
 				022CA0351E4FC48600B49A66 /* BorderButton.swift in Sources */,
 				02847FBF1E54E05700A1DC86 /* RecentEpisodeCell.swift in Sources */,
 				026CF5AE1F9A68A300269E2A /* OpenPodcastsCell.swift in Sources */,
+				021EF1C21FBD6788006F4305 /* RootViewController.swift in Sources */,
 				02847FBD1E54DE6400A1DC86 /* EpisodeCell.swift in Sources */,
 				02EC2EEE1EAAF5D30077DF84 /* Versioned.xcdatamodeld in Sources */,
 				0200C26A1F9AD21F00309527 /* WatchEpisodeCellViewModel.swift in Sources */,
@@ -882,11 +895,13 @@
 				020E296E1E920E2A008013C0 /* Pod2WatchOnWatch.xcdatamodeld in Sources */,
 				020932901E93326200948002 /* Episode.swift in Sources */,
 				02256CED1EB901FF00BDFD4B /* NowPlayingController.swift in Sources */,
+				02C913051FBCDD4100C68770 /* RequestNotificationController.swift in Sources */,
 				0266441C1F9C269000DDD87A /* DownloadEpisodeController.swift in Sources */,
 				020E296D1E9202EA008013C0 /* MessageType.swift in Sources */,
 				026644161F9C210700DDD87A /* TopPodcastsFeed.swift in Sources */,
 				0275B0351F9985C7006F5467 /* NotSyncedController.swift in Sources */,
 				02CED0B11EBEC42000EE8AB1 /* SeekController.swift in Sources */,
+				02C913021FBCC8BA00C68770 /* NotSecureController.swift in Sources */,
 				02DD2C4E1F9D9B6D0056E908 /* PodcastDownloadManager.swift in Sources */,
 				0266441E1F9C275800DDD87A /* PodcastDetailsResponse.swift in Sources */,
 				025216761F9D6E15001E808D /* TopPodcastDetails.swift in Sources */,
@@ -894,6 +909,7 @@
 				026481AE1EBD0310002A3B2B /* AudioPlayer.swift in Sources */,
 				0266440D1F9C194500DDD87A /* DownloadPodcast.swift in Sources */,
 				0266440B1F9C15D400DDD87A /* DownloadEpisodeRowController.swift in Sources */,
+				02C913031FBCC8C300C68770 /* PodcastListErrorController.swift in Sources */,
 				02C0ABD21EC663EE00D9876E /* ComplicationDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

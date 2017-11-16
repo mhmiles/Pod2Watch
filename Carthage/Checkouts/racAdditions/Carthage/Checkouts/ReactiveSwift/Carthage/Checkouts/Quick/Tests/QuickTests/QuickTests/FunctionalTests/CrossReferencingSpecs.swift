@@ -6,14 +6,14 @@ import Nimble
 
 class FunctionalTests_CrossReferencingSpecA: QuickSpec {
     override func spec() {
-        _ = FunctionalTests_CrossReferencingSpecB()
+        let _ = FunctionalTests_CrossReferencingSpecB()
         it("does not crash") {}
     }
 }
 
 class FunctionalTests_CrossReferencingSpecB: QuickSpec {
     override func spec() {
-        _ = FunctionalTests_CrossReferencingSpecA()
+        let _ = FunctionalTests_CrossReferencingSpecA()
         it("does not crash") {}
     }
 }

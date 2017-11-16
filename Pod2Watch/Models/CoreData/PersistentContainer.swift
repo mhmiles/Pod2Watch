@@ -50,8 +50,6 @@ public final class PersistentContainer: NSPersistentContainer {
       }
     })
 
-//    print(container.persistentStoreCoordinator.persistentStores.first?.identifier)
-
     container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
 
     return container

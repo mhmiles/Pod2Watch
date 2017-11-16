@@ -3,7 +3,7 @@ import Foundation
 internal class NotificationCollector {
     private(set) var observedNotifications: [Notification]
     private let notificationCenter: NotificationCenter
-    #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+    #if _runtime(_ObjC)
     private var token: AnyObject?
     #else
     private var token: NSObjectProtocol?
@@ -22,7 +22,7 @@ internal class NotificationCollector {
     }
 
     deinit {
-        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        #if _runtime(_ObjC)
             if let token = self.token {
                 self.notificationCenter.removeObserver(token)
             }
@@ -36,9 +36,11 @@ internal class NotificationCollector {
 
 private let mainThread = pthread_self()
 
+let notificationCenterDefault = NotificationCenter.default
+
 public func postNotifications<T>(
     _ notificationsMatcher: T,
-    fromNotificationCenter center: NotificationCenter = .default)
+    fromNotificationCenter center: NotificationCenter = notificationCenterDefault)
     -> Predicate<Any>
     where T: Matcher, T.ValueType == [Notification]
 {

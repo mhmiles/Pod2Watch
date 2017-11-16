@@ -93,7 +93,8 @@ class DownloadPodcastController: WKInterfaceController {
   private func downloadTopPodcasts() {
     PodcastDownloadManager.shared.downloadTopPodcasts(completion: { (podcasts, error) in
       guard let podcasts = podcasts else {
-        print(error as Any)
+        self.pushController(withName: "PodcastListError",
+                                        context: nil)
         return
       }
       

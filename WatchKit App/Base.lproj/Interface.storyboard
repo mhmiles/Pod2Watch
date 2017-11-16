@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="13196" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
-    <device id="watch42" orientation="portrait">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="13529" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="watchOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="13051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="13507"/>
     </dependencies>
     <scenes>
         <!--Pod2Watch-->
@@ -75,7 +75,9 @@
                                 <tableRow identifier="NoPodcasts" selectable="NO" id="q5E-uq-20p">
                                     <group key="rootItem" width="1" height="174" alignment="left" layout="vertical" id="mph-aa-e8R">
                                         <items>
-                                            <label alignment="center" verticalAlignment="center" text="Sync podcasts from your phone" textAlignment="center" numberOfLines="4" id="epJ-vw-bUT"/>
+                                            <label alignment="center" verticalAlignment="center" text="Force Touch to download podcasts or sync from iPhone" textAlignment="center" numberOfLines="4" id="epJ-vw-bUT">
+                                                <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
+                                            </label>
                                         </items>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
@@ -87,6 +89,11 @@
                     </items>
                     <menu key="menu" id="TbR-kY-0vr">
                         <items>
+                            <menuItem title="Download" icon="add" id="J0b-Z9-XuQ">
+                                <connections>
+                                    <action selector="handleDownload" destination="AgC-eL-Hgc" id="yog-l0-Dng"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Delete All" icon="trash" id="UnC-yJ-6BF">
                                 <connections>
                                     <action selector="handleDeleteAll" destination="AgC-eL-Hgc" id="5BB-mt-GOI"/>
@@ -121,7 +128,7 @@
                     </items>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-1279" y="523"/>
+            <point key="canvasLocation" x="-1302" y="518"/>
         </scene>
         <!--NoBluetooth-->
         <scene sceneID="dUn-IK-BJL">
@@ -136,7 +143,7 @@
                     </items>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-543" y="292"/>
+            <point key="canvasLocation" x="24" y="95"/>
         </scene>
         <!--Now Playing-->
         <scene sceneID="AaR-LZ-vBv">
@@ -254,7 +261,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-836" y="168"/>
+            <point key="canvasLocation" x="-839" y="168"/>
         </scene>
         <!--Top Podcasts-->
         <scene sceneID="6m8-7d-d9w">
@@ -294,15 +301,11 @@
                                     <items>
                                         <group width="1" alignment="center" verticalAlignment="center" layout="vertical" id="ws5-l1-aIH">
                                             <items>
-                                                <imageView width="30" height="30" alignment="center" verticalAlignment="center" image="Spinner" animationDuration="3" id="FW5-vi-GZG"/>
+                                                <imageView width="30" height="30" alignment="center" verticalAlignment="center" image="Activity" animationDuration="1" id="FW5-vi-GZG"/>
                                                 <label alignment="center" verticalAlignment="center" text="Loading Podcasts" id="3N8-9c-WlL">
                                                     <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
                                                 </label>
                                             </items>
-                                            <edgeInsets key="margins" left="0.0" right="0.0" top="20" bottom="0.0"/>
-                                            <variation key="device=watch38mm">
-                                                <edgeInsets key="margins" left="0.0" right="0.0" top="16" bottom="0.0"/>
-                                            </variation>
                                         </group>
                                     </items>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -317,7 +320,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-1159" y="-452"/>
+            <point key="canvasLocation" x="-1159" y="-248"/>
         </scene>
         <!--NotSynced-->
         <scene sceneID="77i-El-yqG">
@@ -341,7 +344,7 @@
                     </items>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-986" y="468"/>
+            <point key="canvasLocation" x="-1048" y="517"/>
         </scene>
         <!--Seek-->
         <scene sceneID="1Kb-OA-2Rf">
@@ -385,23 +388,30 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-543" y="0.0"/>
+            <point key="canvasLocation" x="-534" y="168"/>
         </scene>
         <!--Static Notification Interface Controller-->
         <scene sceneID="0US-gK-6Ak">
             <objects>
                 <notificationController id="JO2-Kq-egb" customClass="DownloadNotificationController">
                     <items>
-                        <label width="1" height="100" alignment="left" text="An episode of a podcast has finished transferring." textAlignment="center" numberOfLines="4" id="BDC-Av-qYW"/>
+                        <group width="1" alignment="left" id="hQg-ch-tUp">
+                            <items>
+                                <label alignment="left" text="Label" id="WVM-LD-xxK">
+                                    <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
+                                </label>
+                            </items>
+                            <edgeInsets key="margins" left="6" right="6" top="6" bottom="6"/>
+                        </group>
                     </items>
                     <notificationCategory key="notificationCategory" identifier="myCategory" id="STL-kp-aRZ"/>
                     <edgeInsets key="margins" left="1" right="1" top="0.0" bottom="0.0"/>
                     <connections>
-                        <outlet property="notificationAlertLabel" destination="BDC-Av-qYW" id="YuK-NI-Lo8"/>
+                        <outlet property="notificationAlertLabel" destination="WVM-LD-xxK" id="SwO-la-7EY"/>
                     </connections>
                 </notificationController>
             </objects>
-            <point key="canvasLocation" x="37.487179487179489" y="675.20512820512829"/>
+            <point key="canvasLocation" x="-270" y="585"/>
         </scene>
         <!--DownloadEpisode-->
         <scene sceneID="gdh-Uc-Gsa">
@@ -428,10 +438,14 @@
                                 </table>
                                 <group width="1" height="174" alignment="left" layout="vertical" spacing="8" id="jFl-OF-ltL">
                                     <items>
-                                        <imageView width="30" height="30" alignment="center" verticalAlignment="center" image="Spinner" animationDuration="3" id="whl-uX-14X"/>
-                                        <label alignment="center" verticalAlignment="center" text="Loading Episodes" id="fR1-sM-3Mn">
-                                            <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
-                                        </label>
+                                        <group width="1" alignment="left" verticalAlignment="center" layout="vertical" id="heB-5R-knq">
+                                            <items>
+                                                <imageView width="30" height="30" alignment="center" verticalAlignment="center" image="Activity" animationDuration="1" id="whl-uX-14X"/>
+                                                <label alignment="center" verticalAlignment="center" text="Loading Episodes" id="fR1-sM-3Mn">
+                                                    <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                                </label>
+                                            </items>
+                                        </group>
                                     </items>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <variation key="device=watch38mm" height="152"/>
@@ -445,7 +459,89 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="-876" y="-452"/>
+            <point key="canvasLocation" x="-840" y="-248"/>
+        </scene>
+        <!--PodcastListError-->
+        <scene sceneID="k5c-9t-th8">
+            <objects>
+                <controller identifier="PodcastListError" id="BNb-yr-77N" customClass="PodcastListErrorController" customModule="Pod2Watch">
+                    <items>
+                        <group width="1" height="1" alignment="left" layout="vertical" id="cPc-CU-AKo">
+                            <items>
+                                <label alignment="center" verticalAlignment="center" text="Error Downloading Podcasts" textAlignment="center" numberOfLines="2" id="giB-dG-2Xn">
+                                    <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
+                                </label>
+                                <button width="1" alignment="left" verticalAlignment="bottom" title="Dismiss" id="DkT-g6-AJb">
+                                    <connections>
+                                        <action selector="handleDismiss" destination="BNb-yr-77N" id="lsO-d6-HXA"/>
+                                    </connections>
+                                </button>
+                            </items>
+                        </group>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="24" y="-166"/>
+        </scene>
+        <!--PodcastSecurityError-->
+        <scene sceneID="yrM-AC-rei">
+            <objects>
+                <controller identifier="PodcastSecurityError" id="pkj-0A-gKd" customClass="NotSecureController" customModule="Pod2Watch_WatchKit_Extension">
+                    <items>
+                        <group width="1" height="1" alignment="left" layout="vertical" spacing="8" id="4yb-vd-bo6">
+                            <items>
+                                <label alignment="center" text="Download Failed" textAlignment="center" id="vJl-1d-UKn">
+                                    <fontDescription key="font" type="system" pointSize="14"/>
+                                </label>
+                                <label alignment="center" text="Episode title title title title" textAlignment="center" numberOfLines="2" id="sX8-pz-eEU">
+                                    <fontDescription key="font" type="system" pointSize="14"/>
+                                </label>
+                                <label alignment="center" verticalAlignment="bottom" text="Secure connection not available. Sync from iPhone instead" textAlignment="center" numberOfLines="6" id="pnB-lc-mEQ">
+                                    <fontDescription key="font" type="system" pointSize="12"/>
+                                </label>
+                                <button width="1" alignment="left" verticalAlignment="bottom" title="Dismiss" id="1eR-ME-db0">
+                                    <connections>
+                                        <action selector="handleDismiss" destination="pkj-0A-gKd" id="fhz-ZG-b3C"/>
+                                    </connections>
+                                </button>
+                            </items>
+                            <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                        </group>
+                    </items>
+                    <connections>
+                        <outlet property="episodeTitleLabel" destination="sX8-pz-eEU" id="OZY-hs-lEB"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="316" y="-166"/>
+        </scene>
+        <!--RequestAuthorization-->
+        <scene sceneID="VZi-lT-pA6">
+            <objects>
+                <controller identifier="RequestAuthorization" id="aed-Ro-Bei" customClass="RequestNotificationController" customModule="Pod2Watch_WatchKit_Extension">
+                    <items>
+                        <group width="1" height="1" alignment="left" layout="vertical" spacing="35" id="v9z-Yq-B3t">
+                            <items>
+                                <label alignment="center" verticalAlignment="center" text="Would you like Pod2Watch to notify you when your downloads complete?" textAlignment="center" numberOfLines="8" id="LdO-OS-NCV">
+                                    <fontDescription key="font" style="UICTFontTextStyleCaption2"/>
+                                    <variation key="device=watch42mm">
+                                        <fontDescription key="font" style="UICTFontTextStyleCaption1"/>
+                                    </variation>
+                                </label>
+                                <button width="1" alignment="left" verticalAlignment="bottom" title="OK" id="qF9-Fd-hN9">
+                                    <color key="backgroundColor" red="0.45445531606674194" green="0.20019704103469849" blue="0.84190982580184937" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    <connections>
+                                        <action selector="handleOK" destination="aed-Ro-Bei" id="FFG-PA-aan"/>
+                                    </connections>
+                                </button>
+                            </items>
+                            <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                            <variation key="device=watch38mm" spacing="20"/>
+                        </group>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="-1595" y="168"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.40784313725490196" green="0.0" blue="0.84313725490196079" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -3,13 +3,13 @@
   "iOS" : [
     {
       "name" : "AlamofireImage",
-      "hash" : "65dd1afcbf83949003c7bfc3f4958151906f82204111f357334109949a376ffb"
+      "hash" : "17b68dd357cbcbef10b018d37b17e925b38f03bb64213f90a5872cb8b17c9a5e"
     }
   ],
   "watchOS" : [
     {
       "name" : "AlamofireImage",
-      "hash" : "bf3712097aa6730877e68eb8a3d07578bf553b78a4cfdac65f2f1394c0bacd84"
+      "hash" : "73cd42572317071cb8b3c77c79cef37554d4bcbe8359872dc60bab6d43d3658c"
     }
   ]
 }

@@ -553,7 +553,7 @@ public final class Property<Value>: PropertyProtocol {
 				guard let box = box else {
 					// Just forward the event, since no one owns the box or IOW no demand
 					// for a cached latest value.
-					return observer.send(event)
+					return observer.action(event)
 				}
 
 				box.begin { storage in
@@ -562,7 +562,7 @@ public final class Property<Value>: PropertyProtocol {
 							value = newValue
 						}
 					}
-					observer.send(event)
+					observer.action(event)
 				}
 			}
 		}

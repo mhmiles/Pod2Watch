@@ -12,6 +12,7 @@ import CoreData
 import AVFoundation
 import Alamofire
 import AlamofireImage
+import UserNotifications
 
 class PodcastTransferManager: NSObject {
   static let shared = PodcastTransferManager()
@@ -28,6 +29,12 @@ class PodcastTransferManager: NSObject {
       }
     }
   }
+  
+  private lazy var __notificationOnce: () = {
+    NotificationCenter.default.post(name: .podcastTransferDidBegin,
+                                    object: self,
+                                    userInfo: nil)
+  }()
   
   override init() {
     session = WCSession.isSupported() ? WCSession.default : nil
@@ -58,6 +65,8 @@ class PodcastTransferManager: NSObject {
   }
   
   func transfer(_ episode: LibraryEpisode, isAutoTransfer: Bool = false) {
+    _ = __notificationOnce
+    
     guard let session = session else {
       return
     }
@@ -239,8 +248,11 @@ class PodcastTransferManager: NSObject {
       "title": podcast.title
     ]
     
-    session?.transferFile(URL(string: filePath)!,
-                          metadata: metadata)
+    guard let fileURL = URL(string: filePath) else {
+      return
+    }
+    
+    session?.transferFile(fileURL, metadata: metadata)
   }
   
   func handleConfirmDeleteAll() {
@@ -472,6 +484,7 @@ extension PodcastTransferManager: WCSessionDelegate {
             return
         }
         
+        // Set has begun transfer to false so a retry can be attempted
         episode.hasBegunTransfer = false
       }
       
@@ -494,6 +507,16 @@ extension PodcastTransferManager: WCSessionDelegate {
       
       episode.isTransferred = true
       
+      let content = UNMutableNotificationContent()
+      content.body = "\(episode.title ?? "") from \(episode.podcast?.title ?? "") has completed transferring."
+      content.sound = UNNotificationSound.default()
+      
+      let request = UNNotificationRequest(identifier: "com.hollingsware.pod2watch.download",
+                                          content: content,
+                                          trigger: nil)
+      
+      UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+      
     default:
       break
     }
@@ -512,4 +535,8 @@ extension PodcastTransferManager: WCSessionDelegate {
   
   func sessionDidDeactivate(_ session: WCSession) {
   }
+}
+
+extension Notification.Name {
+    static let podcastTransferDidBegin = Notification.Name(rawValue: "PodcastDownloadDidBegin")
 }

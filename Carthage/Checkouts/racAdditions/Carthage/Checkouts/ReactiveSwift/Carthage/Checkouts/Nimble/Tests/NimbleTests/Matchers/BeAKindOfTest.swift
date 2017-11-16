@@ -2,10 +2,10 @@ import Foundation
 import XCTest
 import Nimble
 
-private class TestNull: NSNull {}
-private protocol TestProtocol {}
-private class TestClassConformingToProtocol: TestProtocol {}
-private struct TestStructConformingToProtocol: TestProtocol {}
+fileprivate class TestNull: NSNull {}
+fileprivate protocol TestProtocol {}
+fileprivate class TestClassConformingToProtocol: TestProtocol {}
+fileprivate struct TestStructConformingToProtocol: TestProtocol {}
 
 final class BeAKindOfSwiftTest: XCTestCase, XCTestCaseProvider {
     static var allTests: [(String, (BeAKindOfSwiftTest) -> () throws -> Void)] {
@@ -54,7 +54,7 @@ final class BeAKindOfSwiftTest: XCTestCase, XCTestCaseProvider {
     }
 }
 
-#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+#if _runtime(_ObjC)
 
 final class BeAKindOfObjCTest: XCTestCase, XCTestCaseProvider {
     static var allTests: [(String, (BeAKindOfObjCTest) -> () throws -> Void)] {

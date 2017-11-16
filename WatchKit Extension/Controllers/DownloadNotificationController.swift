@@ -11,7 +11,9 @@ import Foundation
 import UserNotifications
 
 class DownloadNotificationController: WKUserNotificationInterfaceController {
+  @IBOutlet var titleLabel: WKInterfaceLabel!
+  
   override func didReceive(_ notification: UNNotification, withCompletion completionHandler: @escaping (WKUserNotificationInterfaceType) -> Void) {
-    print(notification.request.content)
+    titleLabel.setText(notification.request.content.title)
   }
 }

@@ -49,7 +49,7 @@ QuickSpecEnd
 
 - (void)testFailureUsingXCTAssertSpecFailureCountIsEqualToTheNumberOfFailingExamples {
     XCTestRun *result = qck_runSpec([FunctionalTests_FailureUsingXCTAssertSpec_ObjC class]);
-    XCTAssertEqual(result.totalFailureCount, 2);
+    XCTAssertEqual(result.failureCount, 2);
 }
 
 @end

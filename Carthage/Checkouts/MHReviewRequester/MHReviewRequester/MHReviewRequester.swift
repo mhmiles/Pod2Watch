@@ -16,8 +16,6 @@ public class ReviewRequester {
   public static let shared = ReviewRequester()
   
   init() {
-    incrementLaunchCount()
-    
     NotificationCenter.default.addObserver(forName: Notification.Name.UIApplicationDidBecomeActive,
                                            object: nil,
                                            queue: nil) { (_) in

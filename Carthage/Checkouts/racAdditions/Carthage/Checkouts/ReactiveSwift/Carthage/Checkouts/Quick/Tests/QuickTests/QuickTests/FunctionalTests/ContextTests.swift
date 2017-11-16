@@ -2,7 +2,7 @@ import XCTest
 import Quick
 import Nimble
 
-#if (os(macOS) || os(iOS) || os(tvOS) || os(watchOS)) && !SWIFT_PACKAGE
+#if _runtime(_ObjC) && !SWIFT_PACKAGE
 class QuickContextTests: QuickSpec {
     override func spec() {
         describe("Context") {

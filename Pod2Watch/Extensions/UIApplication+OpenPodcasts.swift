@@ -20,9 +20,6 @@ extension UIApplication {
       let alertController = UIAlertController(title: "Install Podcasts App",
                                               message: "Pod2Watch shares a media library with the Apple Podcasts app\n\nWould you like to download it now?",
                                               preferredStyle: .alert)
-      alertController.addAction(UIAlertAction(title: "No",
-                                              style: .default,
-                                              handler: nil))
       
       alertController.addAction(UIAlertAction(title: "Yes",
                                               style: .cancel,
@@ -40,6 +37,10 @@ extension UIApplication {
           }
         }
       }))
+      
+      alertController.addAction(UIAlertAction(title: "No",
+                                              style: .default,
+                                              handler: nil))
       
       rootViewController?.present(alertController, animated: true, completion: nil)
     }

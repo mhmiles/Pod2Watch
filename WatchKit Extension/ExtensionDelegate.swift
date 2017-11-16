@@ -10,28 +10,30 @@ import WatchKit
 import WatchConnectivity
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
+  func applicationDidBecomeActive() {
+    let _ = PodcastDownloadManager.shared
+  }
+  
   func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
     for task in backgroundTasks {
       // Use a switch statement to check the task type
       switch task {
-      case let backgroundTask as WKApplicationRefreshBackgroundTask:
-        // Be sure to complete the background task once you’re done.
-        backgroundTask.setTaskCompletedWithSnapshot(false)
+        
       case let snapshotTask as WKSnapshotRefreshBackgroundTask:
-        // Snapshot tasks have a unique completion call, make sure to set your expiration date
-        snapshotTask.setTaskCompleted(restoredDefaultState: true, estimatedSnapshotExpiration: Date.distantFuture, userInfo: nil)
+        snapshotTask.setTaskCompleted(restoredDefaultState: false,
+                                      estimatedSnapshotExpiration: Date().addingTimeInterval(60 * 60),
+                                      userInfo: nil)
+        
       case let connectivityTask as WKWatchConnectivityRefreshBackgroundTask:
-        // Be sure to complete the connectivity task once you’re done.
-        connectivityTask.setTaskCompletedWithSnapshot(false)
+        let _ = PodcastDownloadManager.shared
+        connectivityTask.setTaskCompletedWithSnapshot(true)
+        
       case let urlSessionTask as WKURLSessionRefreshBackgroundTask:
-       
-        print(urlSessionTask.userInfo as Any)
-        urlSessionTask.setTaskCompletedWithSnapshot(false)
+       PodcastDownloadManager.shared.backgrounndRefreshTask = urlSessionTask
+        
       default:
-        // make sure to complete unhandled task types
         task.setTaskCompletedWithSnapshot(false)
       }
     }
   }
-
 }

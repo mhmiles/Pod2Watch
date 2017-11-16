@@ -22,7 +22,7 @@ public protocol XCTestCaseNameProvider {
 
 public protocol XCTestCaseProvider: XCTestCaseProviderStatic, XCTestCaseNameProvider {}
 
-extension XCTestCaseProvider {
+extension XCTestCaseProvider where Self: XCTestCaseProviderStatic {
     var allTestNames: [String] {
         return type(of: self).allTests.map({ name, _ in
             return name

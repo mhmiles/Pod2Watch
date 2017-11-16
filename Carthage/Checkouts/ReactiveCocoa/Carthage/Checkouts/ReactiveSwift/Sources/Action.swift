@@ -161,7 +161,7 @@ public final class Action<Input, Output, Error: Swift.Error> {
 				}
 
 				let interruptHandle = execute(state, input).start { event in
-					observer.send(event.mapError(ActionError.producerFailed))
+					observer.action(event.mapError(ActionError.producerFailed))
 					action.eventsObserver.send(value: event)
 				}
 

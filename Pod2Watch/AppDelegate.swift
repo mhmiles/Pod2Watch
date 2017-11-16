@@ -9,6 +9,7 @@
 import UIKit
 import MediaPlayer
 import MHReviewRequester
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

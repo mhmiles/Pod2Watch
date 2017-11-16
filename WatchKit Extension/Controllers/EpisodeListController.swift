@@ -12,6 +12,7 @@ import WatchConnectivity
 import CoreData
 import ReactiveSwift
 import AVFoundation
+import UserNotifications
 
 class EpisodeListController: WKInterfaceController, URLSessionDelegate {
   @IBOutlet var podcastsTable: WKInterfaceTable!
@@ -42,6 +43,18 @@ class EpisodeListController: WKInterfaceController, URLSessionDelegate {
     _ = PodcastTransferManager.shared
     
     setUpRows()
+    
+    NotificationCenter.default.addObserver(forName: .podcastSecurityFailed,
+                                           object: nil,
+                                           queue: OperationQueue.main) { notification in
+                                            self.presentController(withName: "PodcastSecurityError",
+                                                                   context: notification.userInfo)
+    }
+    
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(EpisodeListController.handleDownloadDidBegin),
+                                           name: .podcastDownloadDidBegin,
+                                           object: nil)
   }
   
   private let nowPlayingDisposable = SerialDisposable()
@@ -65,7 +78,7 @@ class EpisodeListController: WKInterfaceController, URLSessionDelegate {
       }
     }
     
-
+    
   }
   
   override func willDisappear() {
@@ -120,12 +133,26 @@ class EpisodeListController: WKInterfaceController, URLSessionDelegate {
   
   @IBAction func handleDeleteAll() {
     WKInterfaceDevice.current().play(.click)
-
+    
     presentController(withName: "DeleteAll", context: nil)
   }
   
   @IBAction func handleDownload() {
     pushController(withName: "DownloadPodcast", context: nil)
+  }
+  
+  @objc func handleDownloadDidBegin() {
+    let center = UNUserNotificationCenter.current()
+    center.getNotificationSettings(completionHandler: { (settings) in
+      switch settings.authorizationStatus {
+      case .notDetermined:
+        self.presentController(withName: "RequestAuthorization",
+                          context: nil)
+        
+      default:
+        break
+      }
+    })
   }
 }
 

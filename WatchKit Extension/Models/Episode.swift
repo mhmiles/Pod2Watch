@@ -23,11 +23,11 @@ public class Episode: NSManagedObject {
   @NSManaged public var fileURL: URL?
   @NSManaged public var playbackDuration: Double
   @NSManaged public var persistentID: Int64
-  @NSManaged public var podcastTitle: String?
   @NSManaged public var sortIndex: Int16
   @NSManaged public var startTime: Double
   @NSManaged public var isDownload: Bool
   @NSManaged public var downloadProgress: Double
+  @NSManaged public var remoteURLString: String?
   
   var downloadRequest: DownloadRequest? {
     willSet {
@@ -43,6 +43,14 @@ public class Episode: NSManagedObject {
       }
       
       downloadProgressDisposable = disposable.map { ScopedDisposable($0) }
+    }
+  }
+  
+  var remoteURL: URL? {
+    get {
+      return remoteURLString.flatMap { URL(string: $0) }
+    } set {
+      remoteURLString = newValue.map { $0.absoluteString }
     }
   }
   
@@ -78,19 +86,19 @@ public class Episode: NSManagedObject {
     return playbackDuration - startTime > 15
   }
   
-  public override func awakeFromFetch() {
-    super.awakeFromFetch()
-    
-    if isDownload, fileURL == nil {
-      PodcastTransferManager.shared.delete(self)
-    }
-  }
-  
   class func existing(persistentIDs: [Int64]) -> [Episode] {
     let request: NSFetchRequest<Episode> = fetchRequest()
     request.predicate = NSPredicate(format: "persistentID IN %@", persistentIDs)
     
     return try! PersistentContainer.shared.viewContext.fetch(request)
+  }
+  
+  class func existing(remoteURL: URL) -> Episode? {
+    let request: NSFetchRequest<Episode> = fetchRequest()
+    request.predicate = NSPredicate(format: "remoteURLString == %@", remoteURL.absoluteString)
+    request.fetchLimit = 1
+    
+    return try! PersistentContainer.shared.viewContext.fetch(request).first
   }
   
   class func all() -> [Episode] {

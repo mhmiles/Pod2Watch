@@ -13,6 +13,8 @@ class DeleteAllController: WKInterfaceController {
 
   @IBAction func handleConfirmDeleteAll() {
     PodcastTransferManager.shared.deleteAllPodcasts()
+    PodcastDownloadManager.shared.cancelAllTransfers()
+    
     WKInterfaceDevice.current().play(.success)
     dismiss()
   }

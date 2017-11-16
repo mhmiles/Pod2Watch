@@ -2,9 +2,9 @@ import Foundation
 import XCTest
 import Nimble
 
-private protocol TestProtocol {}
-private class TestClassConformingToProtocol: TestProtocol {}
-private struct TestStructConformingToProtocol: TestProtocol {}
+fileprivate protocol TestProtocol {}
+fileprivate class TestClassConformingToProtocol: TestProtocol {}
+fileprivate struct TestStructConformingToProtocol: TestProtocol {}
 
 final class BeAnInstanceOfTest: XCTestCase, XCTestCaseProvider {
     static var allTests: [(String, (BeAnInstanceOfTest) -> () throws -> Void)] {
@@ -49,7 +49,7 @@ final class BeAnInstanceOfTest: XCTestCase, XCTestCaseProvider {
         failsWithErrorMessageForNil("expected to be an instance of NSString, got <nil>") {
             expect(nil as NSString?).to(beAnInstanceOf(NSString.self))
         }
-#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+#if _runtime(_ObjC)
         let numberTypeName = "__NSCFNumber"
 #else
         let numberTypeName = "NSNumber"

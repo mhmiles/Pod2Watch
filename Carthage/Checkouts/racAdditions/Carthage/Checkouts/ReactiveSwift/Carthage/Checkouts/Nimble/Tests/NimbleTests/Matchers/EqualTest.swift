@@ -51,7 +51,7 @@ final class EqualTest: XCTestCase, XCTestCaseProvider {
         expect(array1).to(equal([1, 2, 3]))
         expect(array1).toNot(equal([1, 2] as [Int]))
 
-#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+#if _runtime(_ObjC)
         expect(NSArray(array: [1, 2, 3])).to(equal(NSArray(array: [1, 2, 3])))
 #endif
 
@@ -137,7 +137,7 @@ final class EqualTest: XCTestCase, XCTestCaseProvider {
         expect(actual).to(equal(expected))
         expect(actual).toNot(equal(unexpected))
 
-#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+#if _runtime(_ObjC)
         expect(NSDictionary(object: "bar", forKey: "foo" as NSString)).to(equal(["foo": "bar"]))
         expect(NSDictionary(object: "bar", forKey: "foo" as NSString) as? [String:String]).to(equal(expected))
 #endif

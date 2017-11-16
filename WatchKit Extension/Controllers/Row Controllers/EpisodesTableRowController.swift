@@ -57,7 +57,6 @@ class EpisodesTableRowController: NSObject {
       setProgressBarCompletion(episode.downloadProgress)
     }
 
-    
     isSelectable = episode.fileURL != nil
   }
 

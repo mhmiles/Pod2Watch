@@ -22,12 +22,6 @@ private let saveDirectoryURL = FileManager.default.containerURL(forSecurityAppli
 class PodcastTransferManager: NSObject {
   static let shared = PodcastTransferManager()
   
-  override init() {
-    super.init()
-    
-    _ = session
-  }
-  
   lazy var session: WCSession = {
     let session = WCSession.default
     session.delegate = self
@@ -36,94 +30,17 @@ class PodcastTransferManager: NSObject {
     return session
   }()
   
+  override init() {
+    super.init()
+    
+    _ = session
+  }
+  
   func delete(_ episode: Episode) {
     deleteEpisodes(persistentIDs: [episode.persistentID])
   }
   
-  private lazy var backgroundDownloadSessionManager: SessionManager = {
-    let configuration = URLSessionConfiguration.background(withIdentifier: "com.hollingsware.pod2watch.podcast-download")
-    configuration.shouldUseExtendedBackgroundIdleMode = true
-    return Alamofire.SessionManager(configuration: configuration)
-  }()
-  
-  //  private var backgroundDownloadSession: URLSession?
-  
-  func download(episode: DownloadEpisode) throws {
-    let existingPodcast = Podcast.existing(title: episode.podcastTitle)
-    
-    if let existingPodcast = existingPodcast  {
-      let request: NSFetchRequest<Episode> = Episode.fetchRequest()
-      request.predicate = NSPredicate(format: "podcast == %@ AND title == %@ ", existingPodcast, episode.title)
-      request.fetchLimit = 1
-      
-      do {
-        if let _ = (try PersistentContainer.shared.viewContext.fetch(request)).first {
-          throw DownloadError.episodeExists
-        }
-      } catch let error {
-        print(error)
-      }
-    }
-    
-    let context = PersistentContainer.shared.viewContext
-    
-    let localEpisode = Episode(context: context)
-    localEpisode.persistentID = episode.persistentID
-    localEpisode.title = episode.title
-    localEpisode.playbackDuration = episode.playbackDuration
-    localEpisode.isDownload = true
-    
-    let request: NSFetchRequest<Episode> = Episode.fetchRequest()
-    request.sortDescriptors = [NSSortDescriptor(key: "sortIndex", ascending: true)]
-    request.fetchLimit = 1
-    localEpisode.sortIndex = ((try? context.fetch(request))?.first?.sortIndex ?? 1)-1
-    
-    let podcast = existingPodcast ?? Podcast(title: episode.podcastTitle,
-                                             context: context)
-    
-    podcast.addToEpisodes(localEpisode)
-    
-    PersistentContainer.saveContext()
-    
-    let saveURL = saveDirectoryURL.appendingPathComponent(episode.mediaURL.lastPathComponent)
-    let destination: DownloadRequest.DownloadFileDestination = { _, _ in
-      return (saveURL, [.removePreviousFile, .createIntermediateDirectories])
-    }
-    
-    localEpisode.downloadRequest = Alamofire.download(episode.mediaURL,
-                                                      to: destination).responseData { [weak localEpisode] (response) in
-                                                        guard let localEpisode = localEpisode else {
-                                                          return
-                                                        }
-                                                        
-                                                        switch response.result {
-                                                        case .success:
-                                                          localEpisode.fileURL = saveURL
-                                                          PersistentContainer.saveContext()
-                                                          
-                                                        case .failure(let error):
-                                                          print(error)
-                                                          PodcastTransferManager.shared.delete(localEpisode)
-                                                        }
-    }
-    
-
-    Alamofire.request(episode.artworkURL).responseImage(completionHandler: { (response) in
-      switch response.result {
-      case .success(let image):
-        podcast.artworkImage = image
-        
-      case .failure(let error):
-        print(error)
-      }
-    })
-
-    
-    
-    sendWatchDownload(episode: episode, sortIndex: localEpisode.sortIndex)
-  }
-  
-  private func sendWatchDownload(episode: DownloadEpisode, sortIndex: Int16) {
+  internal func sendWatchDownload(episode: DownloadEpisode, sortIndex: Int16) {
     let message: [String: Any] = [
       "type": MessageType.sendWatchDownload,
       "persistentID": episode.persistentID,
@@ -310,13 +227,16 @@ extension PodcastTransferManager: WCSessionDelegate {
   }
   
   private func processSortOrder(_ sortOrder: [Int64: Int16]) {
-    let episodes = Episode.existing(persistentIDs: Array(sortOrder.keys))
-    
-    for episode in episodes {
-      episode.sortIndex = sortOrder[episode.persistentID]!
+        PersistentContainer.shared.viewContext.perform {
+          let episodes = Episode.existing(persistentIDs: Array(sortOrder.keys))
+          
+          for episode in episodes {
+            episode.sortIndex = sortOrder[episode.persistentID]!
+          }
+          
+          PersistentContainer.saveContext()
     }
-    
-    PersistentContainer.saveContext()
+
   }
   
   func session(_ session: WCSession, didReceive file: WCSessionFile) {
@@ -371,24 +291,3 @@ extension PodcastTransferManager: WCSessionDelegate {
   }
 }
 
-extension PodcastTransferManager: URLSessionDownloadDelegate {
-  func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
-    print(error as Any)
-  }
-  
-  func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-    print(error.debugDescription)
-  }
-  
-  func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
-    
-  }
-  
-  func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-    
-  }
-  
-  func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-    print(location)
-  }
-}

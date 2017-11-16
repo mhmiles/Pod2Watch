@@ -1,3 +1,15 @@
+## v4.2.5 (November 10, 2017)
+
+* Fix `XMLIndexer.byKey(_:)` bug (fixed in [#165](https://github.com/drmohundro/SWXMLHash/pull/165))
+
+## v4.2.4 (November 9, 2017)
+
+* Fix `characters` deprecation (issue [#163](https://github.com/drmohundro/SWXMLHash/issues/163) fixed in [#164](https://github.com/drmohundro/SWXMLHash/pull/164))
+
+## v4.2.3 (September 21, 2017)
+
+* Fix off by one `byIndex` error (issue [#155](https://github.com/drmohundro/SWXMLHash/issues/155) fixed in [#156](https://github.com/drmohundro/SWXMLHash/pull/156))
+
 ## v4.2.2 (September 21, 2017)
 
 * Xcode 9 related compatibility fixes (via [#152](https://github.com/drmohundro/SWXMLHash/pull/152))

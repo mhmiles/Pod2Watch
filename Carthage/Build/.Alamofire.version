@@ -3,13 +3,13 @@
   "iOS" : [
     {
       "name" : "Alamofire",
-      "hash" : "1e326fce0bfe62b517211c7427f18a7c43370cecee90c392640844178fba2002"
+      "hash" : "4314add5691c91b49c68051d96179a5666ebac5722bb0dc2a2996011bfda6464"
     }
   ],
   "watchOS" : [
     {
       "name" : "Alamofire",
-      "hash" : "1a00675abe3b1870e236b75c5ec3f04bea815572c754bb892a55538ee3f7ab92"
+      "hash" : "db25eb16092a9235fae7e0aeac02d88fd0e2a67f1dd018b24e71afbe60e27af7"
     }
   ]
 }
