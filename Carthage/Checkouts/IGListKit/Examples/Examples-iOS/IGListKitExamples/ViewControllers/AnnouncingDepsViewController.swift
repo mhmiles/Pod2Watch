@@ -12,8 +12,8 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
 import IGListKit
+import UIKit
 
 final class AnnouncingDepsViewController: UIViewController, ListAdapterDataSource {
 
@@ -46,7 +46,7 @@ final class AnnouncingDepsViewController: UIViewController, ListAdapterDataSourc
         collectionView.frame = view.bounds
     }
 
-    func onAdd() {
+    @objc func onAdd() {
         announcer.increment()
     }
 

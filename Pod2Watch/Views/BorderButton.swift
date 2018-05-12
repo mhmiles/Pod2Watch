@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension String {
+private extension String {
   static let borderColor = "borderColor"
 }
 

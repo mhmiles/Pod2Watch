@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13770" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TpU-7P-fnh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="TpU-7P-fnh">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13770"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,8 +15,8 @@
             <objects>
                 <navigationController id="gSG-DD-HUY" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Podcasts" image="Podcasts" id="7jJ-qL-5iG"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="S2D-bV-hjW">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" largeTitles="YES" id="S2D-bV-hjW">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -30,9 +30,9 @@
         <!--Recents-->
         <scene sceneID="RiV-Ml-Uy6">
             <objects>
-                <tableViewController storyboardIdentifier="RecentViewController" id="dXi-G8-PGN" customClass="RecentPodcastsViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="80" sectionHeaderHeight="18" sectionFooterHeight="18" id="ual-MU-5Nh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                <tableViewController storyboardIdentifier="RecentViewController" extendedLayoutIncludesOpaqueBars="YES" id="dXi-G8-PGN" customClass="RecentPodcastsViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="80" sectionHeaderHeight="18" sectionFooterHeight="18" id="ual-MU-5Nh">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <inset key="separatorInset" minX="80" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -131,8 +131,8 @@
             <objects>
                 <navigationController id="XUk-2x-ety" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="recents" id="Kcq-bP-a8V"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="1qN-ql-URN">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" largeTitles="YES" id="1qN-ql-URN">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -146,9 +146,9 @@
         <!--Podcasts-->
         <scene sceneID="vCf-dB-IpJ">
             <objects>
-                <collectionViewController storyboardIdentifier="PodcastsViewController" id="eW5-3v-kwb" customClass="MyPodcastsViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Nwo-BR-Bji">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                <collectionViewController storyboardIdentifier="PodcastsViewController" extendedLayoutIncludesOpaqueBars="YES" id="eW5-3v-kwb" customClass="MyPodcastsViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="Nwo-BR-Bji">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" red="0.40392156862745099" green="0.18823529411764706" blue="0.83137254901960778" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -185,7 +185,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HLl-S7-zuS">
-                                            <rect key="frame" x="-105.5" y="-36" width="260" height="71"/>
+                                            <rect key="frame" x="-105.5" y="-35.5" width="260" height="71"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UxS-Vd-b2n" customClass="BorderButton" customModule="Pod2Watch" customModuleProvider="target">
                                                     <rect key="frame" x="67.5" y="41" width="125" height="30"/>
@@ -229,7 +229,7 @@
                     <tabBarItem key="tabBarItem" title="My Podcasts" image="Podcasts" id="hPC-PN-JGG"/>
                     <navigationItem key="navigationItem" title="Podcasts" id="s6G-nv-2Cl">
                         <barButtonItem key="rightBarButtonItem" id="HUB-Ii-MJh">
-                            <view key="customView" contentMode="scaleToFill" id="AkW-4O-DaF">
+                            <view key="customView" opaque="NO" contentMode="scaleToFill" id="AkW-4O-DaF">
                                 <rect key="frame" x="319" y="2" width="40" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -242,7 +242,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </barButtonItem>
                     </navigationItem>
@@ -315,7 +314,7 @@
                             <outlet property="delegate" destination="ave-un-BsK" id="nCZ-q6-veB"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Episodes" largeTitleDisplayMode="never" id="fL9-Pf-XUg">
+                    <navigationItem key="navigationItem" title="Episodes" id="fL9-Pf-XUg">
                         <barButtonItem key="rightBarButtonItem" width="70" id="1Di-FZ-m9T">
                             <view key="customView" opaque="NO" contentMode="scaleToFill" id="bdM-42-wbj">
                                 <rect key="frame" x="289" y="5.5" width="70" height="33"/>
@@ -357,9 +356,9 @@
         <!--My Watch-->
         <scene sceneID="hPf-Gp-No6">
             <objects>
-                <tableViewController id="XqH-YI-jw8" customClass="MyWatchViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="xQu-ds-FHa">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="XqH-YI-jw8" customClass="MyWatchViewController" customModule="Pod2Watch" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" id="xQu-ds-FHa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="80" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -444,8 +443,8 @@
             <objects>
                 <navigationController id="RgU-kU-Rva" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Watch" image="Watch" selectedImage="Watch" id="rea-LI-Wo6"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Ane-qQ-Z0v">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" largeTitles="YES" id="Ane-qQ-Z0v">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>

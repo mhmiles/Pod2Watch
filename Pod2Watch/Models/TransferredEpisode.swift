@@ -92,15 +92,9 @@ public class TransferredEpisode: NSManagedObject {
         
         return try! PersistentContainer.shared.viewContext.fetch(request)
     }
-    
-    convenience init(context: NSManagedObjectContext) {
-        let entity = NSEntityDescription.entity(forEntityName: "TransferredEpisode", in: context)!
-        self.init(entity: entity, insertInto: context)
-    }
-    
+  
     convenience init(_ episode: LibraryEpisode, context: NSManagedObjectContext) {
-        let entity = NSEntityDescription.entity(forEntityName: "TransferredEpisode", in: context)!
-        self.init(entity: entity, insertInto: context)
+        self.init(context: context)
         
         persistentID = episode.persistentID
         title = episode.title
@@ -231,3 +225,10 @@ public class TransferredEpisode: NSManagedObject {
                                          artworkImage: podcast?.artworkImage)
     }
 }
+
+//extension TransferredEpisode {
+//  @nonobjc public class func fetchRequest() -> NSFetchRequest<TransferredEpisode> {
+//    return NSFetchRequest<TransferredEpisode>(entityName: "TransferredEpisode")
+//  }
+//}
+

@@ -49,10 +49,7 @@ public class LibraryEpisode: NSManagedObject {
     }
     
     convenience init(mediaItem: MPMediaItem, context: NSManagedObjectContext) {
-        let entity = NSEntityDescription.entity(forEntityName: "LibraryEpisode",
-                                                in: context)!
-        
-        self.init(entity: entity, insertInto: context)
+        self.init(context: context)
         
         self.mediaItem = mediaItem
         

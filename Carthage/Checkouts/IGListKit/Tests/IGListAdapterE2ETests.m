@@ -1,10 +1,8 @@
 /**
  * Copyright (c) 2016-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 #import <XCTest/XCTest.h>
@@ -19,6 +17,8 @@
 #import "IGTestDelegateDataSource.h"
 #import "IGTestObject.h"
 #import "IGListTestCase.h"
+#import "IGListAdapterUpdateTester.h"
+#import "IGListTestHelpers.h"
 
 @interface IGListAdapterE2ETests : IGListTestCase
 @end
@@ -958,33 +958,6 @@
     [self waitForExpectationsWithTimeout:30 handler:nil];
 }
 
-- (void)test_whenBatchUpdating_withDuplicateIdentifiers_thatHaveDifferentValues_thatCollectionViewWorks {
-    [self setupWithObjects:@[
-                             // using string values IGTestDelegateController always returns 1 cell
-                             genTestObject(@1, @"a"),
-                             genTestObject(@2, @"a"),
-                             genTestObject(@3, @"a"),
-                             genTestObject(@4, @"b"), // problem item w/ key 4, value "b"
-                             ]];
-
-    self.dataSource.objects = @[
-                                genTestObject(@1, @"a"),
-                                genTestObject(@5, @"a"),
-                                genTestObject(@6, @"a"),
-                                genTestObject(@7, @"a"),
-                                genTestObject(@4, @"a"), // key 4 but value "a", so this needs reloaded
-                                genTestObject(@8, @"a"),
-                                genTestObject(@4, @"b"), // key 4 but value didn't change
-                                ];
-    XCTestExpectation *expectation = genExpectation;
-
-    [self.adapter performUpdatesAnimated:YES completion:^(BOOL finished) {
-        [expectation fulfill];
-    }];
-
-    [self waitForExpectationsWithTimeout:30 handler:nil];
-}
-
 - (void)test_whenPerformingUpdates_withWorkingRange_thatAccessingCellDoesntCrash {
     [self setupWithObjects:@[
                              genTestObject(@1, @1),
@@ -1124,6 +1097,9 @@
 
 - (void)test_whenQueuingUpdate_withSectionControllerBatchUpdate_thatSectionControllerNotRetained {
     __weak id weakSectionController = nil;
+    __weak id weakAdapter = nil;
+    __weak id weakCollectionView = nil;
+
     @autoreleasepool {
         IGListAdapter *adapter = [[IGListAdapter alloc] initWithUpdater:[IGListAdapterUpdater new] viewController:nil];
         IGTestDelegateDataSource *dataSource = [IGTestDelegateDataSource new];
@@ -1146,9 +1122,16 @@
         dataSource.objects = @[object, genTestObject(@2, @2)];
         [adapter performUpdatesAnimated:YES completion:^(BOOL finished) {}];
 
+        weakAdapter = adapter;
+        weakCollectionView = collectionView;
         weakSectionController = section;
+
+        XCTAssertNotNil(weakAdapter);
+        XCTAssertNotNil(weakCollectionView);
         XCTAssertNotNil(weakSectionController);
     }
+    XCTAssertNil(weakAdapter);
+    XCTAssertNil(weakCollectionView);
     XCTAssertNil(weakSectionController);
 }
 
@@ -1540,6 +1523,313 @@
     }];
 
     [self waitForExpectationsWithTimeout:30 handler:nil];
+}
+
+- (void)test_whenInvalidatingInsideBatchUpdate_withSystemReleased_thatSystemNil_andCollectionViewDoesntCrashOnDealloc {
+    __weak id weakAdapter = nil;
+    __block BOOL executedItemUpdate = NO;
+    XCTestExpectation *expectation = genExpectation;
+
+    @autoreleasepool {
+        self.dataSource.objects = @[
+                                    genTestObject(@1, @"Bar"),
+                                    genTestObject(@0, @"Foo")
+                                    ];
+
+        UICollectionView *collectionView = [[UICollectionView alloc] initWithFrame:self.window.frame collectionViewLayout:[UICollectionViewFlowLayout new]];
+        [self.window addSubview:collectionView];
+        IGListAdapterUpdater *updater = [IGListAdapterUpdater new];
+        IGListAdapter *adapter = [[IGListAdapter alloc] initWithUpdater:updater viewController:nil];
+        adapter.dataSource = self.dataSource;
+        adapter.collectionView = collectionView;
+        [collectionView layoutIfNeeded];
+
+        IGTestDelegateController *section = [adapter sectionControllerForObject:self.dataSource.objects.firstObject];
+
+        __weak typeof(section) weakSection = section;
+        section.itemUpdateBlock = ^{
+            executedItemUpdate = YES;
+            [weakSection.collectionContext invalidateLayoutForSectionController:weakSection completion:nil];
+        };
+
+        self.dataSource.objects = @[
+                                    genTestObject(@1, @"Bar"),
+                                    genTestObject(@0, @"Foo")
+                                    ];
+
+        [adapter performUpdatesAnimated:YES completion:^(BOOL finished) {
+            XCTAssertNotNil(collectionView);
+            XCTAssertNotNil(adapter);
+            [collectionView removeFromSuperview];
+            [expectation fulfill];
+        }];
+
+        weakAdapter = adapter;
+        XCTAssertNotNil(weakAdapter);
+    }
+
+    [self waitForExpectationsWithTimeout:30 handler:^(NSError * _Nullable error) {
+        XCTAssertTrue(executedItemUpdate);
+        XCTAssertNil(weakAdapter);
+    }];
+}
+
+- (void)test_whenAddingMultipleUpdateListeners_withPerformUpdatesAnimated_thatEventsReceived {
+    [self setupWithObjects:@[
+                             genTestObject(@1, @1)
+                             ]];
+
+    IGListAdapterUpdateTester *listener1 = [IGListAdapterUpdateTester new];;
+    IGListAdapterUpdateTester *listener2 = [IGListAdapterUpdateTester new];;
+
+    [self.adapter addUpdateListener:listener1];
+    [self.adapter addUpdateListener:listener2];
+
+    self.dataSource.objects = @[
+                                genTestObject(@1, @1),
+                                genTestObject(@2, @1)
+                                ];
+
+    XCTestExpectation *expectation = genExpectation;
+    [self.adapter performUpdatesAnimated:YES completion:^(BOOL finished) {
+        XCTAssertEqual(listener1.hits, 1);
+        XCTAssertEqual(listener1.animated, YES);
+        XCTAssertEqual(listener1.type, IGListAdapterUpdateTypePerformUpdates);
+        XCTAssertEqual(listener2.hits, 1);
+        XCTAssertEqual(listener2.animated, YES);
+        XCTAssertEqual(listener2.type, IGListAdapterUpdateTypePerformUpdates);
+        [expectation fulfill];
+    }];
+
+    [self waitForExpectationsWithTimeout:30 handler:nil];
+}
+
+- (void)test_whenAddingMultipleUpdateListeners_withPerformUpdatesNotAnimated_thatEventsReceived {
+    [self setupWithObjects:@[
+                             genTestObject(@1, @1)
+                             ]];
+
+    IGListAdapterUpdateTester *listener1 = [IGListAdapterUpdateTester new];;
+    IGListAdapterUpdateTester *listener2 = [IGListAdapterUpdateTester new];;
+
+    [self.adapter addUpdateListener:listener1];
+    [self.adapter addUpdateListener:listener2];
+
+    self.dataSource.objects = @[
+                                genTestObject(@1, @1),
+                                genTestObject(@2, @1)
+                                ];
+
+    XCTestExpectation *expectation = genExpectation;
+    [self.adapter performUpdatesAnimated:NO completion:^(BOOL finished) {
+        XCTAssertEqual(listener1.hits, 1);
+        XCTAssertEqual(listener1.animated, NO);
+        XCTAssertEqual(listener1.type, IGListAdapterUpdateTypePerformUpdates);
+        XCTAssertEqual(listener2.hits, 1);
+        XCTAssertEqual(listener2.animated, NO);
+        XCTAssertEqual(listener2.type, IGListAdapterUpdateTypePerformUpdates);
+        [expectation fulfill];
+    }];
+
+    [self waitForExpectationsWithTimeout:30 handler:nil];
+}
+
+- (void)test_whenAddingMultipleUpdateListeners_withReloadData_thatEventsReceived {
+    [self setupWithObjects:@[
+                             genTestObject(@1, @1)
+                             ]];
+
+    IGListAdapterUpdateTester *listener1 = [IGListAdapterUpdateTester new];;
+    IGListAdapterUpdateTester *listener2 = [IGListAdapterUpdateTester new];;
+
+    [self.adapter addUpdateListener:listener1];
+    [self.adapter addUpdateListener:listener2];
+
+    self.dataSource.objects = @[
+                                genTestObject(@1, @1),
+                                genTestObject(@2, @1)
+                                ];
+
+    XCTestExpectation *expectation = genExpectation;
+    [self.adapter reloadDataWithCompletion:^(BOOL finished) {
+        XCTAssertEqual(listener1.hits, 1);
+        XCTAssertEqual(listener1.animated, NO);
+        XCTAssertEqual(listener1.type, IGListAdapterUpdateTypeReloadData);
+        XCTAssertEqual(listener2.hits, 1);
+        XCTAssertEqual(listener2.animated, NO);
+        XCTAssertEqual(listener2.type, IGListAdapterUpdateTypeReloadData);
+        [expectation fulfill];
+    }];
+
+    [self waitForExpectationsWithTimeout:30 handler:nil];
+}
+
+- (void)test_whenAddingMultipleUpdateListeners_withItemUpdatesAnimated_thatEventsReceived {
+    [self setupWithObjects:@[
+                             genTestObject(@1, @1)
+                             ]];
+
+    IGListAdapterUpdateTester *listener1 = [IGListAdapterUpdateTester new];;
+    IGListAdapterUpdateTester *listener2 = [IGListAdapterUpdateTester new];;
+
+    [self.adapter addUpdateListener:listener1];
+    [self.adapter addUpdateListener:listener2];
+
+    self.dataSource.objects = @[
+                                genTestObject(@1, @1),
+                                genTestObject(@2, @1)
+                                ];
+
+    IGListSectionController *section = [self.adapter sectionControllerForObject:self.dataSource.objects.firstObject];
+
+    XCTestExpectation *expectation = genExpectation;
+    [section.collectionContext performBatchAnimated:YES updates:^(id<IGListBatchContext>  _Nonnull batchContext) {
+        [batchContext reloadInSectionController:section atIndexes:[NSIndexSet indexSetWithIndex:0]];
+    } completion:^(BOOL finished) {
+        XCTAssertEqual(listener1.hits, 1);
+        XCTAssertEqual(listener1.animated, YES);
+        XCTAssertEqual(listener1.type, IGListAdapterUpdateTypeItemUpdates);
+        XCTAssertEqual(listener2.hits, 1);
+        XCTAssertEqual(listener2.animated, YES);
+        XCTAssertEqual(listener2.type, IGListAdapterUpdateTypeItemUpdates);
+        [expectation fulfill];
+    }];
+
+    [self waitForExpectationsWithTimeout:30 handler:nil];
+}
+
+- (void)test_whenAddingMultipleUpdateListeners_withItemUpdatesNotAnimated_thatEventsReceived {
+    [self setupWithObjects:@[
+                             genTestObject(@1, @1)
+                             ]];
+
+    IGListAdapterUpdateTester *listener1 = [IGListAdapterUpdateTester new];;
+    IGListAdapterUpdateTester *listener2 = [IGListAdapterUpdateTester new];;
+
+    [self.adapter addUpdateListener:listener1];
+    [self.adapter addUpdateListener:listener2];
+
+    self.dataSource.objects = @[
+                                genTestObject(@1, @1),
+                                genTestObject(@2, @1)
+                                ];
+
+    IGListSectionController *section = [self.adapter sectionControllerForObject:self.dataSource.objects.firstObject];
+
+    XCTestExpectation *expectation = genExpectation;
+    [section.collectionContext performBatchAnimated:NO updates:^(id<IGListBatchContext>  _Nonnull batchContext) {
+        [batchContext reloadInSectionController:section atIndexes:[NSIndexSet indexSetWithIndex:0]];
+    } completion:^(BOOL finished) {
+        XCTAssertEqual(listener1.hits, 1);
+        XCTAssertEqual(listener1.animated, NO);
+        XCTAssertEqual(listener1.type, IGListAdapterUpdateTypeItemUpdates);
+        XCTAssertEqual(listener2.hits, 1);
+        XCTAssertEqual(listener2.animated, NO);
+        XCTAssertEqual(listener2.type, IGListAdapterUpdateTypeItemUpdates);
+        [expectation fulfill];
+    }];
+
+    [self waitForExpectationsWithTimeout:30 handler:nil];
+}
+
+- (void)test_whenAddingMultipleUpdateListeners_thenRemovingListener_thatRemainingReceives {
+    [self setupWithObjects:@[
+                             genTestObject(@1, @1)
+                             ]];
+
+    IGListAdapterUpdateTester *listener1 = [IGListAdapterUpdateTester new];;
+    IGListAdapterUpdateTester *listener2 = [IGListAdapterUpdateTester new];;
+
+    [self.adapter addUpdateListener:listener1];
+    [self.adapter addUpdateListener:listener2];
+    [self.adapter removeUpdateListener:listener2];
+
+    self.dataSource.objects = @[
+                                genTestObject(@1, @1),
+                                genTestObject(@2, @1)
+                                ];
+
+    XCTestExpectation *expectation = genExpectation;
+    [self.adapter performUpdatesAnimated:YES completion:^(BOOL finished) {
+        XCTAssertEqual(listener1.hits, 1);
+        XCTAssertEqual(listener1.animated, YES);
+        XCTAssertEqual(listener1.type, IGListAdapterUpdateTypePerformUpdates);
+        XCTAssertEqual(listener2.hits, 0);
+        [expectation fulfill];
+    }];
+
+    [self waitForExpectationsWithTimeout:30 handler:nil];
+}
+
+- (void)test_whenAddingUpdateListener_thenListenerReferenceHitsZero_thatListenerReleased {
+    [self setupWithObjects:@[
+                             genTestObject(@1, @1)
+                             ]];
+
+    IGListAdapterUpdateTester *listener = [IGListAdapterUpdateTester new];
+    __weak id weakListener = listener;
+    [self.adapter addUpdateListener:listener];
+    listener = nil;
+
+    self.dataSource.objects = @[
+                                genTestObject(@1, @1),
+                                genTestObject(@2, @1)
+                                ];
+
+    XCTestExpectation *expectation = genExpectation;
+    [self.adapter performUpdatesAnimated:YES completion:^(BOOL finished) {
+        XCTAssertNil(weakListener);
+        [expectation fulfill];
+    }];
+
+    [self waitForExpectationsWithTimeout:30 handler:nil];
+}
+
+- (void)test_whenInsertingItemTwice_withDedupeExperiment_thatSecondInsertGetsDropped {
+    ((IGListAdapterUpdater*)self.updater).experiments = IGListExperimentDedupeItemUpdates;
+
+    IGTestObject *object = genTestObject(@1, @1);
+    [self setupWithObjects:@[object]];
+
+    IGTestDelegateController *controller = [self.adapter sectionControllerForObject:self.dataSource.objects.firstObject];
+    XCTestExpectation *expectation = genExpectation;
+    [controller.collectionContext performBatchAnimated:YES updates:^(id<IGListBatchContext>  _Nonnull batchContext) {
+        object.value = @2;
+        [batchContext insertInSectionController:controller atIndexes:[NSIndexSet indexSetWithIndex:0]];
+        [batchContext insertInSectionController:controller atIndexes:[NSIndexSet indexSetWithIndex:0]];
+    } completion:^(BOOL finished) {
+        [expectation fulfill];
+    }];
+
+    [self waitForExpectationsWithTimeout:30 handler:nil];
+}
+
+- (void)test_whenModifyingInitialAndFinalAttribute_thatLayoutIsCorrect {
+    // set up the custom layout
+    IGListCollectionViewLayout *layout = [[IGListCollectionViewLayout alloc] initWithStickyHeaders:NO topContentInset:0 stretchToEdge:YES];
+    self.collectionView.collectionViewLayout = layout;
+
+    IGTestObject *object = genTestObject(@1, @2);
+    [self setupWithObjects:@ [object]];
+
+    // set up the section controller
+    IGTestDelegateController *sectionController = [self.adapter sectionControllerForObject:object];
+    sectionController.transitionDelegate = sectionController;
+
+    CGPoint offset = CGPointMake(10, 10);
+    NSIndexPath *indexPath = genIndexPath(0, 0);
+    UICollectionViewLayoutAttributes *attribute = [layout layoutAttributesForItemAtIndexPath:indexPath];
+
+    // set up the custom initial attribute transformation
+    sectionController.initialAttributesOffset = offset;
+    UICollectionViewLayoutAttributes *initialAttribute = [layout initialLayoutAttributesForAppearingItemAtIndexPath:indexPath];
+
+    // set up the custom final attribute transformation
+    sectionController.finalAttributesOffset = offset;
+    UICollectionViewLayoutAttributes *finalAttribute = [layout finalLayoutAttributesForDisappearingItemAtIndexPath:indexPath];
+
+    IGAssertEqualPoint(initialAttribute.center, attribute.center.x + offset.x, attribute.center.y + offset.y);
+    IGAssertEqualPoint(finalAttribute.center, attribute.center.x + offset.x ,attribute.center.y + offset.y);
 }
 
 @end

@@ -3,13 +3,13 @@
   "iOS" : [
     {
       "name" : "Result",
-      "hash" : "f71a103410e175db831ce52567e533a95edeebbbcb707eca1e57da21e5391da2"
+      "hash" : "491404fa494d7ec79970d8be51ff092c0eec365c901d2d9f1fec998c38f2233d"
     }
   ],
   "watchOS" : [
     {
       "name" : "Result",
-      "hash" : "435502b2d12454efa0e3f0cb402056b65832e94d1994616cedf10e11c499b670"
+      "hash" : "853128e18a2a7f50968d168199abdbd56c3dd55b5ecfb7eff65ef558cba2eb27"
     }
   ]
 }

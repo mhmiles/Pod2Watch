@@ -12,8 +12,8 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
 import IGListKit
+import UIKit
 
 final class EmptyViewController: UIViewController, ListAdapterDataSource, RemoveSectionControllerDelegate {
 
@@ -54,7 +54,7 @@ final class EmptyViewController: UIViewController, ListAdapterDataSource, Remove
         collectionView.frame = view.bounds
     }
 
-    func onAdd() {
+    @objc func onAdd() {
         data.append(tally + 1)
         tally += 1
         adapter.performUpdates(animated: true, completion: nil)

@@ -1,17 +1,18 @@
 /**
  * Copyright (c) 2016-present, Facebook, Inc.
- * All rights reserved.
  *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 #import <XCTest/XCTest.h>
 #import <OCMock/OCMock.h>
 
+#import <IGListKit/IGListKit.h>
+
 #import "IGListAdapterUpdaterInternal.h"
 #import "IGListTestUICollectionViewDataSource.h"
+#import "IGTestObject.h"
 
 #define genExpectation [self expectationWithDescription:NSStringFromSelector(_cmd)]
 #define waitExpectation [self waitForExpectationsWithTimeout:30 handler:nil]
@@ -55,27 +56,27 @@
 }
 
 - (void)test_whenUpdatingWithNil_thatUpdaterHasNoChanges {
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:nil toObjects:nil animated:YES objectTransitionBlock:self.updateBlock completion:nil];
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:nil toObjectsBlock:nil animated:YES objectTransitionBlock:self.updateBlock completion:nil];
     XCTAssertFalse([self.updater hasChanges]);
 }
 
 - (void)test_whenUpdatingtoObjects_thatUpdaterHasChanges {
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:nil toObjects:@[@0] animated:YES objectTransitionBlock:self.updateBlock completion:nil];
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:nil toObjectsBlock:^NSArray *{return @[@0];} animated:YES objectTransitionBlock:self.updateBlock completion:nil];
     XCTAssertTrue([self.updater hasChanges]);
 }
 
 - (void)test_whenUpdatingfromObjects_thatUpdaterHasChanges {
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:@[@0] toObjects:nil animated:YES objectTransitionBlock:self.updateBlock completion:nil];
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:@[@0] toObjectsBlock:^NSArray *{return nil;} animated:YES objectTransitionBlock:self.updateBlock completion:nil];
     XCTAssertTrue([self.updater hasChanges]);
 }
 
 - (void)test_whenUpdatingtoObjects_withfromObjects_thatUpdaterHasChanges {
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:@[@0] toObjects:@[@1] animated:YES objectTransitionBlock:self.updateBlock completion:nil];
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:@[@0] toObjectsBlock:^NSArray *{return @[@1];} animated:YES objectTransitionBlock:self.updateBlock completion:nil];
     XCTAssertTrue([self.updater hasChanges]);
 }
 
 - (void)test_whenCleaningUpState_withChanges_thatUpdaterHasNoChanges {
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:nil toObjects:@[@0] animated:YES objectTransitionBlock:self.updateBlock completion:nil];
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:nil toObjectsBlock:^NSArray *{return @[@0];} animated:YES objectTransitionBlock:self.updateBlock completion:nil];
     XCTAssertTrue([self.updater hasChanges]);
     [self.updater cleanStateBeforeUpdates];
     XCTAssertFalse([self.updater hasChanges]);
@@ -94,17 +95,19 @@
     NSArray *from = @[
                       [IGSectionObject sectionWithObjects:@[]]
                       ];
-    NSArray *to = @[
-                    [IGSectionObject sectionWithObjects:@[]],
-                    [IGSectionObject sectionWithObjects:@[]]
-                    ];
+    IGListToObjectBlock to = ^NSArray *{
+        return @[
+                 [IGSectionObject sectionWithObjects:@[]],
+                 [IGSectionObject sectionWithObjects:@[]]
+                 ];
+    };
 
     self.dataSource.sections = from;
     [self.updater performReloadDataWithCollectionView:self.collectionView];
     XCTAssertEqual([self.collectionView numberOfSections], 1);
 
     XCTestExpectation *expectation = genExpectation;
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjects:to animated:YES objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjectsBlock:to animated:YES objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
         XCTAssertEqual([self.collectionView numberOfSections], 2);
         [expectation fulfill];
     }];
@@ -116,16 +119,18 @@
                       [IGSectionObject sectionWithObjects:@[]],
                       [IGSectionObject sectionWithObjects:@[]]
                       ];
-    NSArray *to = @[
-                    [IGSectionObject sectionWithObjects:@[]]
-                    ];
+    IGListToObjectBlock to = ^NSArray *{
+        return @[
+                 [IGSectionObject sectionWithObjects:@[]]
+                 ];
+    };
 
     self.dataSource.sections = from;
     [self.updater performReloadDataWithCollectionView:self.collectionView];
     XCTAssertEqual([self.collectionView numberOfSections], 2);
 
     XCTestExpectation *expectation = genExpectation;
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjects:to animated:YES objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjectsBlock:to animated:YES objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
         XCTAssertEqual([self.collectionView numberOfSections], 1);
         [expectation fulfill];
     }];
@@ -136,10 +141,12 @@
     NSArray *from = @[
                       [IGSectionObject sectionWithObjects:@[@0]]
                       ];
-    NSArray *to = @[
-                    [IGSectionObject sectionWithObjects:@[@0, @1]],
-                    [IGSectionObject sectionWithObjects:@[@0, @1]]
-                    ];
+    IGListToObjectBlock to = ^NSArray *{
+        return @[
+                 [IGSectionObject sectionWithObjects:@[@0, @1]],
+                 [IGSectionObject sectionWithObjects:@[@0, @1]]
+                 ];
+    };
 
     self.dataSource.sections = from;
     [self.updater performReloadDataWithCollectionView:self.collectionView];
@@ -147,7 +154,7 @@
     XCTAssertEqual([self.collectionView numberOfItemsInSection:0], 1);
 
     XCTestExpectation *expectation = genExpectation;
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjects:to animated:YES objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjectsBlock:to animated:YES objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
         XCTAssertEqual([self.collectionView numberOfSections], 2);
         XCTAssertEqual([self.collectionView numberOfItemsInSection:0], 2);
         XCTAssertEqual([self.collectionView numberOfItemsInSection:1], 2);
@@ -161,11 +168,13 @@
                       [IGSectionObject sectionWithObjects:@[@0, @1, @2]],
                       [IGSectionObject sectionWithObjects:@[]]
                       ];
-    NSArray *to = @[
-                    [IGSectionObject sectionWithObjects:@[@1, @1]],
-                    [IGSectionObject sectionWithObjects:@[@0]],
-                    [IGSectionObject sectionWithObjects:@[@0, @2, @3]]
-                    ];
+    IGListToObjectBlock to = ^NSArray *{
+        return @[
+                 [IGSectionObject sectionWithObjects:@[@1, @1]],
+                 [IGSectionObject sectionWithObjects:@[@0]],
+                 [IGSectionObject sectionWithObjects:@[@0, @2, @3]]
+                 ];
+    };
 
     self.dataSource.sections = from;
     [self.updater performReloadDataWithCollectionView:self.collectionView];
@@ -174,7 +183,7 @@
     XCTAssertEqual([self.collectionView numberOfItemsInSection:0], 3);
 
     XCTestExpectation *expectation = genExpectation;
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjects:to animated:NO objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjectsBlock:to animated:NO objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
         XCTAssertEqual([self.collectionView numberOfSections], 3);
         XCTAssertEqual([self.collectionView numberOfItemsInSection:0], 2);
         XCTAssertEqual([self.collectionView numberOfItemsInSection:1], 1);
@@ -210,9 +219,11 @@
                       [IGSectionObject sectionWithObjects:@[]],
                       [IGSectionObject sectionWithObjects:@[]]
                       ];
-    NSArray *to = @[
-                    [IGSectionObject sectionWithObjects:@[]]
-                    ];
+    IGListToObjectBlock to = ^NSArray *{
+        return @[
+                 [IGSectionObject sectionWithObjects:@[]]
+                 ];
+    };
 
     self.dataSource.sections = from;
     [self.updater performReloadDataWithCollectionView:self.collectionView];
@@ -223,7 +234,7 @@
     [self.collectionView setNeedsLayout];
 
     XCTestExpectation *expectation = genExpectation;
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjects:to animated:NO objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjectsBlock:to animated:NO objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
         XCTAssertEqual([self.collectionView numberOfSections], 1);
         [expectation fulfill];
     }];
@@ -234,10 +245,12 @@
     NSArray *from = @[
                       [IGSectionObject sectionWithObjects:@[]],
                       ];
-    NSArray *to = @[
-                    [IGSectionObject sectionWithObjects:@[]],
-                    [IGSectionObject sectionWithObjects:@[]],
-                    ];
+    IGListToObjectBlock to = ^NSArray *{
+        return @[
+                 [IGSectionObject sectionWithObjects:@[]],
+                 [IGSectionObject sectionWithObjects:@[]],
+                 ];
+    };
 
     self.dataSource.sections = from;
     [self.updater performReloadDataWithCollectionView:self.collectionView];
@@ -245,13 +258,15 @@
     __block NSInteger completionCounter = 0;
 
     XCTestExpectation *expectation1 = genExpectation;
-    void (^preUpdateBlock)() = ^{
-        NSArray *anotherTo = @[
-                               [IGSectionObject sectionWithObjects:@[]],
-                               [IGSectionObject sectionWithObjects:@[]],
-                               [IGSectionObject sectionWithObjects:@[]]
-                               ];
-        [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjects:anotherTo animated:YES objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
+    void (^preUpdateBlock)(void) = ^{
+        NSArray *(^anotherTo)(void) = ^NSArray *{
+            return @[
+                     [IGSectionObject sectionWithObjects:@[]],
+                     [IGSectionObject sectionWithObjects:@[]],
+                     [IGSectionObject sectionWithObjects:@[]]
+                     ];
+        };
+        [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjectsBlock:anotherTo animated:YES objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
             completionCounter++;
             XCTAssertEqual([self.collectionView numberOfSections], 3);
             XCTAssertEqual(completionCounter, 2);
@@ -260,7 +275,7 @@
     };
 
     XCTestExpectation *expectation2 = genExpectation;
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjects:to animated:YES objectTransitionBlock:^(NSArray *toObjects) {
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjectsBlock:to animated:YES objectTransitionBlock:^(NSArray *toObjects) {
         // executing this block within the updater is just before performBatchUpdates: are applied
         // should be able to queue another update here, similar to an update being queued between it beginning and executing
         // the performBatchUpdates: block
@@ -296,7 +311,7 @@
 
     [self.updater performUpdateWithCollectionView:self.collectionView
                                       fromObjects:nil
-                                        toObjects:@[[IGSectionObject sectionWithObjects:@[@1]]]
+                                   toObjectsBlock:^NSArray *{return @[[IGSectionObject sectionWithObjects:@[@1]]];}
                                          animated:YES objectTransitionBlock:^(NSArray * toObjects) {
                                              self.dataSource.sections = toObjects;
                                              sectionUpdateBlockExecuted = YES;
@@ -318,11 +333,11 @@
 }
 
 - (void)test_whenItemsMoveAndUpdate_thatCollectionViewWorks {
-    NSArray *from = @[
-                      [IGSectionObject sectionWithObjects:@[]],
-                      [IGSectionObject sectionWithObjects:@[]],
-                      [IGSectionObject sectionWithObjects:@[]],
-                      ];
+    NSArray<IGSectionObject *> *from = @[
+                                         [IGSectionObject sectionWithObjects:@[]],
+                                         [IGSectionObject sectionWithObjects:@[]],
+                                         [IGSectionObject sectionWithObjects:@[]],
+                                         ];
 
     // change the number of items in the section, which a move would be unable to handle and would throw
     // keep the same pointers so that the objects are equal
@@ -330,12 +345,14 @@
     [from[0] setObjects:@[@1, @1]];
     [from[1] setObjects:@[@1, @1, @1]];
 
-    // rearrange the modified objects
-    NSArray *to = @[
-                    from[2],
-                    from[0],
-                    from[1]
-                    ];
+    IGListToObjectBlock to = ^NSArray *{
+        // rearrange the modified objects
+        return @[
+                 from[2],
+                 from[0],
+                 from[1]
+                 ];
+    };
 
     self.dataSource.sections = from;
     [self.updater performReloadDataWithCollectionView:self.collectionView];
@@ -344,7 +361,7 @@
     self.updater.movesAsDeletesInserts = YES;
 
     XCTestExpectation *expectation = genExpectation;
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjects:to animated:YES objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:from toObjectsBlock:to animated:YES objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
         XCTAssertEqual([self.collectionView numberOfSections], 3);
         XCTAssertEqual([self.collectionView numberOfItemsInSection:0], 1);
         XCTAssertEqual([self.collectionView numberOfItemsInSection:1], 2);
@@ -471,10 +488,12 @@
     [[mockDelegate expect] listAdapterUpdater:self.updater didPerformBatchUpdates:OCMOCK_ANY collectionView:self.collectionView];
 
     XCTestExpectation *expectation = genExpectation;
-    NSArray *to = @[
-                    [IGSectionObject sectionWithObjects:@[]]
-                    ];
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:self.dataSource.sections toObjects:to animated:NO objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
+    IGListToObjectBlock to = ^NSArray *{
+        return @[
+                 [IGSectionObject sectionWithObjects:@[]]
+                 ];
+    };
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:self.dataSource.sections toObjectsBlock:to animated:NO objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
         [expectation fulfill];
     }];
     waitExpectation;
@@ -496,17 +515,19 @@
     [[mockDelegate reject] listAdapterUpdater:self.updater didPerformBatchUpdates:OCMOCK_ANY collectionView:self.collectionView];
 
     XCTestExpectation *expectation = genExpectation;
-    NSArray *to = @[
-                    [IGSectionObject sectionWithObjects:@[]]
-                    ];
-    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:self.dataSource.sections toObjects:to animated:NO objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
+    IGListToObjectBlock to = ^NSArray *{
+        return @[
+                 [IGSectionObject sectionWithObjects:@[]]
+                 ];
+    };
+    [self.updater performUpdateWithCollectionView:self.collectionView fromObjects:self.dataSource.sections toObjectsBlock:to animated:NO objectTransitionBlock:self.updateBlock completion:^(BOOL finished) {
         [expectation fulfill];
     }];
     waitExpectation;
     [mockDelegate verify];
 }
 
-- (void)test_ {
+- (void)test_whenReloadBatchedWithUpdate_thatCompletionBlockStillExecuted {
     IGSectionObject *object = [IGSectionObject sectionWithObjects:@[@0, @1, @2]];
     self.dataSource.sections = @[object];
 
@@ -536,7 +557,7 @@
     [self waitForExpectationsWithTimeout:30 handler:nil];
 }
 
-- (void)test_2 {
+- (void)test_whenNotInViewHierarchy_thatUpdatesStillExecuteBlocks {
     [self.collectionView removeFromSuperview];
 
     IGSectionObject *object = [IGSectionObject sectionWithObjects:@[@0, @1, @2]];
@@ -546,7 +567,7 @@
     __block BOOL completionBlockExecuted = NO;
     [self.updater performUpdateWithCollectionView:self.collectionView
                                       fromObjects:self.dataSource.sections
-                                        toObjects:self.dataSource.sections
+                                   toObjectsBlock:^NSArray *{return self.dataSource.sections;}
                                          animated:YES
                             objectTransitionBlock:^(NSArray *toObjects) {
                                 objectTransitionBlockExecuted = YES;
@@ -577,4 +598,23 @@
     [self waitForExpectationsWithTimeout:30 handler:nil];
 }
 
+- (void)test_whenObjectIdentifiersCollide_withDifferentTypes_thatLookupReturnsNil {
+    id testObject = [[IGTestObject alloc] initWithKey:@"foo" value:@"bar"];
+    id collision = @"foo";
+    XCTAssertEqual(collision, [testObject diffIdentifier]);
+
+    IGListAdapterUpdater *updater = [IGListAdapterUpdater new];
+
+    // mimic internal map setup in IGListAdapter
+    NSPointerFunctions *keyFunctions = [updater objectLookupPointerFunctions];
+    NSPointerFunctions *valueFunctions = [NSPointerFunctions pointerFunctionsWithOptions:NSPointerFunctionsStrongMemory];
+    NSMapTable *table = [[NSMapTable alloc] initWithKeyPointerFunctions:keyFunctions valuePointerFunctions:valueFunctions capacity:0];
+
+    [table setObject:@1 forKey:testObject];
+    XCTAssertNotNil([table objectForKey:testObject]);
+    XCTAssertNil([table objectForKey:collision]);
+}
+
 @end
+
+

@@ -13,4 +13,4 @@
  */
 
 #import "ObjcDemoViewController.h"
-
+#import "ObjcGeneratedModelDemoViewController.h"

@@ -151,6 +151,8 @@ class PodcastTransferManager: NSObject {
     
     PersistentContainer.shared.viewContext.perform {
       for episode in TransferredEpisode.pendingTransfers() {
+        guard let fileURL = episode.fileURL else { continue }
+        
         let metadata: [String: Any] = [
           "type": MessageType.sendEpisode,
           "persistentID": episode.persistentID,
@@ -165,7 +167,7 @@ class PodcastTransferManager: NSObject {
         ]
         
         session.sendMessage(message, replyHandler: nil, errorHandler: nil)
-        episode.transfer = session.transferFile(episode.fileURL!, metadata: metadata)
+        episode.transfer = session.transferFile(fileURL, metadata: metadata)
         episode.hasBegunTransfer = true
       }
       
@@ -313,7 +315,7 @@ class PodcastTransferManager: NSObject {
     if let transferredPodcast = TransferredPodcast.existing(title: podcastTitle) {
       transferredPodcast.addToEpisodes(transferredEpisode)
     } else {
-      let transferredPodcast = TransferredPodcast()
+      let transferredPodcast = TransferredPodcast(context: PersistentContainer.shared.viewContext)
       transferredPodcast.title = podcastTitle
       transferredPodcast.addToEpisodes(transferredEpisode)
       

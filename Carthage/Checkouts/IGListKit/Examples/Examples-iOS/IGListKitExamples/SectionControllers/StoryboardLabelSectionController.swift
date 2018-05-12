@@ -12,8 +12,8 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
 import IGListKit
+import UIKit
 
 protocol StoryboardLabelSectionControllerDelegate: class {
     func removeSectionControllerWantsRemoved(_ sectionController: StoryboardLabelSectionController)
@@ -25,7 +25,7 @@ final class StoryboardLabelSectionController: ListSectionController {
     weak var delegate: StoryboardLabelSectionControllerDelegate?
 
     override func sizeForItem(at index: Int) -> CGSize {
-        return CGSize(width: (self.object?.name.characters.count)! * 7, height: (self.object?.name.characters.count)! * 7)
+        return CGSize(width: (self.object?.name.count)! * 7, height: (self.object?.name.count)! * 7)
     }
 
     override func cellForItem(at index: Int) -> UICollectionViewCell {

@@ -28,8 +28,7 @@ public class Podcast: NSManagedObject {
   }
 
   convenience init(title: String, context: NSManagedObjectContext) {
-    let entity = NSEntityDescription.entity(forEntityName: "Podcast", in: context)!
-    self.init(entity: entity, insertInto: context)
+    self.init(context: context)
 
     self.title = title
   }

@@ -18,6 +18,8 @@ class RootViewController: UITabBarController {
                                            selector: #selector(RootViewController.handleReceivedAuthorizationNotDetermined),
                                            name: .podcastTransferDidBegin,
                                            object: nil)
+    
+    UINavigationBar.appearance().shadowImage = UIImage()
   }
   
   @objc private func handleReceivedAuthorizationNotDetermined() {

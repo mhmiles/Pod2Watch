@@ -12,8 +12,8 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
 import IGListKit
+import UIKit
 
 final class LabelSectionController: ListSectionController {
 
@@ -38,7 +38,5 @@ final class LabelSectionController: ListSectionController {
     override func didUpdate(to object: Any) {
         self.object = String(describing: object)
     }
-
-    override func didSelectItem(at index: Int) {}
 
 }

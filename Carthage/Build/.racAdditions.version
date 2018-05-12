@@ -1,9 +1,9 @@
 {
-  "commitish" : "c45ec67a5bb2342f3bad683c3d29aec48d3819c8",
+  "commitish" : "8b74f3f09ba0733daeb68f6ebec67a62482a72c5",
   "iOS" : [
     {
       "name" : "racAdditions",
-      "hash" : "c275c5121ead1a2dd9ee9fb4823d4aefeca477f6dd9c79bb7f4ea25fd995ad6b"
+      "hash" : "e32a17a309ed5f3d5cc043c903d4528d6033c830e5dba3438690ec3a935f1852"
     }
   ],
   "watchOS" : [

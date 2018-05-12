@@ -12,8 +12,8 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
 import IGListKit
+import UIKit
 
 final class Person: ListDiffable {
 
@@ -73,7 +73,7 @@ final class DiffTableViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
 
-    func onDiff() {
+    @objc func onDiff() {
         let from = people
         let to = usingOldPeople ? newPeople : oldPeople
         usingOldPeople = !usingOldPeople

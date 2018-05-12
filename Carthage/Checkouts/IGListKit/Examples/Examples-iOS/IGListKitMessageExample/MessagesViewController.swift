@@ -12,10 +12,11 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
-import Messages
 import IGListKit
+import Messages
+import UIKit
 
+@available(iOSApplicationExtension 10.0, *)
 final class MessagesViewController: MSMessagesAppViewController, ListAdapterDataSource {
 
     lazy var adapter: ListAdapter = {

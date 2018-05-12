@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pod2Watch/Models/PodcastTransferManager.swift"
-            timestampString = "532554150.210155"
+            timestampString = "534116020.109553"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "477"
-            endingLineNumber = "477"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
             landmarkName = "session(_:didFinish:error:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -89,6 +89,18 @@ class MyPodcastsViewController: UICollectionViewController, ListAdapterDataSourc
     navigationController?.navigationBar.prefersLargeTitles = true
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    navigationItem.hidesSearchBarWhenScrolling = false
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    
+    navigationItem.hidesSearchBarWhenScrolling = true
+  }
+  
   deinit {
     NotificationCenter.default.removeObserver(self)
   }
@@ -136,7 +148,7 @@ class MyPodcastsViewController: UICollectionViewController, ListAdapterDataSourc
   
   func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
     guard let viewModels = viewModels, viewModels.count > 0 else {
-        return []
+      return []
     }
     
     return viewModels + [openPodcastsToken]
@@ -154,7 +166,7 @@ class MyPodcastsViewController: UICollectionViewController, ListAdapterDataSourc
         fatalError()
       }
     }
-
+    
     return PodcastSectionController()
   }
   

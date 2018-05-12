@@ -21,8 +21,7 @@ public class TransferredPodcast: NSManagedObject {
   @NSManaged public var episodes: NSSet
 
   convenience init(_ podcast: LibraryPodcast, context: NSManagedObjectContext = PersistentContainer.shared.viewContext) {
-    let entity = NSEntityDescription.entity(forEntityName: "TransferredPodcast", in: context)!
-    self.init(entity: entity, insertInto: context)
+    self.init(context: context)
 
     title = podcast.title ?? ""
     artworkImage = podcast.artworkImage

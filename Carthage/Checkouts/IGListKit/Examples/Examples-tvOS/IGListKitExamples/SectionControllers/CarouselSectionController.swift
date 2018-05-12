@@ -12,8 +12,8 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
 import IGListKit
+import UIKit
 
 final class CarouselSectionController: ListSectionController {
 
@@ -51,7 +51,5 @@ final class CarouselSectionController: ListSectionController {
     override func didUpdate(to object: Any) {
         number = object as? Int
     }
-
-    override func didSelectItem(at index: Int) {}
 
 }

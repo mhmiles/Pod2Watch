@@ -15,9 +15,9 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.3</string>
+	<string>1.3.3</string>
 	<key>CFBundleVersion</key>
-	<string>17</string>
+	<string>22</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>pcast</string>
@@ -30,7 +30,7 @@
 		<true/>
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Pod2Watch needs access to your podcasts library</string>
+	<string>Pod2Watch reads podcasts from your media library</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

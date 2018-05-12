@@ -42,7 +42,7 @@ public class Episode: NSManagedObject {
         })
       }
       
-      downloadProgressDisposable = disposable.map { ScopedDisposable($0) }
+      downloadProgressDisposable = disposable.map(ScopedDisposable.init)
     }
   }
   

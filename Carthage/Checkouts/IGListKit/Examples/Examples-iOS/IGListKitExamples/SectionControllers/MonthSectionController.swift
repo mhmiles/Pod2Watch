@@ -12,8 +12,8 @@
  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import UIKit
 import IGListKit
+import UIKit
 
 final class MonthSectionController: ListBindingSectionController<ListDiffable>, ListBindingSectionControllerDataSource, ListBindingSectionControllerSelectionDelegate {
 
@@ -56,8 +56,7 @@ final class MonthSectionController: ListBindingSectionController<ListDiffable>, 
 
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>,
                            cellForViewModel viewModel: Any,
-                           at index: Int) -> UICollectionViewCell {
-
+                           at index: Int) -> UICollectionViewCell & ListBindable {
         let cellClass: AnyClass
         if viewModel is DayViewModel {
             cellClass = CalendarDayCell.self
@@ -66,7 +65,9 @@ final class MonthSectionController: ListBindingSectionController<ListDiffable>, 
         } else {
             cellClass = LabelCell.self
         }
-        return collectionContext?.dequeueReusableCell(of: cellClass, for: self, at: index) ?? UICollectionViewCell()
+        guard let cell = collectionContext?.dequeueReusableCell(of: cellClass, for: self, at: index) as? UICollectionViewCell & ListBindable
+            else { fatalError() }
+        return cell
     }
 
     func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>,
@@ -94,7 +95,5 @@ final class MonthSectionController: ListBindingSectionController<ListDiffable>, 
         }
         update(animated: true)
     }
-
-    func sectionController(_ sectionController: ListBindingSectionController<ListDiffable>, didDeselectItemAt index: Int, viewModel: Any) {}
 
 }

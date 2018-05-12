@@ -2,6 +2,84 @@
 
 The changelog for `IGListKit`. Also see the [releases](https://github.com/instagram/IGListKit/releases) on GitHub.
 
+4.0.0 (upcoming release)
+-----
+
+3.4.0
+-----
+
+### Enhancements
+
+- Relicensed IGListKit to MIT. [Ryan Nystrom](https://github.com/rnystrom) [(000bc36)](https://github.com/Instagram/IGListKit/commit/000bc3691909f50649a5dfb098a5f2102c86385b)
+
+- Experimental performance improvement from deferring `-[IGListAdapterDataSource objectsForListAdapter:]` calls until just before diffing. [Ryan Nystrom](https://github.com/rnystrom) [(3059c5e)](https://github.com/Instagram/IGListKit/commit/3059c5e6f5aeac73f112375d032677ae5f38342a)
+
+3.3.0
+-----
+
+### Enhancements
+
+- Add support for UICollectionView's interactive reordering in iOS 9+.  Updates include `-[IGListSectionController canMoveItemAtIndex:]` to enable the behavior, `-[IGListSectionController moveObjectFromIndex:toIndex:]` called when items within a section controller were moved through reordering, `-[IGListAdapterDataSource listAdapter:moveObject:from:to]` called when section controllers themselves were reordered (only possible when all section controllers contain exactly 1 object), and `-[IGListUpdatingDelegate moveSectionInCollectionView:fromIndex:toIndex]` to enable custom updaters to conform to the reordering behavior. The update also includes two new examples `ReorderableSectionController` and `ReorderableStackedViewController` to demonstrate how to enable interactive reordering in your client app. [Jared Verdi](https://github.com/jverdi) [(#976)](https://github.com/Instagram/IGListKit/pull/976)
+
+- 5x improvement to diffing performance when result is only inserts or deletes. [Ryan Nystrom](https://github.com/rnystrom) [(afd2d29)](https://github.com/Instagram/IGListKit/commit/afd2d29eecfac2231d2bcf815c76e844c98d838e)
+
+- Can always show sticky header although section data is empty.  [Marcus Wu](https://github.com/marcuswu0814) [(#1129)](https://github.com/Instagram/IGListKit/pull/1129)
+
+- Added `-[IGListCollectionContext dequeueReusableCellOfClass:withReuseIdentifier:forSectionController:atIndex:]` to allow for registering cells of the same class with different reuse identifiers. [Jeremy Lawrence](https://github.com/Ziewvater) [(f47753e)](https://github.com/Instagram/IGListKit/commit/f47753e3615431f3b079eb3b7900469f9ffdce5b)
+
+### Fixes
+
+- Fixed Xcode 9.3 build errors. [Sho Ikeda](https://github.com/ikesyo) [(#1143)](https://github.com/Instagram/IGListKit/pull/1143)
+
+- Copy objects when retrieving from datasource to prevent modification of models in binding section controller. [Kashish Goel](https://github.com/kashishgoel) [(#1109)](https://github.com/Instagram/IGListKit/pull/1109)
+
+- Fixed footer is sticky when `stickyHeader` is `true` [aelam](https://github.com/aelam) [(#1094)](https://github.com/Instagram/IGListKit/pull/1094)
+
+- Updated IGListCollectionViewLayout to rely on layoutAttributesClass instead of vanilla `UICollectionViewLayoutAttributes` [Cole Potrocky](https://github.com/SirensOfTitan) [#1135](https://github.com/instagram/IGListKit/pull/1135)
+
+- `-[IGListSectionController didSelectItemAtIndex:]` is now called when a `scrollViewDelegate` or `collectionViewDelegate` is set. [Ryan Nystrom](https://github.com/rnystrom) [(#1108)](https://github.com/Instagram/IGListKit/pull/1108)
+
+- Fixed binding section controllers failing to update their cells when the section controller's section changes. [Chrisna Aing](https://github.com/ccrazy88) [(#1144)](https://github.com/Instagram/IGListKit/pull/1144)
+
+3.2.0
+-----
+
+### Enhancements
+
+- Added `-[IGListSectionController didHighlightItemAtIndex:]` and `-[IGListSectionController didUnhighlightItemAtIndex:]` APIs to support `UICollectionView` cell highlighting. [Kevin Delannoy](https://github.com/delannoyk) [(#933)](https://github.com/Instagram/IGListKit/pull/933)
+
+- Added `-didDeselectSectionController:withObject:` to `IGListSingleSectionControllerDelegate` [Darren Clark](https://github.com/darrenclark) [(#954)](https://github.com/Instagram/IGListKit/pull/954)
+
+- Added a new listener API to be notified when `IGListAdapter` finishes updating. Add listeners via `-[IGListAdapter addUpdateListener:]` with objects conforming to the new `IGListAdapterUpdateListener` protocol. [Ryan Nystrom](https://github.com/rnystrom) [(5cf01cc)](https://github.com/Instagram/IGListKit/commit/5cf01cc0a7c41d370600df495aff91d1099fa0bc)
+
+- Updated project settings for iOS 11. [Ryan Nystrom](https://github.com/rnystrom) [(#942)](https://github.com/Instagram/IGListKit/pull/942)
+
+- Added support UICollectionElementKindSectionFooter for IGListCollectionViewLayout. [Igor Vasilenko](https://github.com/vasilenkoigor) [(#1017)](https://github.com/Instagram/IGListKit/pull/1017)
+
+- Added experiment to make  `-[IGListAdapter visibleSectionControllers:]` a bit faster. [Maxime Ollivier](https://github.com/maxoll) [(82a2a2e)](https://github.com/Instagram/IGListKit/commit/82a2a2ee18bb6272744fd14c64c8ff2da3a620a6)
+
+- Added support `-[UIScrollView adjustedContentInset]` for iOS 11. [Guoyin Li](https://github.com/yiplee) [(#1020)](https://github.com/Instagram/IGListKit/pull/1020)
+
+- Added new `transitionDelegate` API to give `IGListSectionController`s control to customize initial and final `UICollectionViewLayoutAttribute`s. Includes automatic integration with `IGListCollectionViewLayout`. Sue Suhan Ma [(26924ec)](https://github.com/Instagram/IGListKit/commit/26924ec3b665d37aeed7e28887e4221a7f3501b1)
+
+- Reordered position of intercepted selector in `IGListAdapterProxy`'s `isInterceptedSelector` method to reduce overall consumption of compare. [zhongwuzw](https://github.com/zhongwu) [(#1055)](https://github.com/Instagram/IGListKit/pull/1055)
+
+- Made IGListTransitionDelegate inherited from NSObject. [Igor Vasilenko](https://github.com/vasilenkoigor) [(#1075)](https://github.com/Instagram/IGListKit/pull/1075)
+
+### Fixes
+
+- Duplicate objects for initial data source setup filtered out. [Mikhail Vashlyaev](https://github.com/yemodin) [(#993](https://github.com/Instagram/IGListKit/pull/993)
+
+- Weakly reference the `UICollectionView` in coalescence so that it can be released if the rest of system is destroyed. [Ryan Nystrom](https://github.com/rnystrom) [(d322c2e)](https://github.com/Instagram/IGListKit/commit/d322c2e5ae241141309923da257542f163c07cc6)
+
+- Fix bug with `-[IGListAdapter scrollToObject:supplementaryKinds:scrollDirection:scrollPosition:animated:]` where the content inset of the collection view was incorrectly being applied to the final offset. [Ryan Nystrom](https://github.com/rnystrom) [(b2860c3)](https://github.com/Instagram/IGListKit/commit/b2860c3604f0c452be1d21ab09c771c921786150)
+
+- Avoid crash when invalidating the layout while inside `-[UICollectionView performBatchUpdates:completion:]. [Ryan Nystrom](https://github.com/rnystrom) [(d9a89c9)](https://github.com/Instagram/IGListKit/commit/d9a89c9b00aa1a9537a24d9affb6919f83065f65)
+
+- Duplicate view models in `IGListBindingSectionController` gets filtered out. [Weyert de Boer](https://github.com/weyert) [(#916)](https://github.com/Instagram/IGListKit/pull/916)
+
+- Check object type on lookup to prevent crossing types if different objects collide with their identifiers. [Ryan Nystrom](https://github.com/rnystrom) [(296baf5)](https://github.com/Instagram/IGListKit/commit/296baf5f854f57150ed12ca5bd8d3903db492734)
+
 3.1.1
 -----
 
@@ -16,6 +94,16 @@ The changelog for `IGListKit`. Also see the [releases](https://github.com/instag
 
 - Added debug descriptions for 'IGListBindingSectionController' when printing to lldb via `po [IGListDebugger dump]`. [Candance Smith](https://github.com/candance) [(#856)](https://github.com/Instagram/IGListKit/pull/856)
 
+- Added `-[IGListSectionController didDeselectItemAtIndex:]` API to support default `UICollectionView` cell deselection. [Ryan Nystrom](https://github.com/rnystrom) [(6540f96)](https://github.com/Instagram/IGListKit/commit/6540f960e2e69bd4776e1e1d8c460ff812ba4c07)
+
+- Added `-[IGListCollectionContext selectItemAtIndex:]` Select an item through IGListCollectionContext like `-[IGListCollectionContext deselectItemAtIndex:]`. [Marvin Nazari](https://github.com/MarvinNazari) [(#874)](https://github.com/Instagram/IGListKit/pull/874)
+
+- Added horizontal scrolling support to `IGListCollectionViewLayout`. [Peter Edmonston](https://github.com/edmonston)  [(#857)](https://github.com/Instagram/IGListKit/pull/857)
+
+- Added support for `scrollViewDidEndDecelerating` to `IGListAdapter`. [Phil Larson](https://github.com/plarson) [(#899)](https://github.com/Instagram/IGListKit/pull/899)
+
+- Automatically disable `[UICollectionView isPrefetchingEnabled]` when setting a collection view on an adapter. [Ryan Nystrom](https://github.com/rnystrom) [(#889)](https://github.com/Instagram/IGListKit/pull/889)
+
 ### Fixes
 
 - Prevent a crash when update queued immediately after item batch update. [Ryan Nystrom](https://github.com/rnystrom) [(3dc6060)](https://github.com/Instagram/IGListKit/commit/3dc6060a385d9bfcb4fa1f61262ba74776573229)
@@ -27,18 +115,6 @@ The changelog for `IGListKit`. Also see the [releases](https://github.com/instag
 - Fix `scrollToObject:supplementaryKinds:...` not scrolling when section is empty but does have supplymentary views. [Gulam Moledina](https://github.com/gmoledina) [(#808)](https://github.com/Instagram/IGListKit/pull/808)
 
 - Better support for non-top positions in `scrollToObject:` API. [Gulam Moledina](https://github.com/gmoledina) [(#861)](https://github.com/Instagram/IGListKit/pull/861)
-
-### Enhancements
-
-- Added `-[IGListSectionController didDeselectItemAtIndex:]` API to support default `UICollectionView` cell deselection. [Ryan Nystrom](https://github.com/rnystrom) [(6540f96)](https://github.com/Instagram/IGListKit/commit/6540f960e2e69bd4776e1e1d8c460ff812ba4c07)
-
-- Added `-[IGListCollectionContext selectItemAtIndex:]` Select an item through IGListCollectionContext like `-[IGListCollectionContext deselectItemAtIndex:]`. [Marvin Nazari](https://github.com/MarvinNazari) [(#874)](https://github.com/Instagram/IGListKit/pull/874)
-
-- Added horizontal scrolling support to `IGListCollectionViewLayout`. [Peter Edmonston](https://github.com/edmonston)  [(#857)](https://github.com/Instagram/IGListKit/pull/857)
-
-- Added support for scrollViewDidEndDecelerating to `IGListAdapter`. [Phil Larson](https://github.com/plarson) [(#899)](https://github.com/Instagram/IGListKit/pull/899)
-
-- Automatically disable `[UICollectionView isPrefetchingEnabled]` when setting a collection view on an adapter. [Ryan Nystrom](https://github.com/rnystrom) [(#889)](https://github.com/Instagram/IGListKit/pull/889)
 
 3.0.0
 -----
